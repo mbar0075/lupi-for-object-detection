@@ -880,7 +880,7 @@ def main_function(
         plot_ap_bars(ap_df, iou_thresholds=["0.50", "0.75", "0.90", "0.5:0.95"], class_names=class_names)
 
         # Plot the normalized confusion matrix
-        # plot_normalised_confusion_matrix(all_pred_boxes, all_true_boxes, all_preds, all_labels, class_names)
+        plot_normalised_confusion_matrix(all_pred_boxes, all_true_boxes, all_preds, all_labels, class_names)
 
     # Load the best model weights
     model.load_state_dict(torch.load(f'{SAVE_DIR}/weights/best.pth'))

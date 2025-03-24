@@ -483,7 +483,7 @@ def main_function(
 
     # Early stopping: Stops training after a set number of epochs without improvement
     # 'patience' is the number of epochs to wait before stopping
-    patience = 5
+    patience = 8
 
     # Number of epochs for training
     NUM_EPOCHS = 100
