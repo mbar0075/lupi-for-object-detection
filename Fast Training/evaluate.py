@@ -1028,6 +1028,9 @@ def main_function(
                 size = target['size'].cpu().numpy()
 
                 # Resize the image and bounding boxes based on the original size
+                # if size is empty
+                if len(size) == 0:
+                    size = [(1280, 1280)]
                 original_size_x, original_size_y = size[0]
                 resize_ratio_x = original_size_x / IMG_RESIZE[0]
                 resize_ratio_y = original_size_y / IMG_RESIZE[1]
