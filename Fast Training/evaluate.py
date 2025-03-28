@@ -138,8 +138,8 @@ class COCODataset(CocoDetection):
                 # Append bounding box and label
                 boxes.append(bbox)
                 if annotation["category_id"] != 0: # Skip background class
-                    labels.append(annotation["category_id"])
-                    # labels.append(1)
+                    # labels.append(annotation["category_id"])
+                    labels.append(1)
 
                 sizes.append(original_size)
             
