@@ -1,0 +1,9 @@
+Class,Precision,Recall,F1 Score
+Background,0.0,0.0,0.0
+Clear Plastic Bottle,0.0,0.0,0.0
+Drink Can,0.0,0.0,0.0
+Drink Carton,0.0,0.0,0.0
+Glass Bottle,0.0,0.0,0.0
+Glass Jar,0.0,0.0,0.0
+Other Plastic Bottle,4.9524564183835184e-05,0.005847953216374269,9.821735500662968e-05
+Mean,4.9524564183835184e-05,0.005847953216374269,9.821735500662968e-05
