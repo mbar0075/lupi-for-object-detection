@@ -13,3 +13,4 @@ albumentations==2.0.2
 seaborn==0.13.2
 torchmetrics==1.6.1
 torch-summary==1.4.5
+grad_cam==1.5.4
