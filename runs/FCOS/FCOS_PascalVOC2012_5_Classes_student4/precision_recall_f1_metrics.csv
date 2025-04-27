@@ -1,0 +1,8 @@
+Class,Precision,Recall,F1 Score
+Background,0.0,0.0,0.0
+aeroplane,0.0,0.0,0.0
+bicycle,0.0,0.0,0.0
+bird,0.0,0.0,0.0
+boat,0.0,0.0,0.0
+bottle,0.0,0.0,0.0
+Mean,0.0,0.0,0.0
