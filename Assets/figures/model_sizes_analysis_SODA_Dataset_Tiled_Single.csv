@@ -1,0 +1,11 @@
+,Model Name,Configuration,Type,Size (MB),Parameters(M),Number of Classes,Number of Channels
+0,SODA_Dataset_Tiled_Single,Baseline,RETINANET,122.72,32.17,2,3
+1,SODA_Dataset_Tiled_Single,Student,RETINANET,122.72,32.17,2,3
+2,SODA_Dataset_Tiled_Single,Baseline,FCOS,122.32,32.06,2,3
+3,SODA_Dataset_Tiled_Single,Student,FCOS,122.32,32.06,2,3
+4,SODA_Dataset_Tiled_Single,Baseline,FASTERRCNN,157.54,41.3,2,3
+5,SODA_Dataset_Tiled_Single,Student,FASTERRCNN,157.54,41.3,2,3
+6,SODA_Dataset_Tiled_Single,Baseline,SSD,90.58,23.75,2,3
+7,SODA_Dataset_Tiled_Single,Student,SSD,90.58,23.75,2,3
+8,SODA_Dataset_Tiled_Single,Baseline,SSDLITE,8.42,2.21,2,3
+9,SODA_Dataset_Tiled_Single,Student,SSDLITE,8.42,2.21,2,3

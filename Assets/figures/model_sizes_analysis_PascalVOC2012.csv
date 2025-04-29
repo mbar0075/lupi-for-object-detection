@@ -1,0 +1,11 @@
+,Model Name,Configuration,Type,Size (MB),Parameters(M),Number of Classes,Number of Channels
+0,PascalVOC2012,Baseline,RETINANET,124.22,32.56,21,3
+1,PascalVOC2012,Student,RETINANET,124.22,32.56,21,3
+2,PascalVOC2012,Baseline,FCOS,122.48,32.11,21,3
+3,PascalVOC2012,Student,FCOS,122.48,32.11,21,3
+4,PascalVOC2012,Baseline,FASTERRCNN,157.92,41.4,21,3
+5,PascalVOC2012,Student,FASTERRCNN,157.92,41.4,21,3
+6,PascalVOC2012,Baseline,SSD,100.27,26.29,21,3
+7,PascalVOC2012,Student,SSD,100.27,26.29,21,3
+8,PascalVOC2012,Baseline,SSDLITE,9.42,2.47,21,3
+9,PascalVOC2012,Student,SSDLITE,9.42,2.47,21,3
