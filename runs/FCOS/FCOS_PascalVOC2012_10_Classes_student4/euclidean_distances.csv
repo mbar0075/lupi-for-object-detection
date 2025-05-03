@@ -1,0 +1,12 @@
+,Class,Mean Euclidean Distance@0.50,Mean Euclidean Distance@0.55,Mean Euclidean Distance@0.60,Mean Euclidean Distance@0.65,Mean Euclidean Distance@0.70,Mean Euclidean Distance@0.75,Mean Euclidean Distance@0.80,Mean Euclidean Distance@0.85,Mean Euclidean Distance@0.90,Mean Euclidean Distance@0.95
+0,Background,,,,,,,,,,
+1,person,,,,,,,,,,
+2,chair,,,,,,,,,,
+3,car,51.98348140410519,36.86077145208149,36.86077145208149,15.819573939120437,,,,,,
+4,dog,,,,,,,,,,
+5,bottle,,,,,,,,,,
+6,cat,18.76915728186491,18.76915728186491,8.014147302379929,8.014147302379929,8.014147302379929,8.014147302379929,8.014147302379929,6.394080285163346,,
+7,bird,,,,,,,,,,
+8,pottedplant,,,,,,,,,,
+9,sheep,,,,,,,,,,
+10,boat,,,,,,,,,,
