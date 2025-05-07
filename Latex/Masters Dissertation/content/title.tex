@@ -1,0 +1,44 @@
+\makeatletter
+\begin{titlepage}
+    \begin{flushleft}
+        \begin{minipage}[t][5.2cm][t]{\textwidth}
+            \begin{Huge}
+                \textbf{\@title}
+            \end{Huge}
+        \end{minipage}
+        %
+        \begin{minipage}[t][1.3cm][t]{\textwidth}
+            \begin{LARGE}
+                \textbf{\@author}
+            \end{LARGE}
+        \end{minipage}
+        %
+        \begin{minipage}[t][3.9cm][t]{\textwidth}
+            \begin{Large}
+                \begin{tabular}{@{}ll@{}}
+                    Supervisor:    & \@supervisor{}   \\
+                    \ifdefined\@cosupervisor{}%
+                    Co-Supervisor: & \@cosupervisor{} \\
+                    \fi%
+                \end{tabular}
+            \end{Large}
+        \end{minipage}
+        %
+        \begin{minipage}[t][9.5cm][t]{\textwidth}
+            \begin{Large}
+                \@titledate{}
+            \end{Large}
+        \end{minipage}
+        %
+        \begin{large}
+            \textit{Submitted in partial fulfilment of the requirements}
+            \newline
+            \textit{for the degree of \@degreename{}.}
+        \end{large}
+
+        \vfill
+
+        \includegraphics[width=9.4cm,keepaspectratio]{content/figures/ict_logo}
+    \end{flushleft}
+\end{titlepage}
+\makeatother

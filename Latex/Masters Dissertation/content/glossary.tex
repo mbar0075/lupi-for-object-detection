@@ -1,0 +1,171 @@
+\newglossaryentry{G}
+{
+    name=\(\mathcal{G}\),
+    description={Loop-free directed graph representing the network topology},
+    sort=G
+}
+\newglossaryentry{V}
+{
+    name=\(V\),
+    description={The set of nodes},
+    sort=V
+}
+\newglossaryentry{E}
+{
+    name=\(E\),
+    description={The set of links},
+    sort=E
+}
+
+
+\newglossaryentry{x}
+{
+    name=\(x\),
+    description={Input features (available at both training and testing stages)},
+    sort=x
+}
+
+\newglossaryentry{x_star}
+{
+    name=\(x^*\),
+    description={Privileged information (available only during training)},
+    sort=x_star
+}
+
+\newglossaryentry{y}
+{
+    name=\(y\),
+    description={Target output (ground truth labels)},
+    sort=y
+}
+
+\newglossaryentry{b}
+{
+    name=\(b\),
+    description={Bounding box containing coordinates: \(\{b_x, b_y, b_w, b_h\}\)},
+    sort=b
+}
+
+\newglossaryentry{l}
+{
+    name=\(l\),
+    description={Predicted class label for a single bounding box},
+    sort=l
+}
+
+\newglossaryentry{L}
+{
+    name=\(L\),
+    description={Finite set of class labels used in detection, specific to the problem being tackled},
+    sort=l_set
+}
+
+\newglossaryentry{W}
+{
+    name=\(W\),
+    description={Width of an image},
+    sort=w
+}
+
+\newglossaryentry{H}
+{
+    name=\(H\),
+    description={Height of an image},
+    sort=h
+}
+
+\newglossaryentry{O}
+{
+    name=\(O\),
+    description={Predicted set of bounding boxes and class labels for an image},
+    sort=o
+}
+
+\newglossaryentry{N}
+{
+    name=\(N\),
+    description={Number of predicted detections in a given image},
+    sort=n
+}
+
+\newglossaryentry{r_function}
+{
+    name=\(r(x)\),
+    description={Regression function, responsible for predicting the bounding box coordinates for all detected objects},
+    sort=r_function
+}
+
+\newglossaryentry{c_function}
+{
+    name=\(c(x)\),
+    description={Classification function, responsible for predicting the class labels for all detected objects in the image},
+    sort=c_function
+}
+
+\newglossaryentry{f_function}
+{
+    name=\(f(x)\),
+    description={Object detection prediction function that outputs bounding box coordinates and class labels for all detected objects},
+    sort=f_function
+}
+
+\newglossaryentry{teacher}
+{
+    name=\(\mathcal{T}\),
+    description={Teacher model trained with both standard input and privileged information},
+    sort=teacher
+}
+
+\newglossaryentry{student}
+{
+    name=\(\mathcal{S}\),
+    description={Student model trained with standard input features and soft labels from the teacher},
+    sort=student
+}
+
+\newglossaryentry{alpha}
+{
+    name=\(\alpha\),
+    description={Weighting factor controlling the impact of privileged information on the student's training},
+    sort=alpha
+}
+
+\newglossaryentry{D}
+{
+    name=\(D\),
+    description={Cosine distance loss measuring similarity between teacher and student latent representations},
+    sort=D
+}
+
+\newglossaryentry{student_loss}
+{
+    name=\(L_{\mathcal{S}}\),
+    description={Student loss incorporating both task-specific and distillation components},
+    sort=ls
+}
+
+\newglossaryentry{channels}
+{
+    name=\(\mathcal{N}\),
+    description={Total number of input channels, including both RGB and any privileged information channels},
+    sort=n_channels
+}
+
+\newglossaryentry{image}{
+    name=\(I\),
+    description={Original input image},
+    sort=I
+}
+
+\newglossaryentry{imin}{
+    name=\(I_{\text{min}}\),
+    description={Minimum pixel intensity across the dataset for specific input channel},
+    sort=Imin
+}
+
+\newglossaryentry{imax}{
+    name=\(I_{\text{max}}\),
+    description={Maximum pixel intensity across the dataset for specific input channel},
+    sort=Imax
+}
+
