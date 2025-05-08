@@ -28,6 +28,7 @@
 % Math symbols and access to the '\eqref' command.
 \RequirePackage{amsmath, amssymb, amsfonts}% For Rel Numbers added final two 03/05/2025
 \RequirePackage{booktabs, multirow} % For channels table 06/05/2025
+\RequirePackage{changepage} % For COCO object size 08/05/2025
 
 % For quotes
 \RequirePackage{epigraph}
