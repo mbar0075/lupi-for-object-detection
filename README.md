@@ -44,11 +44,11 @@ During training, the student model learns from the soft labels produced by the t
 
 <h3>UAV-Based Litter Detection: Within-Dataset Evaluation</h3>
 
----
+
 
 <h4>SODA: Small Objects at Different Altitudes (Low-Altitudes)</h4>
 
----
+
 <p align='center'>
   <img src="Assets/figures/SODA 01m Dataset (Single-label).png" alt="SODA 01m" width="100%" height="auto">
 </p>
@@ -75,7 +75,7 @@ During training, the student model learns from the soft labels produced by the t
 
 <h4>SODA: Small Objects at Different Altitudes (All-Altitudes)</h4>
 
----
+
 
 <p align='center'>
   <img src="Assets/figures/SODA Dataset (Tiled Binary Detection).png" alt="SODA 01m" width="100%" height="auto">
@@ -105,11 +105,11 @@ During training, the student model learns from the soft labels produced by the t
 
 <h3>UAV-Based Litter Detection: Across-Dataset Evaluation</h3>
 
----
+
 
 <h4>BDW: Bottle Detection in the Wild Using Low-Altitude Unmanned Aerial Vehicles</h4>
 
----
+
 <p align='center'>
   <img src="Assets/figures/BDW Dataset (Tested on Models Trained on SODA 01m Binary Detection).png" alt="SODA 01m" width="100%" height="auto">
 </p>
@@ -136,7 +136,7 @@ During training, the student model learns from the soft labels produced by the t
 
 <h4>UAVVaste: Vision‐Based Trash and Litter Detection in Low Altitude Aerial Images</h4>
 
----
+
 
 <p align='center'>
   <img src="Assets/figures/UAVVaste Dataset (Tested on Models Trained on SODA Tiled Binary Detection).png" alt="SODA 01m" width="100%" height="auto">
@@ -166,7 +166,7 @@ During training, the student model learns from the soft labels produced by the t
 
 <h3>Multi-label Object Detection: Pascal VOC 2012 Evaluation</h3>
 
----
+
 
 <p align='center'>
   <img src="Assets/figures/Pascal VOC 2012 Dataset (Multi-label Detection for 20 Classes) .png" alt="Pascal VOC" width="100%" height="auto">
