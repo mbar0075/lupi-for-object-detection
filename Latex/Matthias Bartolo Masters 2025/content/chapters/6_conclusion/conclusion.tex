@@ -1,0 +1,134 @@
+\graphicspath{{content/chapters/6_conclusion/figures/}}
+
+\chapter{Conclusion}%
+\label{chp:conclusion}
+\rule{\textwidth}{1pt} \\[1ex]
+
+\epigraph{\textit{``The end of one journey is simply the beginning of another.''}}{\textbf{-- A. A. Milne}}
+
+\section{Summary and Revisited Objectives}
+\label{sec:6_summary_objectives}
+% Missierna li Inti fis Smewwiet, Jitqaddes Ismek, Tigi Saltnatek, Ikun Dak li Trid Int fis Sema hekk da fl-art. Hobzna ta' Kuljum Ghatina ghal LLum, Ahfrilna dnubietna, Bhal Ma Nahfru lil Min Hu Hait Ghalina, La ddahalniex, fit tigrib izda ehlisna mid deni. Amen.
+
+Object detection remains a central problem within computer vision, supporting applications ranging from medical diagnostics \cite{application_med2} and autonomous systems \cite{application_automation2} to environmental monitoring \cite{application_environment2}, including the detection and classification of litter \cite{soda_dataset}. Recent advances have produced deeper and more complex models capable of identifying intricate visual patterns. However, improvements in detection accuracy are often accompanied by greater computational demands \cite{detr, rt-detr}, which raises concerns about scalability and energy efficiency, especially in resource-constrained settings.
+
+Despite the abundance of object detection architectures made available through the success of deep learning, the prevailing trend of increasing accuracy via added model complexity remains dominant. Yet, the object detection task itself poses unique challenges: it requires the identification of objects at varied scales, across cluttered or occluded backgrounds, often under conditions of class imbalance and sparse data distribution. These complexities call for alternative strategies that do not rely solely on enlarging model capacity.
+
+This dissertation explored the feasibility of adapting the Learning Using Privileged Information (\gls{lupi}) paradigm to object detection models, focusing on its potential for improving accuracy without increasing model size or computational overhead. Such an approach addresses a common trade-off seen in many state-of-the-art models \cite{yolov12, rt-detrv2}. Although \gls{lupi} has shown promise in other vision tasks, such as classification, its application to object detection has remained largely unexplored. This gap served as the foundation for the research question: can \gls{lupi} be effectively integrated into object detection models, and if so, how feasible and generalisable is such an approach?
+
+To meet objective \textbf{O1}, this work proposed both a theoretical framework and a practical approach for incorporating privileged information, specifically in the form of bounding box masks, into the object detection pipeline. This was achieved through a teacher–student network design, where the teacher model receives additional information during training and distils this knowledge to the student network, which is then used at inference.
+
+Objective \textbf{O2} was addressed by applying the proposed methodology across five widely used object detection architectures: Faster \gls{rcnn}, \gls{ssd}, RetinaNet, SSDLite, and \gls{fcos}. These architectures were chosen to cover both one-stage and two-stage detection paradigms, offering a comprehensive testbed for evaluating adaptability.
+
+To evaluate objective \textbf{O3}, extensive experiments were conducted using both within-dataset and cross-dataset evaluation. The \gls{soda} dataset served as the primary benchmark in the context of \gls{uav}-based litter detection, while \gls{bdw} and UAVVaste datasets were employed to assess generalisation performance. An additional optimal tiling experiment was also carried out as a prerequisite for achieving this objective, serving as a dataset pre-processing step to improve model robustness in cluttered or wide-area aerial imagery.
+
+Objective \textbf{O4} involved assessing the trade-off between detection accuracy and computational cost, as well as examining broader applicability. This was accomplished through further evaluation on the Pascal \gls{voc} 2012 dataset, a general-purpose detection benchmark. The findings showed that student models trained using the \gls{lupi}-based approach consistently outperformed their respective baseline counterparts, achieving higher accuracy while maintaining the same model size. Inference time remained constant across both student and baseline models, although the addition of the teacher network increased training time.
+
+Across all experiments, a total of 120 models were trained and evaluated. These included baseline and student variants across all selected architectures and datasets. Results confirmed that integrating LUPI into object detection workflows leads to performance improvements without inflating model complexity or inference latency. The baseline models remained unaltered in architecture and size, enabling a direct and fair comparison with the LUPI-trained student models. An ablation study on the distillation coefficient (\gls{alpha}) was also conducted to analyse its influence on learning stability and performance. Additionally, visual comparisons of detection results were presented to illustrate qualitative improvements and highlight the interoperability of the student models.
+
+In summary, all four objectives have been successfully met. The findings confirm that \gls{lupi} presents a viable approach for improving object detection performance in computationally constrained scenarios, without increasing model depth or parameter count, and without affecting inference time.
+
+\section{Applications}
+\label{sec:6_applications}
+% Sliema Ghalik Marija, Bil Grazzja Mimlija, Imbierek il Frott tal Guf Tieghek Gesu'. Qaddisa Marija Omm Alla, Itlob Ghalina il Midibin, Issa u fis Siegha tal mewt taghna. Amen
+
+Whilst the proposed methodology is broadly applicable and can be integrated into virtually any object detection framework, its strength lies in improving detection accuracy without adding to model size or extending inference time. This makes it highly suitable for deployment in contexts where lightweight models and efficient computation are essential. The following are notable examples where such qualities are especially beneficial:
+
+\begin{description}
+
+\item[UAV-based Litter Detection and Geolocation Systems]
+As demonstrated in this study, \gls{uav}-based litter detection systems rely on fast, accurate detection under tight hardware constraints. These applications demand real-time processing for the identification of small litter objects scattered across complex terrains. The proposed approach supports this need by increasing accuracy without imposing a heavier computational load. It aligns closely with initiatives like the \gls{awigs} Project \cite{awigs_project}, which depend on precise identification and localisation of litter in aerial imagery.
+
+\item[Video Surveillance Monitoring]
+Surveillance applications operate continuously and often on resource-constrained devices. Object detection must be responsive and consistent, especially in crowded scenes or poor lighting. The \gls{lupi}-based method offers more reliable detection outcomes while preserving computational efficiency, supporting long-term deployment in such systems \cite{surveillance}.
+
+\item[Traffic Monitoring Systems]
+Real-time traffic analysis systems must detect vehicles, pedestrians, and infrastructure under dynamic conditions, including varying light and weather. Incorporating the \gls{lupi} approach enables improved detection accuracy using compact models, making it suitable for embedded systems that cannot accommodate complex architectures \cite{traffic_monitoring}.
+
+\item[Underwater Exploration Systems]
+Tasks such as underwater archaeology or marine ecosystem monitoring are frequently limited by low visibility and constrained onboard processing. By improving accuracy without adding complexity, the proposed method is well-suited for object detection in underwater environments, where it can be implemented using compact models on submersible platforms \cite{underwater_archeology}.
+
+\end{description}
+
+\section{Limitations and Future Work}
+\label{sec:6_future_work}
+% Glorja Lil Missier, Lil Iben u Lil Ispirtu s-Santu, Kif kien mill-bidu, Issa u Dejjem ghal Dejjem. Amen.
+
+\subsection*{Limitations}
+
+While the proposed method offers clear benefits in detection performance, it also introduces specific challenges that may affect its usability in real-world scenarios. The points below highlight areas where practical constraints or methodological assumptions may limit adoption.
+
+\begin{description}
+
+\item[Training Overhead]
+A major drawback of the proposed approach lies in the additional training complexity introduced by the teacher–student setup. The need to train an auxiliary model, alongside processing and integrating privileged information, results in significantly longer training times. While this is acceptable for offline applications, it presents a barrier for time-sensitive or resource-limited deployments.
+
+\item[Privileged Information Availability]
+For many object detection tasks, privileged data is not naturally available. It often needs to be constructed or simulated, which can be time-consuming and labour-intensive. In some cases, such as with hyperspectral data, acquiring privileged information can be especially challenging. This limits the method’s practical applicability to scenarios where such data is either readily available or justifiable due to high-performance demands.
+
+\item[Design Constraints on Privileged Inputs]
+The effectiveness of privileged information largely depends on the creativity of the researcher. For datasets such as Pascal \gls{voc} and \gls{coco}, there is no predefined standard for how this supplementary data should be structured. Its design needs to be customised for the specific task, meaning the success of the approach often depends on the researcher’s ability to create relevant and contextually appropriate representations.
+
+\end{description}
+
+\subsection*{Future Work}
+
+Although the current implementation shows promise, several directions remain open for refinement and expansion. The following considerations outline how the method could be developed further to broaden its impact and application.
+
+\begin{description}
+
+\item[Exploring Advanced Architectures]
+Future studies could examine how this method performs when applied to more recent state-of-the-art object detection frameworks. Architectures such as \gls{yolo}v12 \cite{yolov12}, \gls{detr} \cite{detr}, and \gls{rtdetr} \cite{rt-detr} offer diverse design philosophies that challenge current assumptions about what types of knowledge can be transferred efficiently from teacher to student. Testing across these frameworks may highlight new strengths or surface weaknesses in the \gls{lupi} formulation.
+
+\item[Improved Encoding Strategies]
+Further refinement is needed in how privileged information is presented to the teacher. The bounding box mask used in this study is just one of many possible representations. Future work may explore semantic maps, attention hints, or other structured cues that better capture object relationships or contextual dependencies within the scene.
+
+\item[Expanded Knowledge Distillation Techniques]
+One promising direction is modifying how the teacher’s knowledge is transferred. Rather than focusing solely on intermediate feature maps, the distillation process could be expanded to influence directly both the classification and regression branches. This may improve the alignment between teacher guidance and student predictions, especially for harder-to-detect objects.
+
+\item[Architecture-specific Optimisation]
+The current study used consistent training parameters across all models to ensure uniformity. However, fine-tuning hyperparameters for each architecture could lead to further improvements in performance. This includes adjusting learning rate schedules, exploring different data augmentation techniques, and modifying loss function weights, which could bolster training results.
+
+\item[Extension to Segmentation Tasks]
+The method may also be adapted for dense prediction problems such as semantic or instance segmentation. Since segmentation requires high spatial precision \cite{maskrcnn}, incorporating privileged information could support the network in learning subtle spatial cues without increasing its inference footprint.
+
+\end{description}
+
+% Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla
+
+%--
+
+% \begin{itemize}
+%     \item UREC Ethics Form - Done
+%     \item Problem Definition - Done
+%     \item pages 110-120 maximum
+%     \item To check Daniel thesis - Done
+% \end{itemize}
+
+% Revisiting Aims and Objectives
+% limitations and Future Work
+% Conclusion Dont forget Github link in appendix B - Done
+
+% Conclusion
+% Revisting aims and objectives
+% limitation and future work (everything from future work goes here)
+% Conclusion
+
+% Limitations - In general
+% \begin{itemize}
+%     \item Training time takes a lot of time to train with learning using privileged information since there is the overhead of needing to train a teacher model , and that of adopting privileged information
+%     \item Privileged Information for some problems privileged information is not there and needs to be generated (General) which is costly for some applications
+%     \item Limitations in the generated privileged information, this is limited to the creativity to the researcher for Pascal VOC and COCO there may be other forms of privileged information which can be explored in the context of this problem
+    
+% \end{itemize}
+
+% Future Work - Future Research/Future Projects
+% \begin{itemize}
+%     \item Test out the method on state-of-the art object deteciton architectures such as YOLO11, exploring transformer based detectors such as DET, and RT-DETR etc
+%     \item Improvement in terms of encoding the bounding boxes for the teacher better and iinvestigating in better channels  , further exploration in privileged information generation within the context of object detection, new creative ideas
+%     \item Try distilling information at regression and at the classification stream, or applying other forms of distillation at the prediciton head of the network
+%     \item Testing out the proposed approach for the same models with optimised training parameters and even performing hyperparameter tuning, for each specific detection model training parameters
+%     \item Extending this method for tackling the problem of Segmentation
+% \end{itemize}
+
+%--

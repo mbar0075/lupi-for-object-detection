@@ -1,0 +1,160 @@
+\chapter{Introduction}%
+\label{chp:introduction}
+\rule{\textwidth}{1pt} \\[1ex]
+
+\epigraph{\textit{``The real voyage of discovery consists not in seeking new landscapes, but in having new eyes.''}}{\textbf{-- Marcel Proust}}
+
+\section{Introduction}
+\label{sec:1_introduction}
+% Introduction - Done
+% \begin{itemize}
+%     \item Beyond AI litter, plastics and statistics sdg, nso, etc. . .
+%     \item Quite a tangible problem
+%     \item Environmental and Socio economic impact
+% \end{itemize}
+
+% Introduction object detection
+% investigating other learning paradigm
+% dependent on large datasets
+% integrating of privileged information
+% motivation - hone in on litter detection
+
+% Litter pollution constitutes a deeply entrenched environmental concern, intensified by the pace of urban expansion, demographic pressures, mass tourism, and the ineffective enforcement of waste disposal policies. Although several global frameworks have been introduced to discourage excessive waste and to promote recycling practices \cite{sdgs, waste_iniative}, substantive gains remain elusive. The ongoing presence of litter undermines ecological resilience and diminishes urban habitability while simultaneously introducing profound environmental, fiscal, and health-related challenges. Its effects are widespread, affecting both terrestrial and marine environments, placing sustained pressure on public infrastructure, and accelerating the decline of biodiversity. Central to this crisis is the continuous escalation in waste production, which correlates strongly with economic growth and the relentless extension of urban environments. These developments have led to a pronounced surge in global waste output. In 2022, the European Union reported an average municipal waste generation of 513 kilograms per individual \cite{eurostat2024}, a figure that excludes uncollected refuse or illegal dumping. Current forecasts anticipate an increase in global solid waste to 2.6 billion tonnes annually by 2030, up from 2.1 billion \cite{kaza2018waste}, placing considerable strain on already overburdened waste management infrastructures.
+
+% One of the most insidious aspects of this crisis lies in the proliferation of plastic waste, particularly microplastics, which originate from the fragmentation of larger debris. These particles have been identified across various environments, including soil, freshwater bodies, and even food supplies \cite{plastopol}. Their infiltration into ecological systems and human consumption pathways raises urgent concerns regarding their cumulative and potentially irreversible effects. Wildlife remains acutely at risk: ingestion of plastic fragments, as well as entanglement in discarded materials, can result in suffocation, digestive obstruction, toxic exposure, and ultimately, mortality \cite{plastopol}. Such consequences disrupt food chains, compromise reproductive viability, and threaten broader ecosystem equilibrium.
+
+% These trends highlight the shortcomings of existing waste management approaches, which fail to address the scale and ecological consequences of litter. Given the limitations of traditional methods, the need for more sophisticated, technology-driven solutions is evident. Emerging technologies, such as \gls{ai}, and advanced monitoring systems, offer significant potential for improving detection, classification, and management of waste. 
+
+Object detection is considered a foundational problem within the field of \gls{cv}, central to numerous applications ranging from medical analysis \cite{application_med1, application_med2} and autonomous systems \cite{application_automation1, application_automation2} to the monitoring of environmental degradation \cite{application_environment1, application_environment2}, including the identification and classification of litter \cite{taco2020, zerowaste}. In recent years, the field has seen a marked expansion in computational depth, with models capable of detecting increasingly complex visual patterns across several domains. Nevertheless, the issue of achieving consistently high detection accuracy persists. Many high-performing models are heavily dependent on intricate architectures \cite{detr, rt-detr} or extensive labelled datasets \cite{od_survey_problems}, both of which introduce significant practical constraints. Deep models typically require prolonged training cycles and considerable computational power, while large-scale datasets necessitate laborious annotation procedures that are both costly and time-consuming \cite{survey_od_problem}. In contexts where labelled data is scarce or prohibitively expensive, such as the detection of environmental waste across irregular natural terrain or within densely populated urban settings, the limitations of current methods become especially pronounced \cite{taco2020, soda_dataset}. Furthermore, the deployment of such models in practical scenarios often demands rapid inference and reliable performance under limited computational resources--requirements that many conventional approaches are ill-equipped to satisfy \cite{od_survey_problems}.
+Given these challenges, alternative learning strategies that can improve performance without imposing additional demands on model complexity or dataset scale have become increasingly relevant. One such strategy is \gls{lupi}, a training paradigm in which supplementary information is made available exclusively during the learning phase but not during inference \cite{lupi}. The privileged data may take various forms: detailed texture maps, depth cues, high-resolution images, or domain-specific expert input \cite{lupi, lupi_classification, lupiv3}. Crucially, the model learns to internalise these richer signals during training, thereby producing a more refined feature representation that ultimately bolsters its predictive capabilities under normal test-time conditions. By improving generalisation and accelerating convergence, \gls{lupi} provides an opportunity to compensate for sparse annotations or imbalanced datasets without increasing inference time or architectural depth.
+This becomes especially significant in environmental monitoring contexts, where object detection is applied to dynamic, cluttered, and often unpredictable scenes \cite{soda_dataset, bdwdataset}. Automated litter detection, for instance, requires the localisation and classification of debris in varied lighting, terrain, altitude, and background conditions \cite{soda_dataset, taco2020}. Models must learn to distinguish waste from non-waste in a manner that is both accurate and efficient, particularly where rapid deployment and scalability are necessary. In such scenarios, the integration of privileged information may offer substantial improvements.
+
+\section{Motivation}
+\label{sec:motivation}
+% Motivation:
+% \begin{itemize}
+%     \item where does AI enter? litter detection technology
+%     \item challenges of litter detection accuracy, therefore research problem
+%     \item limitation in current litter detection methods, need for improved accuracy
+%     \item awareness AI on computation, LUPI method improved accuracy without increasing computational demand
+% \end{itemize}
+
+% Within this broader context, \gls{ai} systems that incorporate litter detection mechanisms have garnered increasing attention. While the field is not new and has witnessed significant progress \cite{taco2020, zerowaste, plastopol}, the task of accurately identifying and classifying waste in diverse visual environments remains unresolved. The challenges of this problem are substantial, as litter appears in varied forms, often blending into visually dense environments and frequently concealed by vegetation, soil, or uneven terrain. These factors place substantial demands on detection models in terms of generalisability and precision.
+% Furthermore, a parallel strand of this research explores the integration of these models with aerial imagery \cite{uavvaste, soda_dataset, detect_litter}, through the use of unmanned aerial vehicles, to facilitate broader monitoring and spatial analysis of litter distribution. While the approach holds clear potential, it also introduces several technical complexities. As flight altitude increases, the visibility of waste diminishes, reducing litter to minute visual traces and transforming the task into one of small object detection, a notoriously difficult sub-problem within \gls{cv}. Under these circumstances, even state-of-the-art object detection models exhibit reduced performance \cite{small_detection_survey, small_detection}.
+% Compounding these technical concerns is the question of sustainability. Improving model accuracy often entails the use of deeper and more computationally intensive architectures \cite{detr}. While this may improve detection capabilities, it also leads to significantly higher energy consumption in the long run. In doing so, one risks addressing an environmental issue through solutions that contribute to another. The general objective, therefore, must be twofold: to achieve precise and scalable litter detection while ensuring the systems deployed do not impose further environmental costs.
+
+Within the broader effort to improve object detection performance in challenging visual contexts, automated systems designed for the identification of environmental waste have become as a growing area of interest within applicable \gls{ai} technology. Although several datasets and models have emerged to address this task \cite{taco2020, zerowaste, plastopol}, consistently accurate detection remains elusive. Litter manifests in a wide range of shapes, sizes, materials, and colours. Often, it appears partially obscured or embedded within complex backgrounds. These conditions demand not only high spatial sensitivity but also strong contextual reasoning, both of which are difficult to achieve with conventional architectures trained on limited or imbalanced data.
+Notably, an increasingly explored direction involves the use of aerial imagery, captured via unmanned aerial vehicles, to expand the scale and coverage of litter detection systems \cite{uavvaste, soda_dataset, detect_litter}. While promising in terms of spatial reach and operational efficiency, aerial viewpoints introduce their own set of challenges. As the altitude of image capture increases, litter would start to appear at much smaller scales, becoming less distinct and occupying only a few pixels in high-resolution images. This reduction transforms the detection problem into one of identifying small objects, which remains an ongoing challenge in computer vision due to low signal-to-noise ratios and ambiguous boundaries \cite{small_detection_survey, small_detection}.
+Alongside the technical limitations faced by current detection systems lies a pressing concern regarding environmental sustainability \cite{sdgs}. Improvements in accuracy are frequently achieved by expanding model depth or increasing computational complexity \cite{detr, rt-detr}, both of which carry significant energy demands. While such strategies may yield stronger performance on benchmark tasks, their long-term viability becomes questionable when deployed at scale, particularly in scenarios where energy efficiency is a priority \cite{pilz2024increasedcomputeefficiencydiffusion}. As such, there is a clear need for approaches that can maintain or improve predictive performance without exacerbating computational costs. 
+% Learning frameworks that incorporate privileged information exclusively during training offer a promising avenue here. By enriching the learning process with supplementary cues unavailable at test time, these methods can support better generalisation and efficiency, all without inflating inference-time requirements.
+
+
+\section{Problem Definition}
+\label{sec:problem_definition}
+% Problem definition:
+% \begin{itemize}
+%     \item Can LUPI be integrated in object detection to improve performance without increasing the inference time or computation
+%     \item How does approach perform across different models and scenarios
+% \end{itemize}
+% Motivation
+% \begin{itemize}
+%     \item Improvement in object detection performance
+%     \item Testing theory a great teacher is better than a thousand hours of studying
+%     \item Improvement in Litter detection, and small object deteciton in variable backgrounds
+% \end{itemize}
+
+% In light of the aforementioned problem, this study aims to address the challenge of improving the accuracy of both general object detection and litter detection without significantly increasing the computational costs associated with such systems. Traditionally, enhancing detection accuracy has been linked to the use of more complex and computationally intensive architectures. However, this approach often leads to increased energy consumption, which can counteract the environmental benefits of litter detection. It is within this context that this dissertation proposes an alternative approach by investigating the use of the \gls{lupi} paradigm for object detection. The \gls{lupi} paradigm allows for the integration of additional privileged information during the training process, thereby bolstering model robustness and accuracy without requiring modifications to the model's size or architecture. This approach, which has not yet been explored in the context of object detection, offers a unique opportunity to explore how supplementary information can be leveraged to improve object detection models. In this regard, a series of experiments need to be conducted in order to evaluate the feasibility and generalisation capabilities of this method. These experiments must evaluate the efficacy of this method across a range of object detection architectures, as well as its applicability to established litter detection datasets, accounting for diverse environmental contexts and backgrounds. The ultimate objective is to ascertain whether this novel approach offers a viable solution to the escalating issue of litter pollution while avoiding the imposition of unsustainable computational costs.
+
+In light of the identified problem, this study seeks to improve the accuracy of both general object detection and litter detection, without significantly increasing the computational costs associated with such systems. Recent advancements in the field often associate improved accuracy with increasingly complex architectures. However, such models typically incur higher energy consumption, which may undermine the environmental objectives of litter detection systems.
+To address this, the dissertation explores the potential of the \gls{lupi} paradigm within object detection. This training framework introduces auxiliary data available during learning, which may guide the model more effectively without requiring any modification to its architecture or parameters during inference. The potential of \gls{lupi} resides in its ability to bolster decision-making by incorporating supplementary information during the training phase while maintaining an efficient and streamlined inference process.
+Although \gls{lupi} has been applied in other contexts, its relevance to object detection has yet to be thoroughly examined. This work proposes its application not only in the context of general object detection but also in the specific context of litter detection from aerial imagery. The latter remains a complex and largely unresolved problem due to the visual ambiguity, occlusion, and scale variation of litter objects in natural environments.
+Furthermore, to evaluate the proposed method, a set of experiments will be conducted across several object detection architectures. These will assess the performance of the proposed approach on established datasets that reflect varied and realistic environmental conditions. The ultimate aim is to determine whether integrating \gls{lupi} in object detection pipelines would offer improved results without requiring the adoption of computationally expensive architectures, which increase inference time.
+
+\section{Aims and Objectives}
+\label{sec:aims}
+% Aims and Objectives
+% \begin{itemize}
+%     \item propose a novel methodology to object deteciton which uses LUPI paradigm previously  unseen in this extent
+%     \item test this methodology across a sequence of renowned object detection models
+%     \item test this in the context of litter detection, across several litter datasets
+%     \item cross and within dataset evaluation across several litter detection datasets
+%     \item To experiment the potential of generalisation beyond this problem: Pascal VOC evaluation
+% \end{itemize}
+
+This study aims to explore the potential of integrating the \gls{lupi} paradigm with object detection models to improve the accuracy and efficiency of litter detection in various environmental contexts. The primary goal is to develop models that could identify and classify litter in diverse settings while minimising computational costs. This study aims to achieve this by leveraging additional privileged information during the training phase to improve model robustness without increasing the complexity of the detection architecture. To meet these objectives, the research will focus on the following aims:
+
+\begin{enumerate}[label=\textbf{Objective (O\arabic*)}, leftmargin=*]
+    \item Investigate the feasibility of applying the LUPI paradigm to object detection models in the context of litter detection, where its use remains largely unexplored.
+    
+    \item Evaluate this methodology across a variety of renowned object detection architectures to determine its adaptability and performance.
+    
+    \item Test the proposed approach on widely recognised litter detection datasets, examining both within-dataset and cross-dataset evaluation.
+    
+    \item Assess the trade-off between detection accuracy and computational cost, and explore the method’s broader applicability through testing on other detection datasets.
+\end{enumerate}
+
+\section{Main Contributions}
+\label{sec:contributions}
+% Contributions (see Dr. Seychell PHD) + Publications
+% \begin{itemize}
+%     \item Novel methodology using LUPI and object detection, implemented and evaluated across 5 renowned object detection models
+%     \item Improved performance results in litter detection for the proposed methodology, in both normal and smaller litter detection across different backgrounds
+%     \item Greater improved performance for localization then with multi-label
+%     \item Improvement in performance, despite equating no change in detection model architectures, thus no increase in model parameter size, and inference time, however, training time increases with the need of training with a teacher model
+%     \item Performance shows improvement both within and across several litter datasets and across at small litter detection and at ranging altitudes with the use of tiling
+%     \item Improvement in multi-label Pascal VOC deteciton with 20 classes, however, reduced performance in terms of increase in the number of classes
+%     \item contributions which bridge litter detection to a more generalised problem
+%     % \item To keep in mind COCO, no improvement was observed, large number of classes, and due to object occlusions by other objects in terms of privileged information generation
+% \end{itemize}
+
+\begin{description}
+    \item [Introduction of LUPI to Object Detection]  
+    This dissertation shows that integrating the \gls{lupi} paradigm into object detection, specifically for litter detection, improves performance by incorporating privileged information. This methodology, applied across five prominent object detection models, does so without altering model architecture or increasing inference time.
+
+    \item [Improved Litter Detection and Localisation]  
+    This research establishes that the application of LUPI significantly elevates litter detection accuracy, particularly in the detection of smaller objects. Notably, more substantial gains are observed in binary detection (object localisation) compared to multi-label detection, although advancements are evident in both areas.
+
+    \item [Model-Agnostic Performance Improvement]  
+    The proposed approach is shown to be model-agnostic, achieving strong performance without increasing model parameters or inference time. Although training time increases because of the additional requirement to train the teacher model, computational efficiency during deployment remains unaffected.
+
+    \item [Generalisation Across Litter Detection Datasets]  
+    This dissertation also demonstrates that the proposed methodology generalises effectively both within the SODA dataset \cite{soda_dataset} and across other litter detection datasets, including BDW \cite{bdwdataset} and UAVVaste \cite{uavvaste}. Extensive experimentation underscores the trained models' improved ability to detect small and partially occluded objects when applied to different contexts beyond those they were trained.
+
+    \item [Generalisation Across Object Detection Datasets]  
+    Finally, this dissertation highlights its contribution beyond litter detection, particularly in the broader context of object detection. The proposed methodology demonstrated improved multi-label detection performance when evaluated on the Pascal VOC 2012 dataset \cite{pascal-voc-2012}, which includes all 20 object classes. However, performance tends to decline as the number of classes increases.
+
+
+\end{description}
+
+\section{Publications}
+\label{sec:publications}
+
+The key milestones of this study, including the work conducted in the area of object detection, were documented in papers and published in internationally recognised, peer-reviewed conferences and journals.
+
+--None till now--
+
+\section{Dissertation Overview}
+\label{sec:structure}
+
+The dissertation is structured as follows:
+
+\begin{enumerate}[label=\textbf{Chapter \arabic*}, leftmargin=*, start=2]
+    % \item establishes the foundational concepts of object detection and examines key detection models. It also provides an in-depth exploration of learning using privileged information and knowledge distillation within the context of computer vision, culminating in a discussion of the challenges associated with litter detection.
+    
+    % \item reviews the current literature on litter detection, focusing on existing approaches, datasets, and models. It discusses general litter detection methodologies and explores \gls{uav}-based deep learning techniques used in this field.
+
+    \item establishes the foundational concepts of object detection and examines key detection models. It provides an in-depth exploration of learning using privileged information, followed by a review of literature on litter detection approaches. The chapter concludes with a review of the application of learning using privileged information to computer vision.
+    
+    \item details the study's methodology, including the problem definition, theoretical framework, and the proposed system architecture. Additionally, it discusses the implementation of privileged information, knowledge distillation, and the experimental setup, including model selection, data preprocessing techniques, training parameters, and the performance metrics used for evaluation.
+    
+    \item evaluates the proposed system through a series of experiments on the SODA, BDW, UAVVaste, and Pascal VOC 2012 datasets, including a preliminary optimal tiling experiment. It compares the performance of various models across these experiments, discussing the findings and their implications, along with comparing their visual predictions and interpretability.
+    
+    % \item outlines the study's limitations and suggests areas for further research, including extensions to the methodology and applications in other domains.
+
+    \item concludes the dissertation by summarising the aims and objectives, highlighting potential applications of the study, and discussing its limitations and possible future directions for further research.
+\end{enumerate}
+
+\section{Conclusion}
+\label{sec:conclusion_intro}
+
+This chapter introduced the motivation behind the study, offering a summary of the research undertaken and the defined problem. It then presented the aims and objectives of the dissertation, followed by an overview of the key contributions and a brief outline of the chapters that follow.
