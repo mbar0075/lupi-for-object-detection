@@ -107,13 +107,13 @@ L_{\mathcal{S}} = (1 - \alpha) \cdot L(f_{\text{student}}(x, y)) + \alpha \cdot 
 \end{equation}
 where \( L(f_{\text{student}}(x, y)) \), represents the standard supervised loss for the student network, which encompasses both regression and classification tasks. The term \( D(f_i^{(t)}, f_i^{(s)}) \) denotes the distillation loss, measuring the difference between the teacher and student networks' internal representations at the \( i \)-th layer. The scalar parameter \( \alpha \in [0, 1] \) controls the balance between standard supervision and distillation. Specifically, \gls{alpha} determines how much the student network relies on the teacher’s internal representation versus learning from labelled data. When \( \alpha = 0 \), the student learns solely from labelled data, while \( \alpha = 1 \) implies that the student depends entirely on the teacher's internal representations for guidance.
 
-To compute the dissimilarity between the latent feature representations of the student and teacher (\gls{D}), the Cosine distance is employed:
+To compute the dissimilarity between the latent feature representations of the student and teacher (\gls{D}), the cosine distance is employed:
 \begin{equation} \label{eq:cosine_distance}
-D(a, b) = 1 - \frac{\sum_{i=1}^{d} a_i b_i}{\sqrt{\sum_{i=1}^{d} a_i^2} \, \sqrt{\sum_{i=1}^{d} b_i^2}}.
+D(f_i^{(t)}, f_i^{(s)}) = 1 - \frac{\sum_{j=1}^{d} f_{i,j}^{(t)} f_{i,j}^{(s)}}{\sqrt{\sum_{j=1}^{d} (f_{i,j}^{(t)})^2} \, \sqrt{\sum_{j=1}^{d} (f_{i,j}^{(s)})^2}}.
 \end{equation}
-Here, \( a \) and \( b \) are the respective feature vectors, and the distance quantifies the angular divergence between them. By enforcing representational alignment at the shared layer \( l \), the student benefits from the teacher's access to privileged information during training, despite having access only to \( x \) during inference.
+Here, \( f_i^{(t)} \) and \( f_i^{(s)} \) represent the feature vectors of the teacher and student networks at layer \( i \), each of length \( d \), with \( j \) indexing the components of the vectors. The cosine distance captures the angular difference between these representations. By encouraging alignment at a shared intermediate layer \( l \), the student can benefit from the privileged information available during training, even though only the input \( x \) is accessible at inference.
 
-Given this general formulation of how \gls{lupi} can be integrated within the context of object detection, the next step, in alignment with the stated objectives, is to delve into the nature and role of the privileged information itself.
+Given this general formulation of how we integrated \gls{lupi} within the context of object detection, the next step, in alignment with the stated objectives, is to delve into the nature and role of the privileged information itself.
 
 %  This setup naturally leads to a teacher--student framework. Within this framework, the teacher model undertakes both regression and classification tasks, and can be defined as follows:
 % \begin{equation} \label{eq:teacher_network_reg}

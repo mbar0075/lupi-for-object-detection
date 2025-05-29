@@ -75,7 +75,7 @@ To address this, the dissertation explores the potential of the \gls{lupi} parad
 
 Although \gls{lupi} has been applied in other contexts, its relevance to object detection has yet to be thoroughly examined. This work proposes its application not only in the context of general object detection but also in the specific context of litter detection from aerial imagery. The latter remains a complex and largely unresolved problem due to the visual ambiguity, occlusion, and scale variation of litter objects in natural environments.
 
-Furthermore, to evaluate the proposed method, a set of experiments will be conducted across several object detection architectures. These will assess the performance of the proposed approach on established datasets that reflect varied and realistic environmental conditions. The ultimate aim is to determine whether integrating \gls{lupi} in object detection pipelines would offer improved results without requiring the adoption of computationally expensive architectures, which increase inference time.
+Furthermore, to evaluate the proposed method, a set of experiments will be conducted across several object detection architectures. These will assess the performance of the proposed approach on established datasets that reflect varied and realistic environmental conditions. The ultimate aim is, first, to derive a rigorous methodology for integrating privileged information into object detection models; and second, to determine whether incorporating \gls{lupi} within object detection pipelines can lead to improved performance without necessitating the use of computationally expensive architectures that increase inference time.
 
 \section{Aims and Objectives}
 \label{sec:aims}
@@ -91,7 +91,7 @@ Furthermore, to evaluate the proposed method, a set of experiments will be condu
 This study aims to explore the potential of integrating the \gls{lupi} paradigm with object detection models to improve the accuracy and efficiency of both general and litter detection in various environmental contexts. The primary goal is to develop models that could identify and classify objects in diverse settings while minimising computational costs. This study aims to achieve this by leveraging additional privileged information during the training phase to improve model robustness without increasing the complexity of the detection architecture. To meet these objectives, the research will focus on the following aims:
 
 \begin{enumerate}[label=\textbf{Objective (O\arabic*)}, leftmargin=*]
-    \item Investigate the feasibility of applying the LUPI paradigm to object detection models in the context of litter detection, where its use remains largely unexplored.
+    \item Derive a rigorous methodology for integrating the LUPI paradigm into object detection models in the context of litter detection, where its use remains largely unexplored.
     
     \item Evaluate this methodology across a variety of renowned object detection architectures to determine its adaptability and performance.
     
@@ -116,7 +116,7 @@ This study aims to explore the potential of integrating the \gls{lupi} paradigm 
 
 \begin{description}
     \item [Introduction of LUPI to Object Detection]  
-    This dissertation shows that integrating the \gls{lupi} paradigm into object detection, specifically for litter detection, improves performance by incorporating privileged information. This methodology, applied across five prominent object detection models, does so without altering model architecture or increasing inference time.
+    This dissertation demonstrates that integrating the \gls{lupi} paradigm into object detection, particularly for litter detection, enhances performance. This methodology, applied across five prominent object detection models, does so without altering model architecture or increasing inference time.
 
     \item [Improved Litter Detection and Localisation]  
     This research establishes that the application of \gls{lupi} significantly elevates litter detection accuracy, particularly in the detection of smaller objects. Notably, more substantial gains are observed in binary detection (object localisation) compared to multi-label detection, although advancements are evident in both areas.

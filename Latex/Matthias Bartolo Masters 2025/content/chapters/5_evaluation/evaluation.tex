@@ -164,7 +164,7 @@ To examine the impact of these changes on training duration, Figure~\ref{fig:sod
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{training_times_soda_01m_dataset_binary_detection.png}
+    \includegraphics[width=1\textwidth]{training_times_soda_01m_dataset_binary_detection.jpg}
     \caption{Comparison of model training times on the \gls{soda} dataset at a 1-metre altitude for binary litter detection.}
     \label{fig:soda01m_training_time}
 \end{figure}
@@ -253,7 +253,7 @@ The training durations for all models employed in this experiment are presented 
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_binary_detection.png}
+    \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_binary_detection.jpg}
     \caption{Comparison of model training times on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for binary litter detection.}
     \label{fig:soda_tiled_single_training_time}
 \end{figure}
@@ -316,7 +316,7 @@ Having addressed multi-label detection, a class-specific analysis of detection a
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{map_all_classes_soda_multi.png}
+    \includegraphics[width=1\textwidth]{map_all_classes_soda_multi.jpg}
     \caption{Comparison between the baseline and best-performing student models based on mean average precision by class on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection.}
     \label{fig:soda_tiled_multi_per_class}
 \end{figure}
@@ -371,7 +371,7 @@ The training durations for all models used in this experiment are shown in Figur
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_multi_label_detection.png}
+    \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_multi_label_detection.jpg}
     \caption{Comparison of model training times on 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection.}
     \label{fig:soda_tiled_multi_training_time}
 \end{figure}
@@ -462,11 +462,11 @@ The results of this experiment, comparing the baseline model with the best stude
 Unfortunately, the Faster \gls{rcnn} student architecture performed worse than its baseline counterpart, while \gls{ssd} and SSDLite models showed the largest improvements. Interestingly, the architectures using the ResNet-\gls{fpn} architecture performed relatively worse than the others, in contrast to the litter detection experiments. This can be attributed to the nature of the data, as Pascal \gls{voc} contains images at relatively smaller resolutions. This, combined with the initialisation of pre-trained weights from models trained on the \gls{coco} dataset (which contains images of higher resolution), may have contributed to this performance discrepancy. On the other hand, \gls{ssd} and SSDLite take low-resolution images as input, which makes them more suited for this type of data and likely explains their superior performance. In addition to this, Faster \gls{rcnn} showed limited improvement, which may be due to the teacher model providing additional region proposals to reduce false positives, a strategy believed to improve detection accuracy.
 
 Upon reviewing the class-specific metrics for each model, as detailed in Figure \ref{fig:pascal_voc_per_class}, a notable observation becomes apparent.
- Despite the pronounced class imbalance in favour of the \textit{Person} category, which is by far the most represented in the dataset (see Figure \ref{fig:class_distribution_pascal_voc}), the average precision (\gls{ap}) scores for this class were comparatively low. This stands in contrast to categories with fewer examples, such as \textit{Aeroplane}, \textit{Bus}, \textit{Train}, and \textit{TV Monitor}, which frequently yielded higher scores in this evaluation.
+ Despite the pronounced class imbalance in favour of the \textit{Person} category, which is by far the most represented in the dataset (see Figure \ref{fig:class_distribution_pascal_voc}), the average precision scores for this class were comparatively low. This stands in contrast to categories with fewer examples, such as \textit{Aeroplane}, \textit{Bus}, \textit{Train}, and \textit{TV Monitor}, which frequently yielded higher scores in this evaluation.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=1\textwidth]{map_all_classes_pascal_voc_no_text.png}
+    \includegraphics[width=1\textwidth]{map_all_classes_pascal_voc_no_text.jpg}
     \caption{Comparison between the baseline and best-performing student models based on mean average precision by class on the Pascal VOC 2012 dataset for multi-label detection of 20 object classes.}
     \label{fig:pascal_voc_per_class}
 \end{figure}
@@ -523,7 +523,7 @@ The training times for all models used in this experiment are presented in Figur
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{training_times_pascal_voc_2012_dataset_multi_label_detection_for_20_classes.png}
+    \includegraphics[width=1\textwidth]{training_times_pascal_voc_2012_dataset_multi_label_detection_for_20_classes.jpg}
     \caption{Comparison of model training times on the Pascal VOC 2012 dataset for multi-label detection of 20 object classes.}
     \label{fig:pascal_voc_training_time}
 \end{figure}

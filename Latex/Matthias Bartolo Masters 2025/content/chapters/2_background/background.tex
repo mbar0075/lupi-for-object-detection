@@ -87,7 +87,7 @@ In efforts to address the object detection problem and its associated challenges
 Early methods for object detection were heavily reliant on creative heuristics and the efficiency of basic computational techniques. Simple strategies, such as background subtraction \cite{garcia2020background}, sought to identify objects by detecting fluctuations in pixel intensity across an image. As research progressed, more sophisticated feature-driven approaches emerged. One notable example was the development of Haar cascade classifiers \cite{vinh2020real, javed2022human}, designed particularly for face detection. These classifiers exploited Haar-like features, which captured essential edge and line structures within images.
 Another prominent method introduced at the time was the \gls{hog} descriptor \cite{dalal2005histograms, bhattarai2023histogram}, which was widely applied to tasks such as pedestrian detection. \gls{hog} focused on the distribution of local gradient directions, capturing the shape and appearance of objects through structured edge information.
 
-Alongside these developments, several feature extraction techniques became foundational. The \gls{sift} \cite{lowe2004distinctive} identified distinctive keypoints within an image by analysing areas of local variation through eigenvalue computations, enabling reliable feature matching across changes in scale and rotation. The \gls{surf} algorithm \cite{bay2006surf} built upon these ideas, offering a faster alternative while maintaining reliable performance under transformations such as viewpoint and illumination changes.
+Alongside these developments, several feature extraction techniques became foundational. The \gls{sift} \cite{lowe2004distinctive} algorithm identifies distinctive keypoints within an image by detecting local extrema in a scale-space constructed from \gls{dog}, allowing for reliable feature matching under variations in scale and rotation. The \gls{surf} algorithm \cite{bay2006surf} built upon these ideas, offering a faster alternative while maintaining reliable performance under transformations such as viewpoint and illumination changes.
 Later, the \gls{orb} algorithm \cite{rublee2011orb} emerged, combining the efficiency of the \gls{fast} keypoint detector with the compactness of the \gls{brief} descriptor. \gls{orb} provided a computationally inexpensive, rotation-invariant solution, serving as a competitive alternative to \gls{sift} and \gls{surf} in environments requiring faster performance.
 
 \subsubsection{Machine Learning Approaches}
@@ -117,11 +117,11 @@ Further adaptations have continued to emerge. For example, \gls{yolo}-NAS \cite{
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\linewidth]{yolov1.png}
-    \caption{YOLOv1 architecture. (Source: \cite{yolo})}
+    \caption{YOLOv1 pipeline. (Source: \cite{yolo})}
     \label{fig:yolov1}
 \end{figure}
 
-In parallel with developments in \gls{yolo}, other notable one-stage detectors have emerged. The \gls{ssd} Detector \cite{ssd}, introduced in 2016, employed default bounding boxes with a variety of aspect ratios and multi-scale feature maps, enabling it to handle objects of varying sizes. RetinaNet \cite{retinanet} addressed the issue of class imbalance through the application of Focal Loss, incorporating a ResNet backbone along with a \gls{fpn} \cite{fpn} for enhanced multi-scale feature extraction. The \gls{fcos} model  \cite{fcos} adopted a fully convolutional architecture, directly predicting centre points and bounding boxes without relying on region proposals.
+In parallel with developments in \gls{yolo}, other notable one-stage detectors have emerged. The \gls{ssd} Detector \cite{ssd}, introduced in 2016, employed default bounding boxes with a variety of aspect ratios and multi-scale feature maps, enabling it to handle objects of varying sizes. RetinaNet \cite{retinanet} addressed the issue of class imbalance through the application of \textit{Focal Loss}, incorporating a ResNet backbone along with a \gls{fpn} \cite{fpn} for enhanced multi-scale feature extraction. The \gls{fcos} model  \cite{fcos} adopted a fully convolutional architecture, directly predicting centre points and bounding boxes without relying on region proposals.
 
 \subsubsection{Two Stage Detectors}
 \label{subsubsec:2_twostage}
@@ -132,11 +132,11 @@ The \gls{rcnn} family was instrumental in establishing the two-stage framework. 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\linewidth]{fasterrcnn.png}
-    \caption{Faster R-CNN architecture. (Source: \cite{fasterrcnn})}
+    \caption{Faster R-CNN pipeline. (Source: \cite{fasterrcnn})}
     \label{fig:fasterrcnn}
 \end{figure}
 
-Complementing these technological advancements, feature pyramid networks \cite{fpn} improved detection across all network layers by constructing a feature pyramid for improved multi-scale detection. This pyramid included bottom-up pathways that captured semantic information and top-down pathways that refined these maps by merging high-level features with spatially rich information. \gls{rfcn} \cite{rfcn} integrated both classification and localisation tasks, utilising position-sensitive score maps to classify and refine bounding box coordinates. This approach struck a balance between speed and accuracy by enabling shared computation across regions.
+Complementing these technological advancements, \gls{fpn} \cite{fpn} improved detection across all network layers by constructing a feature pyramid for improved multi-scale detection. This pyramid included bottom-up pathways that captured semantic information and top-down pathways that refined these maps by merging high-level features with spatially rich information. \gls{rfcn} \cite{rfcn} integrated both classification and localisation tasks, utilising position-sensitive score maps to classify and refine bounding box coordinates. This approach struck a balance between speed and accuracy by enabling shared computation across regions.
 Building on these two-stage frameworks, EfficientDet \cite{efficientdet} incorporated an EfficientNet \cite{efficientnet} backbone and employed a weighted bi-directional feature pyramid network for efficient multi-scale feature fusion. Furthermore, it introduced a compound scaling method that uniformly scaled resolution, depth, and width across the backbone, feature network, and prediction networks.
 
 \subsubsection{Transformer-Based Detectors}
@@ -179,7 +179,7 @@ As outlined in \cite{lupi}, the standard supervised learning framework is formal
 (x_1, y_1), \dots, (x_l, y_l), \quad x_i \in X, y_i \in Y  .
 \end{equation}
 
-\noindent Assuming that the data pairs $($\gls{x}$ ,$ \gls{y}$)$ are generated according to a fixed but unknown probability distribution \(P(x, y)\). The task is to select a function \(f(x, \theta)\), with \(\theta \in \Theta\), from a specified class of functions, such that the function \(y = f(x, \theta^*)\) minimises the probability of misclassification. In this setting, the input vector \(x_i \in X\) describes an instance, and \(y_i\) denotes its corresponding target label. The ultimate goal is to find the function \(f(x, \theta^*)\) that results in the minimal probability of predicting incorrect labels under \(P(x, y)\).
+\noindent Assuming that the data pairs $($\gls{x}$ ,$ \gls{y}$)$ are generated according to a fixed but unknown probability distribution \(P(x, y)\). The task is to select the function \(\hat{y} = f(x; \theta^{*})\), with parameter \(\theta^{*} \in \Theta\), from a specified class of functions which minimises the probability of misclassification. In this setting, the input vector \(x_i \in X\) describes an instance, and \(y_i\) denotes its corresponding target label. The predicted output \(\hat{y}\) is the model's estimate of the true label \(y\) given the input \(x\).
 In comparison, within the \gls{lupi} framework, training data can be represented as a sequence of triplets:
 \begin{equation} \label{eq:lupi_pairs}
 (x_1, x_1^*, y_1), \dots, (x_l, x_l^*, y_l), \quad x_i \in X , x_i^* \in X^*, y_i \in Y .
