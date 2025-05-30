@@ -67,7 +67,23 @@
 <details>
 <summary style="cursor: pointer;"><b>Click-to-View</b></summary>
 
+- [� Table of Contents](#-table-of-contents)
 - [📄 Abstract](#-abstract)
+- [⚙️ LUPI-OD Architecture](#️-lupi-od-architecture)
+- [🧪 Methodology](#-methodology)
+- [🎯 Contributions of This Research](#-contributions-of-this-research)
+- [📈 Main Detection Results](#-main-detection-results)
+  - [🧮 Model Size Comparison on Pascal VOC 2012](#-model-size-comparison-on-pascal-voc-2012)
+- [🔍 Other Detection Results](#-other-detection-results)
+  - [🛠️ Preliminary Experiment for Privileged Information Selection](#️-preliminary-experiment-for-privileged-information-selection)
+  - [📊 Teacher Model Performance on Pascal VOC 2012](#-teacher-model-performance-on-pascal-voc-2012)
+- [💾 Installation](#-installation)
+  - [Prerequisites](#prerequisites)
+  - [Clone the Repository](#clone-the-repository)
+- [🎓 About This Research](#-about-this-research)
+  - [🎓 Dissertation](#-dissertation)
+- [🪪 License](#-license)
+- [✉️ Contact](#️-contact)
 
 </details>
  
@@ -398,13 +414,13 @@ flowchart TD
 <p align='center'>
   <img src="Assets/figures/privileged_information_soda_01m.png" alt="Privileged Information Channels" width="100%" height="auto">
   <br>
-  <b>Channels Explored</b>
+  <b>Explored Privileged Information Channels</b>
 </p>
 
 <p align='center'>
   <img src="Assets/figures/Preliminary Experiment Privileged Information Selection.png" alt="Privileged Information Results" width="100%" height="auto">
   <br>
-  <b>Experiment Results</b>
+  <b>Preliminary Experiment Results</b>
 </p>
 
 ---
