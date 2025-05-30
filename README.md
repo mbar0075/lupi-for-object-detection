@@ -63,27 +63,27 @@
 </p>
 
 
-## 📚 Table of Contents
+## 🔗 Table of Contents
 <details>
 <summary style="cursor: pointer;"><b>Click-to-View</b></summary>
 
-- [� Table of Contents](#-table-of-contents)
-- [📄 Abstract](#-abstract)
-- [⚙️ LUPI-OD Architecture](#️-lupi-od-architecture)
-- [🧪 Methodology](#-methodology)
-- [🎯 Contributions of This Research](#-contributions-of-this-research)
-- [📈 Main Detection Results](#-main-detection-results)
-  - [🧮 Model Size Comparison on Pascal VOC 2012](#-model-size-comparison-on-pascal-voc-2012)
-- [🔍 Other Detection Results](#-other-detection-results)
-  - [🛠️ Preliminary Experiment for Privileged Information Selection](#️-preliminary-experiment-for-privileged-information-selection)
-  - [📊 Teacher Model Performance on Pascal VOC 2012](#-teacher-model-performance-on-pascal-voc-2012)
-- [💾 Installation](#-installation)
-  - [Prerequisites](#prerequisites)
-  - [Clone the Repository](#clone-the-repository)
-- [🎓 About This Research](#-about-this-research)
-  - [🎓 Dissertation](#-dissertation)
-- [🪪 License](#-license)
-- [✉️ Contact](#️-contact)
+&nbsp;&nbsp;&nbsp;&nbsp;[📄 Abstract](#abstract)  
+&nbsp;&nbsp;&nbsp;&nbsp;[⚙️ LUPI-OD Architecture](#lupi-od-architecture)  
+&nbsp;&nbsp;&nbsp;&nbsp;[🧪 Methodology](#methodology)  
+&nbsp;&nbsp;&nbsp;&nbsp;[🎯 Contributions of This Research](#contributions-of-this-research)  
+&nbsp;&nbsp;&nbsp;&nbsp;[📈 Main Detection Results](#main-detection-results)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🛩️ UAV-Based Litter Detection: Within-Dataset Evaluation](#uav-based-litter-detection-within-dataset-evaluation)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🌍 UAV-Based Litter Detection: Across-Dataset Evaluation](#uav-based-litter-detection-across-dataset-evaluation)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🏷️ Multi-label Object Detection: Pascal VOC 2012 Evaluation](#multi-label-object-detection-pascal-voc-2012-evaluation)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🧮 Model Size Comparison on Pascal VOC 2012](#model-size-comparison-on-pascal-voc-2012)  
+&nbsp;&nbsp;&nbsp;&nbsp;[🔍 Other Detection Results](#other-detection-results)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🛠️ Preliminary Experiment for Privileged Information Selection](#preliminary-experiment-for-privileged-information-selection)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[📊 Teacher Model Performance on Pascal VOC 2012](#teacher-model-performance-on-pascal-voc-2012)  
+&nbsp;&nbsp;&nbsp;&nbsp;[💾 Installation](#installation)  
+&nbsp;&nbsp;&nbsp;&nbsp;[🎓 About This Research](#about-this-research)  
+&nbsp;&nbsp;&nbsp;&nbsp;[📘 Citation](#citation)  
+&nbsp;&nbsp;&nbsp;&nbsp;[🪪 License](#license)  
+&nbsp;&nbsp;&nbsp;&nbsp;[✉️ Contact](#contact)
 
 </details>
  
