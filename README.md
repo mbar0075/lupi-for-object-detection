@@ -63,27 +63,28 @@
 </p>
 
 
-## 🔗 Table of Contents
+<h2>🔗 Table of Contents </h2>
 <details>
 <summary style="cursor: pointer;"><b>Click-to-View</b></summary>
 
-&nbsp;&nbsp;&nbsp;&nbsp;[📄 Abstract](#abstract)  
-&nbsp;&nbsp;&nbsp;&nbsp;[⚙️ LUPI-OD Architecture](#lupi-od-architecture)  
-&nbsp;&nbsp;&nbsp;&nbsp;[🧪 Methodology](#methodology)  
-&nbsp;&nbsp;&nbsp;&nbsp;[🎯 Contributions of This Research](#contributions-of-this-research)  
-&nbsp;&nbsp;&nbsp;&nbsp;[📈 Main Detection Results](#main-detection-results)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🛩️ UAV-Based Litter Detection: Within-Dataset Evaluation](#uav-based-litter-detection-within-dataset-evaluation)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🌍 UAV-Based Litter Detection: Across-Dataset Evaluation](#uav-based-litter-detection-across-dataset-evaluation)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🏷️ Multi-label Object Detection: Pascal VOC 2012 Evaluation](#multi-label-object-detection-pascal-voc-2012-evaluation)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🧮 Model Size Comparison on Pascal VOC 2012](#model-size-comparison-on-pascal-voc-2012)  
-&nbsp;&nbsp;&nbsp;&nbsp;[🔍 Other Detection Results](#other-detection-results)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[🛠️ Preliminary Experiment for Privileged Information Selection](#preliminary-experiment-for-privileged-information-selection)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[📊 Teacher Model Performance on Pascal VOC 2012](#teacher-model-performance-on-pascal-voc-2012)  
-&nbsp;&nbsp;&nbsp;&nbsp;[💾 Installation](#installation)  
-&nbsp;&nbsp;&nbsp;&nbsp;[🎓 About This Research](#about-this-research)  
-&nbsp;&nbsp;&nbsp;&nbsp;[📘 Citation](#citation)  
-&nbsp;&nbsp;&nbsp;&nbsp;[🪪 License](#license)  
-&nbsp;&nbsp;&nbsp;&nbsp;[✉️ Contact](#contact)
+- [📄 Abstract](#-abstract)
+- [⚙️ LUPI-OD Architecture](#️-lupi-od-architecture)
+- [🧪 Methodology](#-methodology)
+- [🎯 Contributions of This Research](#-contributions-of-this-research)
+- [📈 Main Detection Results](#-main-detection-results)
+  - [🛩️ UAV-Based Litter Detection: Within-Dataset Evaluation](#️-uav-based-litter-detection-within-dataset-evaluation)
+  - [🌍 UAV-Based Litter Detection: Across-Dataset Evaluation](#-uav-based-litter-detection-across-dataset-evaluation)
+  - [🏷️ Multi-label Object Detection: Pascal VOC 2012 Evaluation](#️-multi-label-object-detection-pascal-voc-2012-evaluation)
+  - [🧮 Model Size Comparison on Pascal VOC 2012](#-model-size-comparison-on-pascal-voc-2012)
+- [🔍 Other Detection Results](#-other-detection-results)
+  - [🛠️ Preliminary Experiment for Privileged Information Selection](#️-preliminary-experiment-for-privileged-information-selection)
+  - [📊 Teacher Model Performance on Pascal VOC 2012](#-teacher-model-performance-on-pascal-voc-2012)
+- [💾 Installation](#-installation)
+- [🎓 About This Research](#-about-this-research)
+- [📘 Citation](#-citation)
+  - [🎓 Dissertation](#-dissertation)
+- [🪪 License](#-license)
+- [✉️ Contact](#️-contact)
 
 </details>
  
@@ -194,7 +195,7 @@ flowchart TD
 
 ## 📈 Main Detection Results
 
-<h3>🛩️ UAV-Based Litter Detection: Within-Dataset Evaluation</h3>
+### 🛩️ UAV-Based Litter Detection: Within-Dataset Evaluation
 
 
 
@@ -264,7 +265,7 @@ flowchart TD
 
 <hr>
 
-<h3>🌍 UAV-Based Litter Detection: Across-Dataset Evaluation</h3>
+### 🌍 UAV-Based Litter Detection: Across-Dataset Evaluation
 
 
 
@@ -333,7 +334,7 @@ flowchart TD
 
 <hr>
 
-<h3>🏷️ Multi-label Object Detection: Pascal VOC 2012 Evaluation</h3>
+### 🏷️ Multi-label Object Detection: Pascal VOC 2012 Evaluation
 
 
 <p align='center'>
@@ -444,14 +445,14 @@ All results shown below reflect the performance of **teacher models** across key
 
 ## 💾 Installation
 
-### Prerequisites
+<h3>Prerequisites</h3>
 
 ```bash
 Python 3.9+
 CUDA-capable GPU (recommended)
 ```
 
-### Clone the Repository
+<h3>Clone the Repository </h3>
 
 ```bash
 git clone https://github.com/mbar0075/lupi-for-object-detection.git
@@ -469,7 +470,7 @@ This research was carried out at the [University of Malta](https://www.um.edu.mt
 
 </div>
 
-<h2> 📘 Citation</h2>
+## 📘 Citation
 
 ### 🎓 Dissertation
 ```bibtex
