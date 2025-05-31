@@ -359,6 +359,21 @@ Training an optimised detection model in this study began with the teacher netwo
 
 The similarity between these latent feature representations was measured using a cosine distance function (see Equation \ref{eq:cosine_distance}), producing a distillation loss that captures the degree of alignment between the student and teacher. The distillation loss was first computed and then backpropagated through the student model, alongside the standard detection losses. A tunable parameter, \gls{alpha}, controls how much the teacher’s guidance influences the total loss during training. Upon completing this training phase, the teacher model is no longer needed. However, despite being trained without access to privileged information at inference time, the resulting student model benefits from the guided supervision afforded during training.
 
+% Glorja lil Missier, lil Iben u lil Ispirtu s-Santu, Kif kien mill Bidu, Issa u ghal Dejjem ta' Dejjem. Amen. Grazzi hafna Mulej
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=1\textwidth]{Architecture LUPIv5.png}
+\caption{Detailed architecture of the training setup showing the teacher network receiving both RGB images and privileged input channels. The student network processes only RGB data but is trained with additional supervision through knowledge distillation. A baseline RGB-only model is included for comparison.}
+\label{fig:lupi_architecture_final}
+\end{figure}
+
+
+To complement the overview presented in Figure~\ref{fig:lupi_architecture}, Figure~\ref{fig:lupi_architecture_final} offers a more detailed and structured illustration of the training framework. This expanded diagram does not revisit the mathematical details but clarifies the data flow and supervision process. It highlights that the teacher model receives a richer input, combining standard RGB channels with additional privileged information. Meanwhile, both teacher and student models operate in parallel, with the loss computation abstracted into a simplified and more interpretable visual form.
+
+The baseline model, relying exclusively on standard RGB input, serves as a conventional point of reference within this framework. The emphasis remains on contrasting this baseline with the student model, which, although identical in architecture during inference, achieves improved performance through the additional supervision provided by the teacher during training.
+
+
 \section{Training Parameters}
 \label{sec:4_training_params}
 % Glorja lil Missier, lil Iben u lil-Ispirtu s-Santu. Kif kien mill-bidu issa u dejjem, ghal dejjem ta' dejjem. Amen
