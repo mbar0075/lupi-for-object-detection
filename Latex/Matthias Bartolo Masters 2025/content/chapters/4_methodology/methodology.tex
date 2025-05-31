@@ -369,7 +369,7 @@ The similarity between these latent feature representations was measured using a
 \end{figure}
 
 
-To complement the overview presented in Figure~\ref{fig:lupi_architecture}, Figure~\ref{fig:lupi_architecture_final} offers a more detailed and structured illustration of the training framework. This expanded diagram does not revisit the mathematical details but clarifies the data flow and supervision process. It highlights that the teacher model receives a richer input, combining standard RGB channels with additional privileged information. Meanwhile, both teacher and student models operate in parallel, with the loss computation abstracted into a simplified and more interpretable visual form.
+To complement the overview presented in Figure~\ref{fig:lupi_architecture}, Figure~\ref{fig:lupi_architecture_final} offers a more detailed and structured illustration of the training framework. This expanded diagram does not revisit the mathematical details but clarifies the data flow and knowledge distillation process. It highlights that the teacher model receives a richer input, combining standard RGB channels with additional privileged information. Meanwhile, both teacher and student models operate in parallel, with the loss computation (refer to Equation \ref{eq:lupi_loss_function}) abstracted into a simplified and more interpretable visual form.
 
 The baseline model, relying exclusively on standard RGB input, serves as a conventional point of reference within this framework. The emphasis remains on contrasting this baseline with the student model, which, although identical in architecture during inference, achieves improved performance through the additional supervision provided by the teacher during training.
 
