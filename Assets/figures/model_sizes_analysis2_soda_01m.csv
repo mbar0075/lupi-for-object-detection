@@ -1,0 +1,11 @@
+,Model Name,Configuration,Type,Size (MB),Parameters (M),FLOPS (GFLOPS),FPS,Number of Classes,Number of Channels
+0,SODA_01m_Dataset_Single,Baseline,RETINANET,122.72,32.17,254.58,32.84,2,3
+1,SODA_01m_Dataset_Single,Student,RETINANET,122.72,32.17,254.58,31.43,2,3
+2,SODA_01m_Dataset_Single,Baseline,FCOS,122.32,32.06,251.77,30.16,2,3
+3,SODA_01m_Dataset_Single,Student,FCOS,122.32,32.06,251.77,32.07,2,3
+4,SODA_01m_Dataset_Single,Baseline,FASTERRCNN,157.54,41.3,268.56,31.31,2,3
+5,SODA_01m_Dataset_Single,Student,FASTERRCNN,157.54,41.3,268.56,31.56,2,3
+6,SODA_01m_Dataset_Single,Baseline,SSD,90.58,23.75,61.05,107.22,2,3
+7,SODA_01m_Dataset_Single,Student,SSD,90.58,23.75,61.05,105.7,2,3
+8,SODA_01m_Dataset_Single,Baseline,SSDLITE,8.42,2.21,0.87,52.35,2,3
+9,SODA_01m_Dataset_Single,Student,SSDLITE,8.42,2.21,0.87,52.2,2,3
