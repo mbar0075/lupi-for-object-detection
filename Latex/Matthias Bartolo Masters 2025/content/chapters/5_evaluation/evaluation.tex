@@ -8,7 +8,7 @@
 
 \section{Introduction}
 \label{sec:5_introduction}
-% Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla. Grazzi Amen
+% Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla. Grazzi hafna Amen
 
 % Evaluation
 % \begin{itemize}
@@ -24,12 +24,50 @@
 %     \item Discussion - Go over research question once more, theoretical aspect, Knowledge Distillation and Applications - Project AWIGS, summary
 % \end{itemize}
 
-This chapter begins by outlining the hardware setup that forms the foundation for the experiments. It then proceeds to describe the optimal tiling experiments conducted on the \gls{soda} dataset, a necessary preliminary step to achieving the set objectives. The following section focuses on the within-dataset evaluation, specifically \gls{uav}-based litter detection, covering three experiments carried out on the \gls{soda} dataset. Next, the chapter moves on to the cross-dataset evaluation, where experiments on the \gls{bdw} and UAVVaste datasets are presented to assess the generalisability of the trained models. The subsequent section details the Pascal \gls{voc} 2012 evaluation, which tests the methodology's ability to perform multi-label detection across a large number of categories. This is followed by an ablation study on the alpha parameter, a visual comparison of model predictions across all evaluated datasets, and an analysis of the model's interpretability. The chapter then discusses the limitations encountered in generating effective privileged information to guide the model’s internal feature representations. Finally, the chapter concludes with a synthesis of the results and a discussion on whether the research question was effectively addressed in relation to the stated objectives.
+This chapter begins by outlining the hardware setup and evaluation strategy that form the foundation for the experiments. It then proceeds to describe the optimal tiling experiments conducted on the \gls{soda} dataset, a necessary preliminary step to achieving the set objectives. The following section focuses on the within-dataset evaluation, specifically \gls{uav}-based litter detection, covering three experiments carried out on the \gls{soda} dataset. Next, the chapter moves on to the cross-dataset evaluation, where experiments on the \gls{bdw} and UAVVaste datasets are presented to assess the generalisability of the trained models. An additional section examines the detection performance in relation to object size, with special focus on determining whether the proposed \gls{lupi} approach improves the recognition of objects at small scales. The subsequent section details the Pascal \gls{voc} 2012 evaluation, which tests the methodology's ability to perform multi-label detection across a large number of categories. This is followed by an ablation study on the alpha parameter, a visual comparison of model predictions across all evaluated datasets, and an analysis of the model's interpretability. The chapter then discusses the limitations encountered in generating effective privileged information to guide the model’s internal feature representations. Finally, the chapter concludes with a synthesis of the results and a discussion on whether the research question was successfully addressed to the stated objectives.
 
 \section{Hardware Setup}
 \label{sec:5_hardware_setup}
 
 All experiments involving deep learning models were conducted using two primary hardware configurations. Training was performed on systems equipped with an NVIDIA GeForce RTX 4070 and an RTX 4090 \gls{gpu}, both supporting \gls{cuda}-enabled acceleration. These setups were used across different experiments as needed, enabling parallel computation and helping to reduce training times significantly. Furthermore, a batch size of 16 was consistently used across all experiments for training the deep learning models.
+
+\section{Evaluation Strategy}
+\label{sec:5_evaluation_strategy}
+
+To accomplish the research objectives, a comprehensive evaluation strategy was devised to systematically assess the proposed methodology. The evaluation comprised a series of experiments using five distinct object detection architectures (refer to Section \ref{sec:4_distillation_architectures}). For each architecture, both baseline models and their modified versions trained under the \gls{lupi} framework were compared. This comparison provided insight into the feasibility and adaptability of the proposed approach across diverse detection models.
+
+The primary application domain for evaluation was \gls{uav}-based litter detection, a challenging problem due to the small size of target objects and the complexity of aerial imagery. Experiments leveraged several datasets outlined in Section \ref{sec:4_datasets}.  A within-dataset evaluation was conducted using different subsets of the \gls{soda} dataset to examine performance under controlled conditions. A cross-dataset evaluation was also carried out on the \gls{bdw} and UAVVaste datasets to test the generalisation capabilities of the trained models on other \gls{uav}-based litter detection tasks. To assess the broader applicability of the method, experiments were also carried out on the Pascal \gls{voc} 2012 dataset, which featured a larger variety of object categories and greater complexity.
+
+Evaluation metrics were standard within object detection research, as detailed in Section \ref{sec:4_metrics}. These included \gls{map} calculated at different \gls{iou} thresholds, along with precision, recall, and F1 score. Additionally, \gls{mar} was employed to provide a comprehensive perspective on detection performance. The evaluation also incorporated \gls{coco}-style metrics, which were essentially variations of \gls{map} computed separately for small, medium, and large objects. These metrics offered a more granular understanding of model performance across object sizes, which was particularly relevant given the emphasis on detecting small-scale litter objects.
+
+Key experiments included validating the tiling preprocessing strategy on \gls{soda} to ensure appropriate input representation; conducting within-dataset and cross-dataset evaluations to test detection performance and generalisation; analysing performance based on object size to determine whether the \gls{lupi} framework improves small-object detection; and evaluating generalisability on the diverse Pascal \gls{voc} 2012 dataset. An ablation study examined the effect of the \gls{alpha} parameter, a key element of the proposed methodology, on detection performance and computational trade-offs. Finally, qualitative analyses, including visual comparisons and interpretability studies using Grad-CAM variants, were performed to complement quantitative metrics by examining model decision-making processes and attentional focus.
+
+This evaluation strategy was carefully designed to cover all the key objectives: developing, evaluating and refining the methodology (Objectives \textbf{O1} and \textbf{O2}), testing it across various litter detection datasets (Objective \textbf{O3}), and examining both the computational trade-offs and wider generalisation of the approach (Objective \textbf{O4}). A summary of how each experiment relates to these goals is detailed in Table \ref{tab:experiment_strategy}.
+
+
+\renewcommand{\arraystretch}{1.5} % increase row height by 30%
+\begin{table}[htbp]
+    \centering
+    \small
+    \begin{adjustbox}{max width=\textwidth}
+    \begin{tabular}{|l|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{5cm}|}
+        \hline
+        \textbf{Experiment} & \textbf{Dataset/s} & \textbf{Metric/s} & \textbf{Objective/s} & \textbf{Purpose} \\
+        \hline \hline
+        \textbf{Optimal Tiling} & \gls{soda} & Small Object Ratio per Image & preliminary for \textbf{O1}, \textbf{O2}, \textbf{O3} & Validate tiling preprocessing; no reason presented in literature \\ \hline
+        \textbf{Within-Dataset Evaluation} & Subsets of \gls{soda} & mAP, Precision, Recall, F1 Score, mAR, Confusion Matrix, Training Time, Model Size, FPS, GFLOPS & \textbf{O1}, \textbf{O2}, \textbf{O3}, partially \textbf{O4} & Test methodology on UAV-based litter detection \\ \hline
+        \textbf{Cross-Dataset Evaluation} & \gls{bdw}, UAVVaste & mAP, Precision, Recall, F1 Score & \textbf{O3} & Assess generalisation to other UAV litter detection datasets \\ \hline
+        \textbf{Object Size  Performance Analysis} & Subsets of \gls{soda}, \gls{bdw}, UAVVaste & mAP (small, medium, large) & \textbf{O2}, \textbf{O3} & Evaluate small-object detection improvements \\ \hline
+        \textbf{Pascal \gls{voc} 2012 Evaluation} & Pascal \gls{voc} 2012 & mAP, Precision, Recall, F1 Score, mAR, Confusion Matrix, Training Time, Model Size, FPS, GFLOPS & \textbf{O4} & Test generalisability on a larger dataset with a broader range of object categories \\ \hline
+        \textbf{Ablation Study on Alpha (\gls{alpha})} & Subsets of \gls{soda}, Pascal \gls{voc} 2012 & mAP, F1 Score & \textbf{O2}, partially \textbf{O4} & Assess impact of critical  alpha (\gls{alpha}) parameter \\ \hline
+        \textbf{Visual Comparison} & All datasets & Qualitative comparison & — & Visually inspect improvements beyond metrics \\ \hline
+        \textbf{Visual Interpretability} & Primarily \gls{soda}, but also evaluated on other datasets with similar results & Grad-CAM variants & — & Explore model decision processes and attention \\
+        \hline
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Summary of the evaluation strategy, detailing the conducted experiments, datasets used, key metrics, aligned research objectives, and the purpose of each experiment.}
+    \label{tab:experiment_strategy}
+\end{table}
 
 
 \section{Optimal Tiling Experiments}
@@ -98,11 +136,11 @@ As a result of this experiment, the tiling configuration used for dataset pre-pr
 
 % N.B. Visual results and confusion matrix as well, explain different value of alpha, why they were chosen
 
-To assess the proposed integration of the \gls{lupi} paradigm within object detection, litter detection was selected as a case study, supporting the investigation of objectives \textbf{O1}, \textbf{O2}, \textbf{O3}, and partially addressing \textbf{O4}. This task presents a particularly challenging scenario, largely due to the frequent presence of small objects, which considerably complicates the detection process. To examine the effectiveness of the proposed methodology under such conditions, a within-dataset evaluation was conducted using the \gls{soda} dataset.
+To assess the proposed integration of the \gls{lupi} paradigm within object detection, \gls{uav}-based litter detection was selected as a case study, supporting the analysis of objectives \textbf{O1}, \textbf{O2}, \textbf{O3}, and partially addressing \textbf{O4}. This task presents a particularly challenging scenario, largely due to the frequent presence of small objects, which considerably complicates the detection process. To examine the effectiveness of the proposed methodology under such conditions, a within-dataset evaluation was conducted using the \gls{soda} dataset.
 
 The \gls{soda} dataset was purposefully chosen as the principal dataset for training \gls{uav}-based litter detection models. Its selection stems from its capacity to represent a diverse range of altitudes and litter types--characteristics not fully captured by the other available \gls{uav}-based litter datasets. The within-dataset evaluation comprised three core experiments: (i) binary litter detection using only the 1-metre altitude subset with no tiling; (ii) binary litter detection on the full \gls{soda} dataset, tiled using a 3$\times$3 grid and covering all altitudes; and (iii) multi-label litter detection using the same 3$\times$3 tiled version across all altitudes. Each of these configurations was chosen for a specific purpose: the first experiment targets detection at close range, the second expands the scope across variable altitudes, and the third introduces additional classification complexity by extending from binary to multi-label tasks, distinguishing between various litter types and the background.
 
-For each of these experiments, the five object detection architectures detailed in Section \ref{sec:4_distillation_architectures} were trained: Faster \gls{rcnn}, \gls{ssd}, RetinaNet, SSDLite, and \gls{fcos}. For each architecture, a baseline model, a teacher model, and four student models were trained with varying levels of teacher guidance. Consequently, 30 distinct models were trained for each experiment.
+For each of these experiments, the five object detection architectures chosen in Section \ref{sec:4_distillation_architectures} were trained: Faster \gls{rcnn}, \gls{ssd}, RetinaNet, SSDLite, and \gls{fcos}. For each architecture, a baseline model, a teacher model, and four student models were trained with varying levels of teacher guidance. Consequently, 30 distinct models were trained for each experiment.
 
 The central objective was to determine whether student models trained using the \gls{lupi} framework, with access to privileged training signals, could outperform their respective baselines, which were trained using only standard input data. For each architecture, a teacher model was first trained, followed by the training of student models using five distinct \gls{alpha} values: 0, 0.25, 0.5, 0.75, and 1. These values match those used in related work in \gls{lupi} \cite{lab2wild}. An $\alpha$ of 0 represents the baseline, where the student is trained without any guidance from the teacher, while $\alpha = 1$ reflects full reliance on the teacher’s output during training. The intermediate values allowed a controlled study of how varying degrees of teacher influence affected model performance.
 
@@ -127,7 +165,7 @@ The results of this experiment, comparing the baseline model with the best stude
     \label{fig:soda01m_bar}
 \end{figure}
 
-While RetinaNet, \gls{fcos}, and Faster \gls{rcnn} delivered the best results in this experiment, which can be attributed largely to their complex architectures and the use of the ResNet-\gls{fpn} backbone, notable improvements were also observed with the \gls{ssd} and SSDLite architectures. This suggests that the \gls{lupi} method can improve litter detection performance at close range, even in complex environments with backgrounds such as rocks and plants. The results indicate that, regardless of the architecture, \gls{lupi} significantly improves detection accuracy in close-range binary detection.
+While RetinaNet, \gls{fcos}, and Faster \gls{rcnn} delivered the best results in this experiment, which can be attributed largely to their complex architectures and the use of the ResNet-\gls{fpn} backbone, notable improvements were also observed with the \gls{ssd} and SSDLite architectures. A closer examination suggests that this performance boost is closely linked to the role of \gls{lupi} in refining the representational quality of the ResNet-\gls{fpn} within the teacher model. In the course of training, the privileged spatial information enables the teacher to acquire a more precise spatial understanding of the scene, thereby increasing the spatial information captured by the backbone \gls{fpn} and leading to higher-quality proposals, which are subsequently transferred to the student during distillation. This suggests that the \gls{lupi} method can improve litter detection performance at close range, even in complex environments with backgrounds such as rocks and plants. The results indicate that, regardless of the architecture, \gls{lupi} significantly improves detection accuracy in close-range binary detection.
 
 In addition to the comparison between the baseline and student models, a further analysis was conducted to evaluate the performance of the different teacher models, using the same evaluation metrics and experimental setup. The results are summarised in Table~\ref{tab:teacher_model_metrics_soda01m}, which presents the detection accuracy achieved by each teacher model architecture. It can be observed that Faster \gls{rcnn}, \gls{fcos}, and RetinaNet stood out as the highest-performing teacher models. Most of their detection metrics approached 1.0, suggesting near-ideal detection performance across the evaluated scenes. 
 % These results highlight the informative nature of these teacher networks, especially in supporting the \gls{lupi} training paradigm.
@@ -158,56 +196,56 @@ Interestingly, while Faster \gls{rcnn} proved to be the top-performing teacher m
 Across all teacher models, recall was generally high, while precision tended to be lower. This implies that the teacher models were primarily geared toward minimising false negatives.
 % , reinforcing their utility in guiding student models to identify more instances, albeit sometimes at the expense of \gls{fp}.
 
-While the results clearly show that \gls{lupi} improves detection accuracy in this particular experiment, it is also important to acknowledge that this improvement does not come without cost. Training within the \gls{lupi} framework requires an additional training phase, wherein a teacher model must be trained before the student. Moreover, each model must process privileged inputs during training, resulting in larger tensors and increased computational demands, despite only minor adjustments to the teacher architecture and none to the student.
-
-To examine the impact of these changes on training duration, Figure~\ref{fig:soda01m_training_time} presents a comparison of training times across all models involved in this experiment. As shown in the figure, both student and teacher models required substantially more time to train than the baseline models. This increase is due in part to the two-stage nature of the training process and, for student models specifically, the added computation needed to process the teacher’s outputs and compute the distillation loss. The time taken by the teacher during inference directly contributes to the student’s overall training time.
-
-\begin{figure}[!ht]
+\begin{figure}[!b]
     \centering
     \includegraphics[width=1\textwidth]{training_times_soda_01m_dataset_binary_detection.jpg}
     \caption{Comparison of model training times on the \gls{soda} dataset at a 1-metre altitude for binary litter detection.}
     \label{fig:soda01m_training_time}
 \end{figure}
 
+While the results clearly show that \gls{lupi} improves detection accuracy in this particular experiment, it is also important to acknowledge that this improvement does not come without cost. Training within the \gls{lupi} framework requires an additional training phase, wherein a teacher model must be trained before the student. Moreover, each model must process privileged inputs during training, resulting in larger tensors and increased computational demands, despite only minor adjustments to the teacher architecture and none to the student.
+
+
+To examine the impact of these changes on training duration, Figure~\ref{fig:soda01m_training_time} presents a comparison of training times across all models involved in this experiment. As shown in the figure, both student and teacher models required substantially more time to train than the baseline models. This increase is due in part to the two-stage nature of the training process and, for student models specifically, the added computation needed to process the teacher’s outputs and compute the distillation loss. The time taken by the teacher during inference directly contributes to the student’s overall training time.
+
 In terms of model-specific performance, \gls{fcos} and SSDLite exhibited the shortest training durations, whereas RetinaNet and Faster \gls{rcnn} incurred the highest training times, especially under the \gls{lupi} setup. Notably, teacher models consistently recorded the longest training durations across all architectures.
 
-Despite the increase in training time, a comparison of model size and parameter count between the baseline and student models, as shown in Table~\ref{tab:model_configs_soda01m}, shows that they remain identical across all architectures. This suggests that student models benefit from improved detection accuracy through \gls{lupi} without adding any cost in terms of model size or computational demands during inference. In contrast to many modern detection models that require larger storage and are computationally intensive at deployment \cite{detr, rt-detr, rt-detrv2, rf-detr}, the student models preserve the compactness of their baseline versions.
-
-\begin{table}[!ht]
+\begin{table}[!b]
     \centering
-    \begin{tabular}{llcc}
+    \begin{adjustbox}{width=\textwidth}
+    \begin{tabular}{llcccc}
         \toprule
-        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} \\
+        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} & \textbf{\gls{gflops}} & \textbf{\gls{fps}} \\
         \midrule
         \multirow{5}{*}{\textbf{Baseline}} 
-            & RetinaNet   & 122.72 & 32.17 \\
-            & FCOS        & 122.32 & 32.06 \\
-            & Faster R-CNN & 157.54 & 41.30 \\
-            & SSD         & 90.58  & 23.75 \\
-            & SSDLite     & 8.42   & 2.21 \\
+            & RetinaNet   & 122.72 & 32.17 & 254.58 & 32.84 \\
+            & FCOS        & 122.32 & 32.06 & 251.77 & 30.16 \\
+            & Faster R-CNN & 157.54 & 41.30 & 268.56 & 31.31 \\
+            & SSD         & 90.58  & 23.75 & 61.05 & 107.22 \\
+            & SSDLite     & 8.42   & 2.21 & 0.87 & 52.35 \\
         \midrule
         \multirow{5}{*}{\textbf{Student}} 
-            & RetinaNet   & 122.72 & 32.17 \\
-            & FCOS        & 122.32 & 32.06 \\
-            & Faster R-CNN & 157.54 & 41.30 \\
-            & SSD         & 90.58  & 23.75 \\
-            & SSDLite     & 8.42   & 2.21 \\
+            & RetinaNet   & 122.72 & 32.17 & 254.58 & 31.43 \\
+            & FCOS        & 122.32 & 32.06 & 251.77 & 32.07 \\
+            & Faster R-CNN & 157.54 & 41.30 & 268.56 & 31.56 \\
+            & SSD         & 90.58  & 23.75 & 61.05 & 105.70 \\
+            & SSDLite     & 8.42   & 2.21 & 0.87 & 52.20\\
         \bottomrule
     \end{tabular}
-    \caption{Comparison of model configurations for trained baseline and student models on the \gls{soda} dataset at a 1-metre altitude for binary litter detection, including model type, size in megabytes, and number of parameters (in millions).}
+    \end{adjustbox}
+    \caption{Comparison of model configurations for trained baseline and student models on the \gls{soda} dataset at a 1-metre altitude for binary litter detection, including model type, size in megabytes, number of parameters (in millions), computational complexity in \gls{gflops}, and inference speed in \gls{fps}.}
     \label{tab:model_configs_soda01m}
 \end{table}
 
-It is also important to point out that Faster \gls{rcnn}, \gls{fcos}, and RetinaNet occupy more memory overall, as they rely on larger architectural designs. On the other hand, \gls{ssd} and SSDLite remain comparatively lightweight. Even so, the main observation remains clear. In the context of \gls{uav}-based binary litter detection, where lightweight architectures are essential due to hardware limitations, \gls{lupi} enables improved detection accuracy without increasing model size. This makes it a practical solution for situations where both storage and computational efficiency are important.
+Despite the increase in training time, a comparison of model size and parameter count between the baseline and student models, as shown in Table~\ref{tab:model_configs_soda01m}, shows that they remain identical across all architectures. This suggests that student models achieve improved detection accuracy through \gls{lupi} without increasing model size or computational demands during inference. This is supported by the identical \gls{gflops} values, which represent the number of billions of floating-point operations the model performs per second, and comparable \gls{fps} measurements, indicating the number of frames processed per second during inference—both of which are consistent across models, as expected. In contrast to many modern detection models that require larger storage and are computationally intensive at deployment \cite{detr, rt-detr, rt-detrv2, rf-detr}, the student models preserve the compactness of their baseline versions.
+
+It is also important to point out that Faster \gls{rcnn}, \gls{fcos}, and RetinaNet occupy more memory overall, as they rely on larger architectural designs. On the other hand, \gls{ssd} and SSDLite remain comparatively lightweight. Even so, the main observation remains clear. In the context of binary litter detection, where lightweight architectures are essential due to hardware limitations, \gls{lupi} enables improved detection accuracy without increasing model size. This makes it a practical solution for situations where both storage and computational efficiency are important.
 
 \subsection{Binary Litter Detection on the SODA Dataset Across All Altitudes}
 \label{subsec:5_soda_tiled_single_dataset_exp}
 % Glorja lil Missier, lil Iben u lil Ispirtu s-Santu. Amen
 
 The second experiment aimed to build upon the context of the first by further exploring the benefits of using the \gls{lupi} framework for litter detection at higher altitudes, addressing the challenges posed by more complex detection scenarios. To this end, the entire \gls{soda} dataset was tiled in a 3$\times$3 configuration at all altitudes to reflect a more complex, real-world scenario for \gls{uav}-based litter detection. This dataset included 7,461 images, with 5,238 allocated for training, 765 for validation, and 1,458 for testing. In this experiment, detection models were trained to classify all litter into a single category, focusing on distinguishing small litter from variable and challenging backgrounds.
-
-The results of this experiment, comparing the baseline model with the best student model across all five selected detection architectures, are presented in Figure~\ref{fig:soda_tiled_single_bar}. In most cases, the student models performed better than their baseline counterparts, showing noticeable improvements in detection accuracy, particularly in the more demanding \gls{map}@50–95 metric and precision, recall, and F1 score metrics. However, the \gls{ssd} and SSDLite architectures exhibited little to no improvement.
-Compared to the earlier experiment shown in Figure~\ref{fig:soda01m_bar}, the results here reflect a tougher detection setting, which generally led to lower overall performance. Even so, models trained with the \gls{lupi} framework still showed clear advantages. 
 
 \begin{figure}[!ht]
     \centering
@@ -216,9 +254,13 @@ Compared to the earlier experiment shown in Figure~\ref{fig:soda01m_bar}, the re
     \label{fig:soda_tiled_single_bar}
 \end{figure}
 
+The results of this experiment, comparing the baseline model with the best student model across all five selected detection architectures, are presented in Figure~\ref{fig:soda_tiled_single_bar}. In most cases, the student models performed better than their baseline counterparts, showing noticeable improvements in detection accuracy, particularly in the more demanding \gls{map}@50–95 metric and precision, recall, and F1 score metrics. However, the \gls{ssd} and SSDLite architectures exhibited little to no improvement.
+Compared to the earlier experiment shown in Figure~\ref{fig:soda01m_bar}, the results here reflect a tougher detection setting, which generally led to lower overall performance. Even so, models trained with the \gls{lupi} framework still showed clear advantages. 
+
 Among all models, the student version of Faster \gls{rcnn} delivered the best overall results, followed by \gls{fcos} and RetinaNet. This marks a shift from the previous experiment, where RetinaNet had achieved the highest scores. The performance of Faster \gls{rcnn} suggests that its two-stage architecture may be better suited to the demands of this task than the one-stage approaches. Furthermore, the student models outperformed their baseline counterparts across all evaluated metrics, with accuracy improvements ranging from 0.01 to 0.11. \gls{fcos} and Faster \gls{rcnn} recorded the most noticeable performance boosts compared to their baselines. RetinaNet and SSDLite also benefitted, though to a lesser degree. For \gls{ssd}, the improvement was limited, appearing only in the \gls{map}@75 metric.
 
-Moreover, the findings further support the selection of Faster \gls{rcnn}, \gls{fcos}, and RetinaNet as more effective detection architectures in this context, especially when compared to the lighter alternatives, owing to their structural complexity and performance consistency.
+Moreover, the findings further support the selection of Faster \gls{rcnn}, \gls{fcos}, and RetinaNet as more effective detection architectures in this context, especially when compared to the lighter alternatives, owing to their structural complexity and performance consistency. This continues to suggest that the individual components of these networks, particularly the \gls{fpn}, when trained with privileged information, enable a more precise spatial representation, which in turn facilitates improved detection outcomes. 
+
 In addition to this comparison, a further analysis was carried out to assess the efficacy of different teacher models, following a similar approach to the previous experiment. The outcomes, presented in Table~\ref{tab:teacher_model_metrics_soda_tiled_single}, detail the detection accuracy attained by each teacher architecture. Once again, Faster \gls{rcnn}, \gls{fcos}, and RetinaNet emerged as the top performers, with several of their metrics approaching ideal values, though with slight reductions in some areas. These results indicate that, despite the increased scene complexity, these models continue to demonstrate high detection accuracy.
 
 \begin{table}[!ht]
@@ -241,55 +283,57 @@ In addition to this comparison, a further analysis was carried out to assess the
     \label{tab:teacher_model_metrics_soda_tiled_single}
 \end{table}
 
-The \gls{ssd} and SSDLite teacher models, while producing acceptable results, exhibited a noticeable decline in detection accuracy relative to the other models. This drop was particularly evident when assessing performance through \gls{map} and F1 score. Moreover, their results showed a significant reduction compared to the first experiment, further emphasising the limitations in their ability to generalise, particularly given the added complexity introduced by small object detection.
+The \gls{ssd} and SSDLite teacher models, while producing acceptable results, exhibited a noticeable decline in detection accuracy relative to the other models. This drop was especially evident when assessing performance through \gls{map} and F1 score. Moreover, their results showed a significant reduction compared to the first experiment, further emphasising the limitations in their ability to generalise, particularly given the added complexity introduced by small object detection.
 
 In contrast to the first experiment conducted at 1 metre altitude, Faster \gls{rcnn} emerged as the best-performing teacher and student model in this multi-altitude experiment. RetinaNet, which incorporates focal loss to address class imbalance between foreground and background, underperformed relative to both Faster \gls{rcnn} and \gls{fcos}, with some detection metrics showing a gap of 0.1 or more in terms of the models outlined in Figure \ref{fig:soda_tiled_single_bar}. This suggests that RetinaNet may not be ideally suited for detecting litter in scenes characterised by visually complex and variable backgrounds. \gls{fcos}, leveraging \textit{centre-ness} loss to improve spatial accuracy, delivered results on par with Faster \gls{rcnn} across both baseline and student models, reinforcing its reliability under these conditions.
 
 Notably, the consistent use of the ResNet-\gls{fpn} backbone across Faster \gls{rcnn}, \gls{fcos}, and RetinaNet likely contributed to their relative success. The \gls{fpn}’s capacity for multi-scale object detection aligns well with the demands of \gls{uav}-based litter detection at varying altitudes. This architectural feature appears to bolster compatibility with learning via privileged information.
 
-Across the teacher models, recall remained consistently high, while precision tended to be lower. Once again, this suggests that the models were primarily geared toward reducing false negatives, which is generally beneficial in domains where missing detections is costly. However, in the context of litter detection, this emphasis may be less appropriate, as an increase in false positives can also undermine model reliability.
-
-The training durations for all models employed in this experiment are presented in Figure~\ref{fig:soda_tiled_single_training_time}. The outcomes differ slightly from those of the first experiment (refer to Figure~\ref{fig:soda01m_training_time}). In certain instances, the student model required marginally less time to train than its baseline counterpart, though this difference was observed solely in the case of RetinaNet and was negligible.
-
-\begin{figure}[!ht]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_binary_detection.jpg}
     \caption{Comparison of model training times on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for binary litter detection.}
     \label{fig:soda_tiled_single_training_time}
 \end{figure}
 
+Across the teacher models, recall remained consistently high, while precision tended to be lower. Once again, this suggests that the models were primarily geared toward reducing false negatives, which is generally beneficial in domains where missing detections is costly. However, in the context of litter detection, this emphasis may be less appropriate, as an increase in false positives can also undermine model reliability.
+
+The training durations for all models employed in this experiment are presented in Figure~\ref{fig:soda_tiled_single_training_time}. The outcomes differ slightly from those of the first experiment (refer to Figure~\ref{fig:soda01m_training_time}). In certain instances, the student model required marginally less time to train than its baseline counterpart, though this difference was observed solely in the case of RetinaNet and was negligible.
+
 Due to the increased number of training images, the overall time required rose across all models. For the \gls{ssd} and SSDLite models, both the student and baseline versions required roughly the same duration to complete training. Nevertheless, two further observations stand out. The \gls{fcos} student model took longer to train than its teacher, which might be explained by the added computational cost of the \textit{centre-ness} loss function. This component introduces further complexity to the optimisation process and could account for the increased training time. Additionally, the Faster \gls{rcnn} teacher exhibited a comparatively long training duration. However, the difference in training time between the Faster \gls{rcnn} student and its baseline counterpart was minimal.
 
-Interestingly, the Faster \gls{rcnn} student model required less training time than the RetinaNet student, despite achieving the highest accuracy among all student models. This performance could be partly explained by the versatility of the region proposal mechanism used by the network.
-
-A comparison of model sizes, as shown in Table~\ref{tab:model_configs_soda_tiled_single}, reveals results identical to those in Table~\ref{tab:model_configs_soda01m} from the first experiment. This consistency is due to the use of binary detection models, meaning the model heads remained the same. Despite this, the observed improvement in detection accuracy across most model architectures indicates that student models benefit from the inclusion of \gls{lupi}, without introducing any additional cost in terms of model size or computational load during inference.
-
-\begin{table}[!ht]
+\begin{table}[ht]
     \centering
-    \begin{tabular}{llcc}
+    \begin{adjustbox}{width=\textwidth}
+    \begin{tabular}{llcccc}
         \toprule
-        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} \\
+        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} & \textbf{\gls{gflops}} & \textbf{\gls{fps}} \\
         \midrule
         \multirow{5}{*}{\textbf{Baseline}} 
-            & RetinaNet     & 122.72 & 32.17 \\
-            & FCOS          & 122.32 & 32.06 \\
-            & Faster R-CNN  & 157.54 & 41.30 \\
-            & SSD           & 90.58  & 23.75 \\
-            & SSDLite       & 8.42   & 2.21 \\
+            & RetinaNet   & 122.72 & 32.17 & 254.58 & 38.30 \\
+            & FCOS        & 122.32 & 32.06 & 251.77 & 40.21 \\
+            & Faster R-CNN & 157.54 & 41.30 & 268.56 & 36.29 \\
+            & SSD         & 90.58  & 23.75 & 61.05 & 169.63 \\
+            & SSDLite     & 8.42   & 2.21 & 0.87 & 108.80\\
         \midrule
         \multirow{5}{*}{\textbf{Student}} 
-            & RetinaNet     & 122.72 & 32.17 \\
-            & FCOS          & 122.32 & 32.06 \\
-            & Faster R-CNN  & 157.54 & 41.30 \\
-            & SSD           & 90.58  & 23.75 \\
-            & SSDLite       & 8.42   & 2.21 \\
+            & RetinaNet   & 122.72 & 32.17 & 254.58 & 38.31 \\
+            & FCOS        & 122.32 & 32.06 & 251.77 & 39.94 \\
+            & Faster R-CNN & 157.54 & 41.30 & 268.56 & 36.15 \\
+            & SSD         & 90.58  & 23.75 & 61.05 & 169.73 \\
+            & SSDLite     & 8.42   & 2.21 & 0.87 & 104.89\\
         \bottomrule
     \end{tabular}
-    \caption{Comparison of model configurations for trained baseline and student models on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for binary litter detection, including model type, size in megabytes, and number of parameters (in millions).}
+    \end{adjustbox}
+    \caption{Comparison of model configurations for trained baseline and student models on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for binary litter detection, including model type, size in megabytes, number of parameters (in millions), computational complexity in \gls{gflops}, and inference speed in \gls{fps}.}
     \label{tab:model_configs_soda_tiled_single}
 \end{table}
 
-Overall, this experiment sought to introduce a more challenging setting in which to evaluate the proposed methodology by extending the scope of the 1-metre experiment to incorporate altitude as an additional practical factor. This added dimension increased the task's difficulty. Despite this, the use of \gls{lupi} continued to show improved accuracy in most models, although not universally. A noticeable decline was observed across all metrics, reflecting the increased complexity of the problem being addressed.
+Interestingly, the Faster \gls{rcnn} student model required less training time than the RetinaNet student, despite achieving the highest accuracy among all student models. This performance could be partly explained by the versatility of the region proposal mechanism used by the network.
+
+A comparison of model sizes, as shown in Table~\ref{tab:model_configs_soda_tiled_single}, reveals results identical to those in Table~\ref{tab:model_configs_soda01m} from the first experiment. This consistency is due to the use of binary detection models, meaning the model heads remained the same. Despite this, the observed improvement in detection accuracy across most model architectures indicates that student models benefit from incorporating \gls{lupi} without incurring additional costs in model size or computational load during inference, with only marginal variations in \gls{fps}.
+
+Overall, this experiment sought to introduce a more challenging setting in which to evaluate the proposed methodology by extending the scope of the 1-metre experiment to incorporate altitude as an additional practical factor. This added dimension increased the task's difficulty. Despite this, the use of \gls{lupi} continued to show improved accuracy in most models, although not universally. A noticeable decline was observed across all metrics, reflecting the increased complexity of the problem being tackled.
 
 
 \subsection{Multi-label Litter Detection on the SODA Dataset Across All Altitudes}
@@ -309,8 +353,8 @@ The results, comparing the baseline models with the best-performing student mode
 \end{figure}
 
 Compared to the earlier experiments, this setup presented a more difficult detection scenario, leading to an overall drop in performance. Nevertheless, models trained using the \gls{lupi} framework continued to show a measurable advantage in most cases.
-Among all the models, the student version of \gls{fcos} delivered the best overall results, followed by Faster \gls{rcnn} and RetinaNet. While this represents a shift from previous experiments, the general trend suggests that architectures using the ResNet-\gls{fpn} backbone tend to be more effective for this litter detection task. For all-altitude binary litter detection, Faster \gls{rcnn} produced the best results, but in the multi-label detection experiment, \gls{fcos} was more successful. However, the differences between the two were minimal in both experiments.
-Furthermore, the student models outperformed their baseline counterparts across all evaluated metrics, with accuracy improvements ranging from 0.01 to 0.08. Although these improvements gradually decreased, they still had a notable impact. \gls{fcos} and Faster \gls{rcnn} showed the most significant performance boosts compared to their baselines. RetinaNet and \gls{ssd} also showed some benefit, though to a lesser degree. In contrast, SSDLite showed no improvement in any of the metrics.
+Among all the models, the student version of \gls{fcos} delivered the best overall results, followed by Faster \gls{rcnn} and RetinaNet. While this represents a shift from previous experiments, the general trend suggests that architectures using the ResNet-\gls{fpn} backbone, which benefits from acquiring richer and more precise spatial information, tend to be more effective for this litter detection task. For all-altitude binary litter detection, Faster \gls{rcnn} produced the best results, but in the multi-label detection experiment, \gls{fcos} was more successful. However, the differences between the two were minimal in both experiments.
+Furthermore, the student models outperformed their baseline counterparts across all evaluated metrics, with accuracy improvements ranging from 0.01 to 0.08. Although these improvements gradually decreased, they still had a noticeable impact. \gls{fcos} and Faster \gls{rcnn} showed the most significant performance boosts compared to their baselines. RetinaNet and \gls{ssd} also showed some benefit, though to a lesser degree. In contrast, SSDLite showed no improvement in any of the metrics.
 
 Having addressed multi-label detection, a class-specific analysis of detection accuracy was also conducted. Figure~\ref{fig:soda_tiled_multi_per_class} presents this evaluation using the \gls{ap}@50--95 metric. As seen, the same trend in model performance is maintained across architecture types. \gls{fcos} and Faster \gls{rcnn} again emerged as the best-performing models, followed by RetinaNet, \gls{ssd}, and SSDLite. The advantage offered by the \gls{lupi} framework is especially pronounced here, with student models outperforming their baseline counterparts in most individual \gls{ap} scores.
 
@@ -321,12 +365,12 @@ Having addressed multi-label detection, a class-specific analysis of detection a
     \label{fig:soda_tiled_multi_per_class}
 \end{figure}
 
-When this performance is compared against the class imbalance found in the \gls{soda} dataset, as shown in Figure~\ref{fig:soda_annotation_distribution}, a consistent pattern is observed. The classes \textit{Drink Can} and \textit{Clear Plastic Bottle}, which are most frequent in the dataset, tend to record the highest \gls{ap} scores. Curiously, although \textit{Glass Bottle} is more common than several other classes, no detector in this study successfully identified it. This could be attributed to it being misclassified as \textit{Glass Jar}, due to the visual similarity between the two, leading to incorrect predictions.
+When this performance is compared against the class imbalance found in the \gls{soda} dataset, as shown in Figure~\ref{fig:soda_annotation_distribution}, a consistent pattern is observed. The classes \textit{drink can} and \textit{clear plastic bottle}, which are most frequent in the dataset, tend to record the highest \gls{ap} scores. Curiously, although \textit{glass bottle} is more common than several other classes, no detector in this study successfully identified it. This could be attributed to it being misclassified as \textit{glass jar}, due to the visual similarity between the two, leading to incorrect predictions.
 
-Unexpectedly, \textit{Other Plastic Bottle} performed quite well despite its relatively low frequency in the dataset. This suggests that, in the context of litter detection across varied backgrounds, this particular class may present more distinct visual features, making it easier to detect than more transparent items, which blend more easily with their surroundings.
+Unexpectedly, the models also performed well in detecting \textit{other plastic bottle}, despite its relatively low frequency in the dataset. This suggests that, in the context of litter detection across varied backgrounds, this particular class may present more distinct visual features, making it easier to detect than more transparent items, which blend more easily with their surroundings.
 
 In addition to the class-specific results, the confusion matrix for this approach provides further insight, as shown in Figure~\ref{fig:cm_soda}. This figure presents the normalised confusion matrix for the best-performing model, \gls{fcos}. Both baseline and student versions exhibit a broadly diagonal structure, which is expected in successful classification scenarios. However, a considerable number of litter items remain unclassified, indicating a high rate of missed detections. Moreover, a portion of the litter is misclassified under incorrect categories, suggesting a degree of confusion between visually similar classes.
-\begin{figure}[!htbp]
+\begin{figure}[p]
   \centering
   \begin{tabular}{c}
     \includegraphics[width=0.7\textwidth]{cm1.png} \\
@@ -364,10 +408,10 @@ In addition to the above comparisons, an extended analysis was conducted to eval
     \label{tab:teacher_model_metrics_soda_tiled_multi}
 \end{table}
  
-The \gls{ssd} and SSDLite teacher models once again displayed a marked drop in detection accuracy, both in comparison to other architectures and relative to their own performance in the preceding experiment. This further exacerbates their limited capacity to generalise within this more demanding detection context. As observed previously, Faster \gls{rcnn} remained the most effective teacher model overall. However, despite being the second-best teacher, \gls{fcos} produced the highest-performing student in this multi-label setup. RetinaNet continued to lag behind both Faster \gls{rcnn} and \gls{fcos}, showing comparatively weaker performance.
+The \gls{ssd} and SSDLite teacher models once again displayed a marked drop in detection accuracy, both in comparison to other architectures and relative to their performance in the preceding experiment. This further exacerbates their limited capacity to generalise within this more demanding detection context. As observed previously, Faster \gls{rcnn} remained the most effective teacher model overall. However, despite being the second-best teacher, \gls{fcos} produced the highest-performing student in this multi-label setup. RetinaNet continued to lag behind both Faster \gls{rcnn} and \gls{fcos}, showing comparatively weaker performance.
 Among all teacher models, recall scores were consistently high, while precision varied more significantly. Notably, SSDLite recorded a precision score of zero, whereas the remaining models achieved more acceptable precision values, ranging from 0.59 to 0.96.
 
-The training durations for all models used in this experiment are shown in Figure~\ref{fig:soda_tiled_multi_training_time}. These results contrast significantly with those from the first experiment (see Figure~\ref{fig:soda_tiled_single_training_time}). Overall, training times increased across the board. Notably, the student models required substantially more time to train compared to their baseline counterparts, marking a sharp rise relative to the earlier experiment.
+The training durations for all models used in this experiment are shown in Figure~\ref{fig:soda_tiled_multi_training_time}. These results contrast significantly with those from the previous experiment (see Figure~\ref{fig:soda_tiled_single_training_time}). Overall, training times increased across the board. Notably, the student models required substantially more time to train compared to their baseline counterparts, marking a sharp rise relative to the earlier experiment.
 
 \begin{figure}[!ht]
     \centering
@@ -378,30 +422,32 @@ The training durations for all models used in this experiment are shown in Figur
 
 Interestingly, the teacher models now required less training time than their corresponding student models, a trend observed across all architectures except for Faster \gls{rcnn}. The \gls{fcos} student model, despite requiring more training time than RetinaNet, achieved the best performance overall. In contrast, Faster \gls{rcnn} trained faster than RetinaNet, and both Faster \gls{rcnn} and \gls{fcos} required less cumulative time for training (teacher and student combined) than the RetinaNet model. Meanwhile, \gls{ssd} and SSDLite remained the fastest to train, maintaining a similar trend to that observed in previous experimental setups.
 
-A comparison of model sizes, as outlined in Table~\ref{tab:model_configs_soda_tiled_multi}, reveals results that differ slightly from those observed in the previous experiments. This variation stems from the shift to multi-label detection, which required modifying the model head to predict a broader range of categories. Consequently, this adjustment led to an expected increase in the parameter count within the detection head, consistent with standard object detection practices. Nonetheless, the overall trend of improved detection accuracy across most model architectures suggests that student models continue to benefit from the application of \gls{lupi}, without incurring any added cost in terms of model size or computational demand during inference.
+A comparison of model sizes and inference speeds, as outlined in Table~\ref{tab:model_configs_soda_tiled_multi}, reveals results that differ slightly from those observed in the previous experiments. This variation stems from the shift to multi-label detection, which required modifying the model head to predict a broader range of categories. Consequently, this adjustment led to an expected increase in the parameter count within the detection head, consistent with standard object detection practices. Nonetheless, the overall trend of improved detection accuracy across most model architectures suggests that student models continue to benefit from the application of \gls{lupi}, without incurring any added cost in terms of model size or computational demand during inference, as also evident by the similar \gls{gflops} and \gls{fps} values.
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{llcc}
+    \begin{adjustbox}{width=\textwidth}
+    \begin{tabular}{llcccc}
         \toprule
-        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} \\
+        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} & \textbf{\gls{gflops}} & \textbf{\gls{fps}} \\
         \midrule
         \multirow{5}{*}{\textbf{Baseline}} 
-            & RetinaNet     & 123.11 & 32.27 \\
-            & FCOS          & 122.36 & 32.08 \\
-            & Faster R-CNN  & 157.64 & 41.32 \\
-            & SSD           & 93.13  & 24.41 \\
-            & SSDLite       & 8.68   & 2.28 \\
+            & RetinaNet     & 123.11 & 32.27 & 257.35 & 40.38 \\
+            & FCOS          & 122.36 & 32.08 & 252.08 & 40.88 \\
+            & Faster R-CNN  & 157.64 & 41.32 & 268.61 & 37.45 \\
+            & SSD           & 93.13  & 24.41 & 61.55 & 147.09 \\
+            & SSDLite       & 8.68   & 2.28 & 0.89 & 92.65\\
         \midrule
         \multirow{5}{*}{\textbf{Student}} 
-            & RetinaNet     & 123.11 & 32.27 \\
-            & FCOS          & 122.36 & 32.08 \\
-            & Faster R-CNN  & 157.64 & 41.32 \\
-            & SSD           & 93.13  & 24.41 \\
-            & SSDLite       & 8.68   & 2.28 \\
+            & RetinaNet     & 123.11 & 32.27 & 257.35 & 38.30 \\
+            & FCOS          & 122.36 & 32.08 & 252.08 & 39.26 \\
+            & Faster R-CNN  & 157.64 & 41.32 & 268.61 & 36.65 \\
+            & SSD           & 93.13  & 24.41 & 61.55 & 142.24 \\
+            & SSDLite       & 8.68   & 2.28 & 0.89 & 97.64\\
         \bottomrule
     \end{tabular}
-    \caption{Comparison of model configurations for trained baseline and student models on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection, including model type, size in megabytes, and number of parameters (in millions).}
+    \end{adjustbox}
+    \caption{Comparison of model configurations for trained baseline and student models on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection, including model type, size in megabytes, number of parameters (in millions), computational complexity in \gls{gflops}, and inference speed in \gls{fps}.}
     \label{tab:model_configs_soda_tiled_multi}
 \end{table}
 
@@ -410,7 +456,7 @@ Across these experiments, which span various realistic contexts and model archit
 \section{Cross-Dataset Evaluation}
 \label{sec:5_cross_dataset_exp}
 
-In addition to the within-dataset evaluation, a separate cross-dataset examination was conducted to verify whether the models trained on the \gls{soda} dataset exhibited more consistent learning when trained with \gls{lupi}, compared to their baseline counterparts, in alignment with objective \textbf{O3}. To this end, cross-dataset testing was carried out using the two other available \gls{uav}-based litter detection datasets: \gls{bdw} and UAVVaste. For the \gls{bdw} dataset, models trained on the \gls{soda} dataset at 1-metre altitude were selected, given their closer alignment with the characteristics of the \gls{bdw} data (see Figure~\ref{fig:bdw_samples}). For the UAVVaste evaluation, the binary litter detection models trained on the 3$\times$3 tiled version of the \gls{soda} dataset were used, again due to the similarity in visual layout and scene composition (refer to Figure~\ref{fig:uavvaste_samples}). In both cases, the models applied were trained specifically for binary litter detection.
+In addition to the within-dataset evaluation, a separate cross-dataset examination was conducted to verify whether the models trained on the \gls{soda} dataset exhibited more consistent learning when trained with \gls{lupi}, compared to their baseline counterparts, in alignment with objective \textbf{O3}. To this end, cross-dataset testing was carried out using the two other available \gls{uav}-based litter detection datasets: \gls{bdw} \cite{bdwdataset} and UAVVaste \cite{uavvaste}. For the \gls{bdw} dataset, models trained on the \gls{soda} dataset at 1-metre altitude were selected, given their closer alignment with the characteristics of the \gls{bdw} data (see Figure~\ref{fig:bdw_samples}). For the UAVVaste evaluation, the binary litter detection models trained on the 3$\times$3 tiled version of the \gls{soda} dataset were used, again due to the similarity in visual layout and scene composition (refer to Figure~\ref{fig:uavvaste_samples}). In both cases, the models applied were trained specifically for binary litter detection.
 
 \subsection{Binary Litter Detection on the BDW Dataset}
 \label{subsec:5_bdw_exp}
@@ -430,7 +476,7 @@ Models using the ResNet-\gls{fpn} backbone continued to perform reliably well, s
 \subsection{Binary Litter Detection on the UAVVaste Dataset}
 \label{subsec:5_uavvaste_exp}
 
-The cross-dataset evaluation results on the UAVVaste dataset, shown in Figure \ref{fig:uavvaste_bar}, largely confirm the earlier trend: the proposed approach incorporating \gls{lupi} tends to improve detection performance for student models over their baseline counterparts. In this setup, the binary detection models trained on the 3$\times$3 tiled \gls{soda} dataset were evaluated on the UAVVaste data.
+The cross-dataset evaluation results on the UAVVaste dataset, shown in Figure \ref{fig:uavvaste_bar}, largely confirm the earlier trend: the proposed approach incorporating \gls{lupi} tends to improve detection performance for student models over their baseline counterparts. In this setup, the binary detection models trained on the 3$\times$3 tiled \gls{soda} dataset were evaluated on the UAVVaste test set.
 
 \begin{figure}[!ht]
     \centering
@@ -444,11 +490,170 @@ Faster \gls{rcnn}, \gls{fcos}, and RetinaNet all produced better results under t
 The weaker outcomes from SSDLite and \gls{ssd} once again highlight their unsuitability for \gls{uav}-based litter detection, suggesting that the limited improvements observed with \gls{lupi} stem from the inherent inefficiency of these architectures in addressing this task.
 The drop in performance across all detectors likely stems from how litter is represented in each dataset. As shown in Figure \ref{fig:uavvaste_samples}, the UAVVaste dataset contains smaller and visually distinct litter representations compared to the \gls{soda} dataset. Even so, several models produced accurate predictions, with most student models outperforming their baseline counterparts.
 
+\section{Object Size-Based Performance Analysis}
+\label{sec:5_object_size_performance}
+
+In continuation of the within-dataset and cross-dataset evaluations, which have consistently demonstrated the effectiveness of the proposed approach compared to baseline models, it is important to highlight a fundamental challenge posed by the problem of \gls{uav}-based litter detection: its inherent focus on small object detection. While improvements in overall metrics such as \gls{map} and \gls{mar} have been observed, a more detailed analysis is required to determine whether incorporating the \gls{lupi} framework into existing object detection architectures specifically enhances the detection of small objects.
+
+Accordingly, this section examines this aspect in greater detail, in line with objectives \textbf{O2} and \textbf{O3}. The \gls{coco} evaluation metrics are utilised, which expand upon the standard metrics introduced in Section \ref{sec:4_metrics} by calculating \gls{map} and \gls{mar} separately for small, medium, and large objects. These size categories follow the conventions established by the \gls{coco} dataset, with definitions consistent with those outlined earlier in Section \ref{sec:5_tiling_exp}. Essentially, this involves applying the standard metrics to subsets of objects grouped by size. Furthermore, the analysis focuses on results from both within- and cross-dataset evaluations, aiming to determine whether the proposed methodology offers distinct improvements across object sizes, with an emphasis on small object detection.
+
+\begin{table*}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.35} % increase row height
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{llccccccc}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{mAP@50--95} & \(\mathbf{mAP}^{\text{Small}}\) & \(\mathbf{mAP}^{\text{Medium}}\) & \(\mathbf{mAP}^{\text{Large}}\) & \(\mathbf{mAR}^{\text{Small}}\) & \(\mathbf{mAR}^{\text{Medium}}\) & \(\mathbf{mAR}^{\text{Large}}\) \\ \hline
+\multirow{2}{*}{\textbf{RetinaNet}} 
+ & \textbf{Baseline}      & 0.61 & --    & 0.44 & 0.64 & --    & 0.50 & 0.71 \\
+ & \textbf{Best Student}  & \textbf{0.76} & --    & \textbf{0.62} & \textbf{0.79} & --    & \textbf{0.68} & \textbf{0.83} \\ \hline
+\multirow{2}{*}{\textbf{FCOS}} 
+ & \textbf{Baseline}      & 0.68 & --    & 0.51 & 0.72 & --    & 0.59 & 0.76 \\
+ & \textbf{Best Student}  & \textbf{0.73} & --    & \textbf{0.62} & \textbf{0.76} & --    & \textbf{0.67} & \textbf{0.80} \\ \hline
+\multirow{2}{*}{\textbf{Faster R-CNN}} 
+ & \textbf{Baseline}      & 0.65 & --    & 0.43 & 0.69 & --    & 0.50 & 0.73 \\
+ & \textbf{Best Student}  & \textbf{0.74} & --    & \textbf{0.67} & \textbf{0.76} & --    & \textbf{0.70} & \textbf{0.81} \\ \hline
+\multirow{2}{*}{\textbf{SSD}} 
+ & \textbf{Baseline}      & 0.45 & --    & 0.09 & 0.54 & --    & 0.11 & 0.58 \\
+ & \textbf{Best Student}  & \textbf{0.59} & --    & \textbf{0.50} & \textbf{0.61} & --    & \textbf{0.55} & \textbf{0.66} \\ \hline
+\multirow{2}{*}{\textbf{SSDLite}} 
+ & \textbf{Baseline}      & 0.30 & --    & 0.00 & 0.37 & --    & 0.00 & 0.43 \\
+ & \textbf{Best Student}  & \textbf{0.41} & --    & \textbf{0.01} & \textbf{0.50} & --    & \textbf{0.01} & \textbf{0.54} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the \gls{soda} dataset at 1-metre altitude for binary litter detection, with results reported separately for each object size category.}
+\label{tab:soda01m_object_sizes_split}
+\end{table*}
+
+Examining the results for the \gls{soda} dataset at 1-metre altitude for binary litter detection, as detailed in Table \ref{tab:soda01m_object_sizes_split}, it is important to note that both $\text{mAP}^{\text{Small}}$ and $\text{mAR}^{\text{Small}}$ are undefined, since this subset does not contain any small objects. However, for the remaining object sizes, a substantial improvement is evident, with the best student models significantly outperforming the baseline models. This is especially noticeable for RetinaNet, Faster \gls{rcnn}, and \gls{fcos} architectures, where consistent improvements across all metrics are observed, underscoring their enhanced ability to detect medium to large objects. While improvements for larger objects were expected and are consistent throughout the experiments, it is interesting to observe that \gls{ssd} achieved the largest increase in $\text{mAP}^{\text{Medium}}$ compared to the other models, whereas SSDLite exhibited the smallest gains, a trend that is mirrored in the $\text{mAR}^{\text{Medium}}$ metric as well.
+
+\begin{table*}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.35} % increase row height
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{llccccccc}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{mAP@50--95} & \(\mathbf{mAP}^{\text{Small}}\) & \(\mathbf{mAP}^{\text{Medium}}\) & \(\mathbf{mAP}^{\text{Large}}\) & \(\mathbf{mAR}^{\text{Small}}\) & \(\mathbf{mAR}^{\text{Medium}}\) & \(\mathbf{mAR}^{\text{Large}}\) \\ \hline
+\multirow{2}{*}{\textbf{RetinaNet}} 
+ & \textbf{Baseline}      & 0.20 & 0.08 & 0.26 & 0.41 & 0.10 & 0.29 & 0.47 \\
+ & \textbf{Best Student}  & \textbf{0.31} & \textbf{0.11} & \textbf{0.43} & \textbf{0.59} & \textbf{0.14} & \textbf{0.50} & \textbf{0.65} \\ \hline
+\multirow{2}{*}{\textbf{FCOS}} 
+ & \textbf{Baseline}      & 0.29 & 0.15 & 0.37 & 0.49 & 0.19 & 0.44 & 0.54 \\
+ & \textbf{Best Student}  & \textbf{0.41} & \textbf{0.27} & \textbf{0.50} & \textbf{0.62} & \textbf{0.34} & \textbf{0.57} & \textbf{0.67} \\ \hline
+\multirow{2}{*}{\textbf{Faster R-CNN}} 
+ & \textbf{Baseline}      & 0.29 & 0.13 & 0.36 & 0.55 & 0.16 & 0.44 & 0.62 \\
+ & \textbf{Best Student}  & \textbf{0.43} & \textbf{0.28} & \textbf{0.48} & \textbf{0.68} & \textbf{0.33} & \textbf{0.55} & \textbf{0.74} \\ \hline
+\multirow{2}{*}{\textbf{SSD}} 
+ & \textbf{Baseline}      & 0.18 & \textbf{0.02} & 0.25 & 0.43 & \textbf{0.03} & 0.30 & 0.49 \\
+ & \textbf{Best Student}  & \textbf{0.18} & 0.01 & \textbf{0.25} & \textbf{0.49} & 0.01 & \textbf{0.30} & \textbf{0.56} \\ \hline
+\multirow{2}{*}{\textbf{SSDLite}} 
+ & \textbf{Baseline}      & 0.08 & 0.00 & 0.01 & 0.39 & 0.00 & 0.00 & 0.47 \\
+ & \textbf{Best Student}  & \textbf{0.10} & 0.00 & \textbf{0.01} & \textbf{0.47} & 0.00 & \textbf{0.01} & \textbf{0.54} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the 3$\times$3 \gls{soda} dataset across all altitudes for binary litter detection, with results reported separately for each object size category.}
+\label{tab:soda_tiled_binary_object_sizes_split}
+\end{table*}
+
+Tackling a more challenging problem with binary litter detection on the \gls{soda} dataset, the application of a 3$\times$3 tiling preprocessing step enables more detailed analysis, as shown in Table \ref{tab:soda_tiled_binary_object_sizes_split}. Unlike before, this dataset subset now includes small objects, thus $\text{mAP}^{\text{Small}}$ and $\text{mAR}^{\text{Small}}$ are defined. Notably, RetinaNet, \gls{fcos}, and Faster \gls{rcnn} demonstrate substantial improvements across object sizes. However, these advances are less apparent for the \gls{ssd} and SSDLite architectures. As expected, the highest scores are generally observed for medium and large objects, but meaningful improvements in $\text{mAP}^{\text{Small}}$ and $\text{mAR}^{\text{Small}}$ are also visible, particularly for models with ResNet-\gls{fpn} backbones. The other architectures tend to perform worse in this regard, consistent with observations from Subsection \ref{subsec:5_soda_tiled_single_dataset_exp}. Interestingly, \gls{ssd} is the only case where the baseline outperforms the student model on small object metrics, which may be attributed to the architectural limitations of \gls{ssd} in capturing fine-grained features for small objects, resulting in less effective knowledge transfer through \gls{lupi} compared to the other models.
+
+Continuing to increase the complexity of the problem by targeting multi-label detection on the 3$\times$3 tiled \gls{soda} dataset, the difficulty of the task naturally rises, and the magnitude of improvements begins to diminish. Nonetheless, Table \ref{tab:soda_tiled_multi_object_sizes_split} continues to illustrate that the proposed approach generally improves multi-label small object detection. Specifically, marginal improvements were noted for Faster \gls{rcnn}, \gls{fcos}, and to a lesser extent \gls{ssd}. However, for RetinaNet and SSDLite, the baseline models outperformed the student models in terms of small object detection. Despite this, the student models consistently outperformed the baselines on medium and large object metrics. These findings align with observations from Subsection \ref{subsec:5_soda_tiled_multi_dataset_exp}, where a significant drop in \gls{map} and \gls{mar} scores was recorded due to the increased complexity. Still, even with this heightened challenge, a marginal benefit from adopting the proposed methodology remains evident.
+
+\begin{table*}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.5} % increase row height
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{llccccccc}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{mAP@50--95} & \(\mathbf{mAP}^{\text{Small}}\) & \(\mathbf{mAP}^{\text{Medium}}\) & \(\mathbf{mAP}^{\text{Large}}\) & \(\mathbf{mAR}^{\text{Small}}\) & \(\mathbf{mAR}^{\text{Medium}}\) & \(\mathbf{mAR}^{\text{Large}}\) \\ \hline
+\multirow{2}{*}{\textbf{RetinaNet}} 
+ & \textbf{Baseline}      & 0.06 & \textbf{0.02} & 0.09 & 0.14 & \textbf{0.02} & 0.11 & 0.18 \\
+ & \textbf{Best Student}  & \textbf{0.10} & 0.01 & \textbf{0.14} & \textbf{0.26} & 0.01 & \textbf{0.16} & \textbf{0.31} \\ \hline
+\multirow{2}{*}{\textbf{FCOS}} 
+ & \textbf{Baseline}      & 0.16 & 0.11 & 0.20 & 0.24 & 0.14 & 0.26 & 0.30 \\
+ & \textbf{Best Student}  & \textbf{0.23} & \textbf{0.13} & \textbf{0.30} & \textbf{0.35} & \textbf{0.17} & \textbf{0.38} & \textbf{0.46} \\ \hline
+\multirow{2}{*}{\textbf{Faster R-CNN}} 
+ & \textbf{Baseline}      & 0.14 & 0.08 & 0.20 & 0.22 & 0.10 & 0.24 & 0.29 \\
+ & \textbf{Best Student}  & \textbf{0.22} & \textbf{0.14} & \textbf{0.26} & \textbf{0.33} & \textbf{0.19} & \textbf{0.33} & \textbf{0.39} \\ \hline
+\multirow{2}{*}{\textbf{SSD}} 
+ & \textbf{Baseline}      & 0.04 & 0.01 & 0.07 & 0.11 & 0.00 & 0.08 & 0.17 \\
+ & \textbf{Best Student}  & \textbf{0.05} & \textbf{0.01} & \textbf{0.10} & \textbf{0.11} & \textbf{0.01} & \textbf{0.12} & \textbf{0.18} \\ \hline
+\multirow{2}{*}{\textbf{SSDLite}} 
+ & \textbf{Baseline}      & 0.03 & 0.00 & 0.00 & 0.12 & 0.00 & 0.00 & 0.17 \\
+ & \textbf{Best Student}  & \textbf{0.03} & 0.00 & 0.00 & \textbf{0.13} & 0.00 & 0.00 & \textbf{0.18} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the 3$\times$3 \gls{soda} dataset across all altitudes for multi-label litter detection, with results reported separately for each object size category.}
+\label{tab:soda_tiled_multi_object_sizes_split}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.5} % increase row height
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{llccccccc}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{mAP@50--95} & \(\mathbf{mAP}^{\text{Small}}\) & \(\mathbf{mAP}^{\text{Medium}}\) & \(\mathbf{mAP}^{\text{Large}}\) & \(\mathbf{mAR}^{\text{Small}}\) & \(\mathbf{mAR}^{\text{Medium}}\) & \(\mathbf{mAR}^{\text{Large}}\) \\ \hline
+\multirow{2}{*}{\textbf{RetinaNet}} 
+ & \textbf{Baseline}      & 0.29 & --    & 0.14 & 0.35 & --    & 0.20 & 0.47 \\
+ & \textbf{Best Student}  & \textbf{0.42} & --    & \textbf{0.26} & \textbf{0.49} & --    & \textbf{0.32} & \textbf{0.56} \\ \hline
+\multirow{2}{*}{\textbf{FCOS}} 
+ & \textbf{Baseline}      & 0.34 & --    & 0.14 & 0.42 & --    & 0.27 & 0.51 \\
+ & \textbf{Best Student}  & \textbf{0.46} & --    & \textbf{0.26} & \textbf{0.54} & --    & \textbf{0.39} & \textbf{0.62} \\ \hline
+\multirow{2}{*}{\textbf{Faster R-CNN}} 
+ & \textbf{Baseline}      & 0.31 & --    & 0.13 & 0.37 & --    & 0.18 & 0.48 \\
+ & \textbf{Best Student}  & \textbf{0.41} & --    & \textbf{0.24} & \textbf{0.47} & --    & \textbf{0.29} & \textbf{0.55} \\ \hline
+\multirow{2}{*}{\textbf{SSD}} 
+ & \textbf{Baseline}      & 0.21 & --    & 0.07 & 0.26 & --    & 0.09 & 0.32 \\
+ & \textbf{Best Student}  & \textbf{0.37} & --    & \textbf{0.19} & \textbf{0.43} & --    & \textbf{0.25} & \textbf{0.52} \\ \hline
+\multirow{2}{*}{\textbf{SSDLite}} 
+ & \textbf{Baseline}      & 0.05 & --    & 0.00 & 0.07 & --    & 0.00 & 0.08 \\
+ & \textbf{Best Student}  & \textbf{0.09} & --    & \textbf{0.01} & \textbf{0.12} & --    & 0.00 & \textbf{0.13} \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the \gls{bdw} dataset, with models trained on the \gls{soda} dataset captured at a 1‐metre altitude for binary litter detection, and results reported separately for each object size category.}
+\label{tab:bdw_object_sizes_split}
+\end{table*}
+
+The results of the across-dataset experiments, segregated by object sizes, continue to align with the previously observed trends. As shown in Tables \ref{tab:bdw_object_sizes_split} and \ref{tab:uavvaste_object_sizes_split} for the \gls{bdw} and UAVVaste datasets, respectively, the findings further support this notion. For the \gls{bdw} dataset, small object detection metrics are undefined due to the absence of small objects. In this case, improvements are consistently seen in the medium and large object categories, with student models outperforming their baseline counterparts. The most pronounced improvements are observed for large objects, which is expected. While all models demonstrate this improvement, some achieve it to a greater extent than others, consistent with the observations in Subsection \ref{subsec:5_bdw_exp}.
+
+For the UAVVaste dataset, a relatively clear improvement in small object detection can be observed for the majority of models, with only a few outliers. This pattern mirrors the findings in Subsection \ref{subsec:5_uavvaste_exp}. While the improvements for small objects are marginal, the largest performance boosts remain in the large object category, as previously emphasised. Overall, the across-dataset evaluations confirm that the proposed methodology enables student models to outperform baseline models, a trend that persists across all experiments.
+
+\begin{table*}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.5} % increase row height
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{llccccccc}
+\hline
+\textbf{Model} & \textbf{Type} & \textbf{mAP@50--95} & \(\mathbf{mAP}^{\text{Small}}\) & \(\mathbf{mAP}^{\text{Medium}}\) & \(\mathbf{mAP}^{\text{Large}}\) & \(\mathbf{mAR}^{\text{Small}}\) & \(\mathbf{mAR}^{\text{Medium}}\) & \(\mathbf{mAR}^{\text{Large}}\) \\ \hline
+\multirow{2}{*}{\textbf{RetinaNet}} 
+ & \textbf{Baseline}      & 0.03 & 0.02 & 0.10 & 0.04 & 0.02 & 0.16 & 0.20 \\
+ & \textbf{Best Student}  & \textbf{0.06} & \textbf{0.04} & \textbf{0.22} & \textbf{0.25} & \textbf{0.05} & \textbf{0.29} & \textbf{0.25} \\ \hline
+\multirow{2}{*}{\textbf{FCOS}} 
+ & \textbf{Baseline}      & 0.05 & 0.04 & 0.15 & 0.00 & 0.05 & 0.24 & 0.00 \\
+ & \textbf{Best Student}  & \textbf{0.13} & \textbf{0.09} & \textbf{0.34} & \textbf{0.40} & \textbf{0.13} & \textbf{0.42} & \textbf{0.40} \\ \hline
+\multirow{2}{*}{\textbf{Faster R-CNN}} 
+ & \textbf{Baseline}      & 0.05 & 0.03 & 0.21 & 0.11 & 0.03 & 0.31 & \textbf{0.45} \\
+ & \textbf{Best Student}  & \textbf{0.16} & \textbf{0.13} & \textbf{0.39} & \textbf{0.40} & \textbf{0.17} & \textbf{0.50} & 0.40 \\ \hline
+\multirow{2}{*}{\textbf{SSD}} 
+ & \textbf{Baseline}      & 0.02 & 0.01 & 0.08 & 0.09 & 0.01 & \textbf{0.17} & 0.35 \\
+ & \textbf{Best Student}  & \textbf{0.02} & \textbf{0.01} & \textbf{0.09} & \textbf{0.12} & \textbf{0.01} & 0.15 & \textbf{0.35} \\ \hline
+\multirow{2}{*}{\textbf{SSDLite}} 
+ & \textbf{Baseline}      & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+ & \textbf{Best Student}  & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the UAVVaste dataset, with models trained on the 3$\times$3 \gls{soda} dataset across all altitudes for binary litter detection, and results reported separately for each object size category.}
+\label{tab:uavvaste_object_sizes_split}
+\end{table*}
+
+Taken together, these findings suggest that the proposed methodology is capable of delivering improvements across datasets and object size categories, albeit with benefits that are at times modest. The recurrence of such outcomes under varied experimental conditions points to a measure of robustness in the approach. Although not uniformly transformative, the observed enhancements indicate that the method holds meaningful potential for tackling a range of object detection scenarios.
+
 \section{Pascal VOC 2012 Evaluation}
 \label{sec:5_pascal_voc_dataset_exp}
-% Sliema Ghalik Marija, bil Grazzja Mimlija, Imbierek il Frott tal Guf Tieghek Gesu', Qaddisa Marija Omm Alla Itlob ghalin il Midinbin, Issa u Fis Siegha tal mewt taghna. Amen. Grazzi
+% Sliema Ghalik Marija, bil Grazzja Mimlija, IMbierka Inti u Imbierek il Frott tal Guf Tieghek Gesu', Qaddisa Marija Omm Alla Itlob ghalin il Midinbin, Issa u Fis Siegha tal mewt taghna. Amen. Grazzi
 
-Although it has consistently been shown across both within-dataset and cross-dataset evaluations that integrating \gls{lupi} into object detection allows student models to outperform their baselines, proven even in demanding scenarios such as that of \gls{uav}-based litter detection and small object detection. A final experiment was conducted to verify the generalisability of the proposed approach across larger object detection datasets with a larger number of categories, addressing fully objective \textbf{O4}. To this end, the Pascal \gls{voc} 2012 dataset was selected for its broader range of object categories and increased complexity. With 20 object classes, the dataset provides a more challenging test environment. As detailed in Subsection \ref{subsec:4_pascal_voc}, Pascal VOC is a widely recognised benchmark for object detection. It contains 17,112 images in total, with 13,690 used for training and 3,422 for validation in this study.
+Although it has consistently been shown across both within-dataset and cross-dataset evaluations that integrating \gls{lupi} into object detection allows student models to outperform their baselines, proven even in demanding scenarios such as that of \gls{uav}-based litter detection and small object detection. A final experiment was conducted to verify the generalisability of the proposed approach across larger object detection datasets with a larger number of categories, addressing fully objective \textbf{O4}. To this end, the Pascal \gls{voc} 2012 dataset was selected for its broader range of object categories and increased complexity. With 20 object classes, the dataset provides a more challenging test environment. As detailed in Subsection \ref{subsec:4_pascal_voc}, Pascal \gls{voc} is a widely recognised benchmark for object detection. It contains 17,112 images in total, with 13,690 used for training and 3,422 for validation in this study.
 
 The results of this experiment, comparing the baseline model with the best student model across five selected detection architectures, are shown in Figure \ref{fig:pascal_voc_bar}. In most architectures, the student model outperformed the baseline, demonstrating a marginal improvement in detection accuracy when compared to previous experiments, especially in the challenging \gls{map}@50–95 metric. Among the models tested, the SSDLite student achieved the highest performance, followed by Faster \gls{rcnn}, \gls{fcos}, and \gls{ssd} student models. Across all metrics, the student models showed an accuracy improvement ranging from 0.02 to 0.05, although slightly less when compared to the other models presented in this study.
 
@@ -459,10 +664,10 @@ The results of this experiment, comparing the baseline model with the best stude
     \label{fig:pascal_voc_bar}
 \end{figure}
 
-Unfortunately, the Faster \gls{rcnn} student architecture performed worse than its baseline counterpart, while \gls{ssd} and SSDLite models showed the largest improvements. Interestingly, the architectures using the ResNet-\gls{fpn} architecture performed relatively worse than the others, in contrast to the litter detection experiments. This can be attributed to the nature of the data, as Pascal \gls{voc} contains images at relatively smaller resolutions. This, combined with the initialisation of pre-trained weights from models trained on the \gls{coco} dataset (which contains images of higher resolution), may have contributed to this performance discrepancy. On the other hand, \gls{ssd} and SSDLite take low-resolution images as input, which makes them more suited for this type of data and likely explains their superior performance. In addition to this, Faster \gls{rcnn} showed limited improvement, which may be due to the teacher model providing additional region proposals to reduce false positives, a strategy believed to improve detection accuracy.
+Unfortunately, the Faster \gls{rcnn} student architecture performed worse than its baseline counterpart, while \gls{ssd} and SSDLite models showed the largest improvements. Interestingly, the architectures using the ResNet-\gls{fpn} architecture performed relatively worse than the others, in contrast to the litter detection experiments. This can be attributed to the nature of the data, as Pascal \gls{voc} contains images at relatively smaller resolutions. This, combined with the initialisation of pre-trained weights from models trained on the \gls{coco} dataset (which contains images of higher resolution), may have contributed to this performance discrepancy. It can also be the case that, in scenes with overlapping objects, the nature of the privileged information confuses the \gls{rpn} in Faster \gls{rcnn}, leading to less reliable proposal generation and contributing to its poorer performance in comparison to the baseline. On the other hand, \gls{ssd} and SSDLite take low-resolution images as input, which makes them more suited for this type of data and likely explains their superior performance. In addition to this, Faster \gls{rcnn} showed limited improvement, which may be due to the teacher model providing additional region proposals to reduce false positives, a strategy believed to improve detection accuracy.
 
 Upon reviewing the class-specific metrics for each model, as detailed in Figure \ref{fig:pascal_voc_per_class}, a notable observation becomes apparent.
- Despite the pronounced class imbalance in favour of the \textit{Person} category, which is by far the most represented in the dataset (see Figure \ref{fig:class_distribution_pascal_voc}), the average precision scores for this class were comparatively low. This stands in contrast to categories with fewer examples, such as \textit{Aeroplane}, \textit{Bus}, \textit{Train}, and \textit{TV Monitor}, which frequently yielded higher scores in this evaluation.
+ Despite the pronounced class imbalance in favour of the \textit{person} category, which is by far the most represented in the dataset (see Figure \ref{fig:class_distribution_pascal_voc}), the average precision scores for this class were comparatively low. This stands in contrast to categories with fewer examples, such as \textit{aeroplane}, \textit{bus}, \textit{train}, and \textit{tv monitor}, which frequently yielded higher scores in this evaluation.
 
 \begin{figure}[!htbp]
     \centering
@@ -471,14 +676,14 @@ Upon reviewing the class-specific metrics for each model, as detailed in Figure 
     \label{fig:pascal_voc_per_class}
 \end{figure}
 
-Several factors may explain this disparity. Although a large number of \textit{Person} instances might be expected to improve detection performance, the high variability within this class likely introduces ambiguity, making accurate classification more difficult. In contrast, the less frequent classes may have featured more visually distinct or consistently structured examples, which likely contributed to stronger detection outcomes.
+Several factors may explain this disparity. Although a large number of \textit{person} instances might be expected to improve detection performance, the high variability within this class likely introduces ambiguity, making accurate classification more difficult. In contrast, the less frequent classes may have featured more visually distinct or consistently structured examples, which likely contributed to stronger detection outcomes.
 
-This variation in performance was consistent across the evaluated models. RetinaNet, for instance, showed only limited detection capability when compared to the others. In contrast, Faster \gls{rcnn} and SSDLite recorded the highest overall scores. While the student version of Faster \gls{rcnn} generally performed worse than its baseline, certain classes saw an improvement in \gls{ap} scores under the student model, though this improvement was not consistent. Similar fluctuations were observed in other models, where student variants outperformed their baselines for some classes and underperformed for others.
+This variation in performance was consistent across the evaluated models. RetinaNet, for instance, showed only limited detection capabilities when compared to the others. In contrast, Faster \gls{rcnn} and SSDLite recorded the highest overall scores. While the student version of Faster \gls{rcnn} generally performed worse than its baseline, certain classes saw an improvement in \gls{ap} scores under the student model, though this improvement was not consistent. Similar fluctuations were observed in other models, where student variants outperformed their baselines for some classes and underperformed for others.
 
 Nevertheless, despite the variation and inconsistency, the broader pattern indicates that student models frequently maintained or slightly improved per-class scores. Given the complexity of detecting across 20 classes, even marginal improvements suggest meaningful progression.
-This pattern is also evident in the normalised confusion matrix for the best-performing model, SSDLite, shown in Figure \ref{fig:cm_pascal_voc}. Both the baseline and student versions show a largely diagonal structure, which is expected in effective classification. However, a noticeable portion of objects remain unclassified, pointing to continued difficulties with missed detections and a tendency to label uncertain regions as background.
+This pattern is also evident in the normalised confusion matrix for the best-performing model, SSDLite, shown in Figure \ref{fig:cm_pascal_voc}. Here, both the baseline and student versions show a largely diagonal structure, which is expected in effective classification. However, a significant portion of objects remains unclassified, highlighting ongoing challenges with missed detections and a tendency to label uncertain regions as background.
 
-\begin{figure}[!ht]
+\begin{figure}[p]%!ht % p=Page of floats only
   \centering
   \begin{tabular}{c}
     \includegraphics[width=0.7\textwidth]{cm3.png} \\
@@ -491,7 +696,7 @@ This pattern is also evident in the normalised confusion matrix for the best-per
   \label{fig:cm_pascal_voc}
 \end{figure}
 
-The student model shows some improvement. Its confusion matrix presents clearer diagonal lines across most categories, indicating more accurate predictions. There are also fewer unclassified examples overall. The classes most reliably identified by the student model are \textit{Train}, \textit{Cat}, and \textit{Bus}. These appear to be among the simpler categories to detect, likely because they have more distinct and consistent visual features than others.
+The student model shows some improvement. Its confusion matrix presents clearer diagonal lines across most categories, indicating more accurate predictions. There are also fewer unclassified examples overall. The classes most reliably identified by the student model are \textit{train}, \textit{cat}, and \textit{bus}. These appear to be among the simpler categories to detect, likely because they have more distinct and consistent visual features than others.
 
 Building on the earlier comparisons, an additional analysis was undertaken to examine the performance of various teacher models, using the same experimental setup as in the previous tests. The outcomes, detailed in Table~\ref{tab:teacher_model_metrics_pascal_voc}, reflect the detection accuracy achieved by each teacher architecture. Interestingly, Faster \gls{rcnn}, \gls{fcos}, and RetinaNet continued to yield the best results, though their performance metrics were lower than the near-ideal values reported in earlier evaluations.
 
@@ -519,8 +724,6 @@ A notable observation is that, despite their weaker performance as teacher model
 
 \gls{fcos}, in particular, stood out as a strong teacher, closely following Faster \gls{rcnn} and even outperforming it in some metrics. A consistent pattern across all teacher models was the high recall values, while precision scores showed greater variation. SSDLite, in this context, had the lowest precision, whereas the other models achieved values between 0.25 and 0.56. These figures were somewhat lower than anticipated, especially considering the use of privileged information. The results also suggest that increasing the number of classes introduces added complexity, which negatively affects both teacher and student performance across all detection metrics.
 
-The training times for all models used in this experiment are presented in Figure~\ref{fig:pascal_voc_training_time}. Compared to earlier experiments, these models generally required less time to train. Notably, most models in this study exhibited a more uniform rate of convergence, in contrast to the more varied patterns seen in earlier experiments.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{training_times_pascal_voc_2012_dataset_multi_label_detection_for_20_classes.jpg}
@@ -528,43 +731,48 @@ The training times for all models used in this experiment are presented in Figur
     \label{fig:pascal_voc_training_time}
 \end{figure}
 
+The training times for all models used in this experiment are presented in Figure~\ref{fig:pascal_voc_training_time}. Compared to earlier experiments, these models generally required less time to train. Notably, most models in this study exhibited a more uniform rate of convergence, in contrast to the more varied patterns seen in earlier experiments.
+
+
 RetinaNet and Faster \gls{rcnn} had the longest training times for their student models. On the other hand, \gls{ssd} and SSDLite, which completed training more quickly, produced the strongest student performances in this experiment. Across all models, student training took longer than the corresponding baselines, while teacher models consistently required the most time overall.
 
-A comparison of model sizes, as detailed in Table~\ref{tab:model_configs_pascal_voc}, reveals some differences from the findings of previous experiments. The models in this study now feature more parameters and a larger overall size, primarily due to the increased number of classes to 20. This expansion requires additional parameters in the prediction head, which in turn increases the total model size.
+A comparison of model sizes and inference speeds, as detailed in Table~\ref{tab:model_configs_pascal_voc}, reveals some differences from the findings of previous experiments. The models in this study now feature more parameters and a larger overall size, primarily due to the increased number of classes to 20. This expansion requires additional parameters in the prediction head, which in turn increases the total model size.
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{llcc}
+     \begin{adjustbox}{width=\textwidth}
+    \begin{tabular}{llcccc}
         \toprule
-        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} \\
+        \textbf{Model Configuration} & \textbf{Type} & \textbf{Size (MB)} & \textbf{Parameters (M)} & \textbf{\gls{gflops}} & \textbf{\gls{fps}} \\
         \midrule
         \multirow{5}{*}{\textbf{Baseline}} 
-            & RetinaNet     & 124.22 & 32.56 \\
-            & FCOS          & 122.48 & 32.11 \\
-            & Faster R-CNN  & 157.92 & 41.40 \\
-            & SSD           & 100.27 & 26.29 \\
-            & SSDLite       & 9.42   & 2.47 \\
+            & RetinaNet     & 124.22 & 32.56 & 265.10 & 39.74 \\
+            & FCOS          & 122.48 & 32.11 & 252.94 & 39.55 \\
+            & Faster R-CNN  & 157.92 & 41.40 & 268.75 & 30.66 \\
+            & SSD           & 100.27 & 26.29 & 62.94 & 67.44 \\
+            & SSDLite       & 9.42   & 2.47 & 0.95 & 36.74 \\
         \midrule
         \multirow{5}{*}{\textbf{Student}} 
-            & RetinaNet     & 124.22 & 32.56 \\
-            & FCOS          & 122.48 & 32.11 \\
-            & Faster R-CNN  & 157.92 & 41.40 \\
-            & SSD           & 100.27 & 26.29 \\
-            & SSDLite       & 9.42   & 2.47 \\
+            & RetinaNet     & 124.22 & 32.56 & 265.10 & 38.00 \\
+            & FCOS          & 122.48 & 32.11 & 252.94 & 34.65 \\
+            & Faster R-CNN  & 157.92 & 41.40 & 268.75 & 30.39 \\
+            & SSD           & 100.27 & 26.29 & 62.94 & 67.67 \\
+            & SSDLite       & 9.42   & 2.47 & 0.95 & 36.75 \\
         \bottomrule
     \end{tabular}
-    \caption{Comparison of model configurations for trained baseline and student models on the Pascal VOC 2012 dataset for multi-label object detection, including model type, size in megabytes, and number of parameters (in millions).}
+    \end{adjustbox}
+    \caption{Comparison of model configurations for trained baseline and student models on the Pascal VOC 2012 dataset for multi-label object detection, including model type, size in megabytes, number of parameters (in millions), computational complexity in \gls{gflops}, and inference speed in \gls{fps}.}
     \label{tab:model_configs_pascal_voc}
 \end{table}
 
-Despite this growth, the results demonstrate that applying the proposed methodology to any detector leads to improved detection accuracy. Importantly, this improvement is realised without relying on more complex or computationally intensive architectures. Through various experimental setups, each conducted with strict controls and repeated testing, the method consistently delivered better performance while keeping both model size and parameter count under control.
+Despite this growth, the results demonstrate that applying the proposed methodology to any detector leads to improved detection accuracy. Importantly, this improvement is realised without relying on more complex or computationally intensive architectures. Through various experimental setups, each conducted with strict controls and repeated testing, the method consistently delivered better performance while keeping both model size and parameter count under control, with \gls{gflops} remaining equivalent and \gls{fps} showing similar results during inference.
 
 
 \section{Ablation Study on the Alpha Parameter}
 \label{sec:5_alpha_exp}
 % Glorja lil Missier, lil Iben u lil Ispirtu s-Santu, Kif kien mill bidu, issa u dejjem ghal dejjem. Amen. Grazzi
 
-An ablation study was conducted to evaluate the effect of the \gls{alpha} parameter, which determines the importance given to the teacher network when distilling knowledge to the student model. Following the approach outlined in \cite{lab2wild}, various \gls{alpha} values were explored: 0, 0.25, 0.5, 0.75, and 1. The results of this study, presented in Figures~\ref{fig:ablation_combined} and \ref{fig:ablation_combined2}, assess which \gls{alpha} value best supports the distillation process. This figure compares the outcomes of both the within-dataset experiments and the models trained on the Pascal \gls{voc} 2012 dataset.
+An ablation study was conducted to evaluate the effect of the \gls{alpha} parameter, which determines the importance given to the teacher network when distilling knowledge to the student model. Following the approach outlined in \cite{lab2wild}, \gls{alpha} values of 0, 0.25, 0.5, 0.75, and 1 were tested to systematically assess the model’s behaviour across the full spectrum from relying solely on labelled data to relying entirely on the teacher’s representations. The results of this study, presented in Figures~\ref{fig:ablation_combined} and \ref{fig:ablation_combined2}, assess which \gls{alpha} value best supports the distillation process. These figures compare the outcomes of both the within-dataset experiments and the models trained on the Pascal \gls{voc} 2012 dataset.
 
 \begin{figure}[!ht]
     \centering
@@ -596,7 +804,7 @@ An ablation study was conducted to evaluate the effect of the \gls{alpha} parame
     \label{fig:ablation_combined2}
 \end{figure}
 
-The principal finding from this analysis is that, across all experiments, the most effective performance in terms of the primary object detection metric (\gls{map}@50–95) was observed when \gls{alpha} values were set between 0.25 and 0.5. There were a few isolated instances in which a value of 0.75 produced comparable results, but these were exceptions rather than the norm. In general, when \gls{alpha} was set to 1, which gives full control to the teacher, all metrics showed near-zero scores. For F1 scores, the trend for achieving high object classification performance was observed at \gls{alpha} values of 0.25 and 0.5. However, there were a few exceptions in the multi-label litter detection experiment, where \gls{fcos} and Faster \gls{rcnn} favoured \gls{alpha} = 0.75. 
+The principal finding from this analysis is that, across all experiments, the most effective performance in terms of the primary object detection metric (\gls{map}@50–95) was observed when \gls{alpha} values were set between 0.25 and 0.5. There were a few isolated instances in which a value of 0.75 produced comparable results, but these were exceptions rather than the norm. In general, when \gls{alpha} was set to 1, which gives full control to the teacher, all metrics showed near-zero scores. For F1 scores, the trend for achieving high object classification performance was observed at \gls{alpha} values of 0.25 and 0.5. However, there were a few exceptions in the multi-label litter detection experiment, where \gls{fcos} and Faster \gls{rcnn} performance favoured \gls{alpha} = 0.75. 
 
 Further analysis revealed that for RetinaNet, on average, \gls{alpha} values of 0.5 and 0.75 yielded the best results, while for \gls{fcos}, the optimal values for \gls{map}@50, \gls{map}@75, and F1 scores were similar, with \gls{alpha} = 0.25 being optimal for the harder metric, \gls{map}@50–95. For Faster \gls{rcnn} and \gls{ssd}, which followed a similar trend, \gls{alpha} values between 0.5 and 0.75 delivered the best results. Finally, for SSDLite, \gls{alpha} = 0.5 appeared to be the most effective configuration. That said, this architecture generally delivered weak results across all metrics in the litter detection experiments. However, it did show a modest yet meaningful improvement in the Pascal \gls{voc} 2012 evaluation.
 
@@ -605,10 +813,10 @@ Thus, the findings of this ablation study indicate that setting the \gls{alpha} 
 
 \section{Visual Comparison of Model Predictions}
 \label{sec:5_visual_results}
-% Glorja lil Missier, u lil Iben u lil Ispirtu s-Santu, Kif kien mill bidu issa u ghal dejjem ta' dejjem. Amen. Grazzi
+% Glorja lil Missier, u lil Iben u lil Ispirtu s-Santu, Kif kien mill bidu issa u ghal dejjem ta' dejjem. Amen. Grazzi hafna Mulej
 
 In addition to the evaluation outlined in the previous experiments, which is based on established object detection metrics, it is equally valuable to consider whether improvements can be observed visually through the integration of \gls{lupi} using the proposed methodology. This form of comparison helps to assess whether the predictions are qualitatively better. To address this, the following section presents visual results across the various experiments, comparing outputs from both within- and across-dataset models, as well as from those trained on the Pascal \gls{voc} 2012 dataset. 
-The aim is to compare the visual predictions from the best-performing baseline and student models of the same architecture type, using sample images taken from the test sets of each dataset. The corresponding results are illustrated in Figures \ref{fig:visuals_soda}, \ref{fig:visuals_bdw}, \ref{fig:visuals_uavvaste}, and \ref{fig:visuals_pascal_voc}.
+The aim is to compare the visual predictions from the best-performing baseline and student models of the same architecture type, using sample images taken from the test sets of each dataset. The corresponding visual results are illustrated in Figures \ref{fig:visuals_soda}, \ref{fig:visuals_bdw}, \ref{fig:visuals_uavvaste}, and \ref{fig:visuals_pascal_voc}.
 
 \begin{figure}[!ht]
   \centering
@@ -625,10 +833,8 @@ The aim is to compare the visual predictions from the best-performing baseline a
   \label{fig:visuals_soda}
 \end{figure}
 
-Examining the visual results from the within-dataset experiments, as shown in Figure \ref{fig:visuals_soda}, it is evident that the integration of \gls{lupi} results in a noticeable improvement over the baseline model. In subfigures (a) and (b), this improvement is clear: although both RetinaNet models successfully detect all litter objects, the \gls{lupi} student model produces higher confidence scores, particularly in scenarios tailored for detection at a 1-metre altitude.
+Examining the visual results from the within-dataset experiments, as shown in Figure \ref{fig:visuals_soda}, it is evident that the integration of \gls{lupi} results in a noticeable improvement over the baseline model. In subfigures (a) and (b), this improvement is clear: although both RetinaNet models successfully detect all litter objects, the \gls{lupi} student model produces higher confidence scores, notably in the scenario tailored for detection at a 1-metre altitude.
 In subfigures (c) and (d), where detection becomes more challenging due to the significantly higher altitude, the improvement achieved by the Faster \gls{rcnn} student model is even more evident. It identifies more litter instances than the corresponding baseline and assigns higher confidence scores to its predictions. This further reinforces the practical value of incorporating the proposed approach.
-
-In the cross-dataset evaluation, where models trained on the \gls{soda} dataset were tested on other binary litter detection datasets to assess how well the proposed approach generalises, the improvement is also clearly visible. This is illustrated in Figures \ref{fig:visuals_bdw} and \ref{fig:visuals_uavvaste}.
 
 \begin{figure}[!ht]
   \centering
@@ -652,9 +858,8 @@ In the cross-dataset evaluation, where models trained on the \gls{soda} dataset 
   \label{fig:visuals_uavvaste}
 \end{figure}
 
+In the cross-dataset evaluation, where models trained on the \gls{soda} dataset were tested on other binary litter detection datasets to assess how well the proposed approach generalises, the improvement is also clearly visible. This is illustrated in Figures \ref{fig:visuals_bdw} and \ref{fig:visuals_uavvaste}.
 For the \gls{bdw} dataset, using the best-performing model based on the \gls{fcos} architecture, the student model detected more litter instances than the baseline. Similarly, for UAVVaste, where the top-performing model was Faster \gls{rcnn}, the student model again identified more objects. In both cases, the continued trend of higher confidence scores reinforces the notion that integrating \gls{lupi} contributes to more effective and robust learning.
-
-A similar trend is evident in the general object detection task with multi-label detection, as demonstrated in the Pascal \gls{voc} 2012 experiment. The improvement is particularly noticeable when using the best-performing architecture, Faster \gls{rcnn}, as shown in Figure \ref{fig:visuals_pascal_voc}.
 
 \begin{figure}[!ht]
   \centering
@@ -675,9 +880,10 @@ A similar trend is evident in the general object detection task with multi-label
   \label{fig:visuals_pascal_voc}
 \end{figure}
 
+A similar trend is evident in the general object detection task with multi-label detection, as demonstrated in the Pascal \gls{voc} 2012 experiment. The improvement is especially noticeable when using the best-performing architecture, Faster \gls{rcnn}, as shown in Figure \ref{fig:visuals_pascal_voc}.
 In the first example, the baseline prediction in (a) has a low detection score, and the bounding box does not fully capture the object of interest. In contrast, the student model produces a bounding box that accurately encloses the object, reflecting a more precise prediction. In the second example, the baseline prediction in (c) performs reasonably well but misses some important elements. It fails to detect the person inside the car and overlooks the car in the background, while also assigning relatively low confidence scores, which negatively impact the \gls{map}.
 In comparison, the student prediction in (d) correctly identifies all the relevant objects except for the horse in the background. 
-Furthermore, in the third example, the student model correctly predicted both the type and the bounding box position of (f), while the baseline model in (e) mistakenly labelled the sheep as a dog. This improvement in object coverage, classification and confidence underscores the overall efficacy of the proposed methodology, demonstrating its advantages in both litter detection and general object detection tasks.
+In the third example, the student model correctly predicted both the type and the bounding box position of (f), while the baseline model in (e) mistakenly labelled the sheep as a dog. This improvement in object coverage, classification and confidence underscores the overall efficacy of the proposed methodology, demonstrating its advantages in both litter detection and general object detection tasks.
 
 
 \section{Visual Interpretability of Model Predictions}
@@ -685,12 +891,12 @@ Furthermore, in the third example, the student model correctly predicted both th
 
 Additional tests were conducted to evaluate the visual interpretability of how the models make predictions on specific images. To facilitate this, three commonly used class activation mapping techniques were employed to assess any improvements between the baseline and student models from a feature-based perspective. These methods included Grad-\gls{cam} \cite{gradcam}, Grad-\gls{cam}++ \cite{gradcam_plus_plus}, and Eigen-\gls{cam} \cite{eigencam}.
 
-Grad-\gls{cam} and Grad-\gls{cam}++ both use a gradient-based approach, where the gradient of a target concept is propagated to the final convolutional layer, resulting in a coarse localisation map that highlights key regions in the image relevant for the prediction. Grad-\gls{cam}++ builds on this process by providing clearer visual explanations, improving object localisation and enabling better interpretation of multiple object instances within a single image. Meanwhile, Eigen-\gls{cam} utilises principal components derived from the learned features in the convolutional layers, offering a different approach to explaining model predictions. 
+Grad-\gls{cam} and Grad-\gls{cam}++ both use a gradient-based approach, where the gradient of a target concept is propagated to the final convolutional layer, resulting in a coarse localisation map that highlights key regions in the image relevant for the prediction. Grad-\gls{cam}++ builds on this process by providing clearer visual explanations, improving object localisation and enabling better interpretation of multiple object instances within a single image\cite{gradcam, gradcam_plus_plus}. Meanwhile, Eigen-\gls{cam} utilises principal components derived from the learned features in the convolutional layers, offering a different approach to explaining model predictions \cite{eigencam}. 
 
 
-This test was carried out across all selected architecture types, using the specific target layer where the distillation process took place for each model (see Subsection \ref{subsec:4_student}) to examine whether there were visual differences in feature-based learning between the baseline and student models. Although this analysis was conducted on all trained models and across various images for consistency, only the results from models trained on the \gls{soda} 1-metre altitude dataset are presented here for brevity. This decision was made as the experiment yielded the most significant improvements under the proposed \gls{lupi}-based approach. The visual outcomes of this test are shown in Figure \ref{fig:gradcam_comparison}.
+This test was carried out across all selected architecture types, using the specific target layer where the distillation process took place for each model (see Subsection \ref{subsec:4_student}) to examine whether there were visual differences in feature-based learning between the baseline and student models. Although this analysis was conducted on all trained models and across various images for consistency, only the results from models trained on the \gls{soda} 1-metre altitude dataset are presented here for brevity. This decision was made as the experiment yielded the most significant improvements under the proposed \gls{lupi}-based approach, with the other experiments showing relatively similar results. The visual outcomes of this test are shown in Figure \ref{fig:gradcam_comparison}.
 
-\begin{figure}[!ht]
+\begin{figure}[p]
     \centering
     \begin{tabular}{c}
         \includegraphics[width=0.9\textwidth]{gradcam_comparison_baseline.jpg} \\
@@ -703,7 +909,7 @@ This test was carried out across all selected architecture types, using the spec
     \label{fig:gradcam_comparison}
 \end{figure}
 
-A consistent trend observed in Section \ref{sec:5_visual_results} is also evident here, with the student models generally outperforming the baselines. For example, the Faster \gls{rcnn} baseline mistakenly identified rocks as litter, a mistake that the student model successfully corrected. Likewise, both the \gls{ssd} and SSDLite baseline models missed certain litter objects, while the student models successfully identified them.
+A consistent trend observed in Section \ref{sec:5_visual_results} is also evident here, with the student models generally outperforming the baselines. For example, the Faster \gls{rcnn} baseline mistakenly identified rocks as litter, an error that the student model corrected. Likewise, both the \gls{ssd} and SSDLite baseline models missed certain litter objects, while the student models successfully identified them.
 
 Shifting the focus to the class activation maps, the visual differences between baseline and student models are more subtle. While the activation maps from Grad-\gls{cam}, Grad-\gls{cam}++, and Eigen-\gls{cam} are relatively similar in overall appearance, some meaningful observations can still be made. In the Grad-\gls{cam} outputs, even for objects that were not detected by the \gls{ssd} and SSDLite baselines, some degree of attention was still allocated to those regions. This suggests that although the models failed to classify the objects correctly, they were at least partially aware of their presence.
 
@@ -718,50 +924,60 @@ The results across the remaining datasets followed consistent patterns, reinforc
 
 \section{Limitations in Privileged Information Generation}
 \label{sec:5_fail_cases_priv_info_gen}
-% Madonna Itlob Ghalina u Ddefendina, ghal Dejjem ta' Dejjem. Amen. Grazzi
+% Madonna Itlob Ghalina u Ddefendina, ghal Dejjem ta' Dejjem. Amen. Grazzi hafna
 
 While it has been demonstrated that leveraging privileged information in object detection offers significant benefits, especially with simplified modifications and lightweight alternatives to complex architectures, it is also prudent to consider the limitations associated with this approach. One of the primary challenges lies in generating the privileged information itself. As previously acknowledged, the increased training time required for this method, compared to excluding privileged information, is a key drawback. However, there are still issues in effectively representing certain objects through this information.
 
-These limitations can primarily be broken down into three key challenges: (i) overlapping objects of the same type, (ii) large objects obscuring smaller ones, and (iii) difficulties in distinguishing between object classes in datasets with a large number of categories. In the case of \gls{uav}-based litter detection, where litter objects are relatively small and spaced apart, this method performs well (as seen in Figure \ref{fig:privileged_visual}). However, in scenarios with overlapping objects, the challenge of encoding privileged information becomes more pronounced.
+These limitations can primarily be broken down into three key challenges: (i) overlapping objects of the same type, (ii) large objects obscuring smaller ones, and (iii) difficulties in distinguishing between object classes in datasets with a large number of categories. In the case of \gls{uav}-based litter detection, where litter objects are relatively small and spaced apart (as seen in Figure \ref{fig:privileged_visual}), this method performs well. However, in scenarios with overlapping objects, the challenge of encoding privileged information becomes more pronounced.
 
-Figure \ref{fig:fail_cases} illustrates three examples of these difficulties using the Pascal \gls{voc} 2012 dataset. In the first row, subfigure (a) shows an image of multiple chairs. The privileged information in subfigure (b) shows the bounding boxes merged together, making it challenging to distinguish the individual objects. This issue arises when the same type of objects overlap, leading to a lack of clarity in the privileged information. In the second row, subfigures (c) and (d) show a scene with several buses in the background, many of which are obscured by the aeroplane, one bus also partially hides a significant portion of the person in front of the plane, ultimately confusing detection. While this problem can be partially addressed through sorting, as was done in this study (refer to Algorithm \ref{alg:boundingBoxMask}), some smaller objects remain occluded by larger ones. Finally, in the third example (e) shows an image of a boy and a motorcycle, with the privileged information in (f) still distinguishing the two objects due to slight colour differences. However, this highlights a limitation when dealing with datasets that contain many object categories. The pool of distinct colours available to represent different objects becomes too small. A possible solution could be increasing the number of channels to use an RGB mask instead of a grayscale mask, but this would significantly increase training time.
+% Figure \ref{fig:fail_cases} illustrates three examples of these difficulties using the Pascal \gls{voc} 2012 dataset. In the first row, subfigure (a) shows an image of multiple chairs. The privileged information in subfigure (b) shows the bounding boxes merged together, making it challenging to distinguish the individual objects. This issue arises when the same type of objects overlap, leading to a lack of clarity in the privileged information. In the second row, subfigures (c) and (d) show a scene with several buses in the background, many of which are obscured by the aeroplane, one bus also partially hides a significant portion of the person in front of the plane, ultimately confusing detection. While this problem can be partially addressed through sorting, as was done in this study (refer to Algorithm \ref{alg:boundingBoxMask}), some smaller objects remain occluded by larger ones. Finally, in the third example (e) shows an image of a boy and a motorcycle, with the privileged information in (f) still distinguishing the two objects due to slight colour differences. However, this highlights a limitation when dealing with datasets that contain many object categories. The pool of distinct colours available to represent different objects becomes too small. A possible solution could be increasing the number of channels to use an RGB mask instead of a grayscale mask, but this would significantly increase training time.
 
-\begin{figure}[!ht]
+\begin{figure}[!b]% b = bottom of page
   \centering
-  \begin{tabular}{cc}
-    \includegraphics[width=0.47\textwidth]{fail_case1.jpg} &
-    \includegraphics[width=0.47\textwidth]{fail_case2.jpg} \\
-    \small (a) & \small (b) \\
-    \addlinespace[1em]
-    \includegraphics[width=0.47\textwidth]{fail_case3.jpg} &
-    \includegraphics[width=0.47\textwidth]{fail_case4.jpg} \\
-    \small (c) & \small (d) \\
-    \addlinespace[1em]
-    \includegraphics[width=0.47\textwidth]{fail_case5.jpg} &
-    \includegraphics[width=0.47\textwidth]{fail_case6.jpg} \\
-    \small (e) & \small (f) \\
+  \begin{tabular}{ccc}
+    \includegraphics[width=0.3\textwidth]{fail_case1.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case9.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case2.jpg} \\
+    \small (a) & \small (b) & \small (c) \\[1em]
+    
+    \includegraphics[width=0.3\textwidth]{fail_case3.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case7.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case4.jpg} \\
+    \small (d) & \small (e) & \small (f) \\[1em]
+    
+    \includegraphics[width=0.3\textwidth]{fail_case5.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case8.jpg} &
+    \includegraphics[width=0.3\textwidth]{fail_case6.jpg} \\
+    \small (g) & \small (h) & \small (i) \\
   \end{tabular}
-  \caption{Examples of failure cases in privileged information generation. Subfigures (a), (c) and (e) show original images from the Pascal \gls{voc} 2012 dataset, while (b), (d) and (f) display the corresponding generated privileged information.}
+  \caption{Examples of failure cases in privileged information generation. Subfigures (a), (d), and (g) show original images from the Pascal \gls{voc} 2012 dataset, while (b), (e), and (h) display the corresponding images with overlayed ground truth annotations. Subfigures (c), (f), and (i) present the privileged information for these cases.}
   \label{fig:fail_cases}
 \end{figure}
 
-These examples highlight the limitations inherent in generating privileged information, particularly in encoding bounding box data for object detection networks. The difficulties become more pronounced in scenarios involving overlapping objects or complex scenes with numerous categories. While strategies such as sorting or expanding the colour pool may alleviate some of these issues, there remains a need for further investigation into how this method can be generalised for larger, more intricate use cases. Nevertheless, the advantages of employing this approach significantly outweigh its limitations, suggesting that continued research in this area is both necessary and valuable.
+Figure \ref{fig:fail_cases} highlights several challenges in generating privileged information from the Pascal \gls{voc} 2012 dataset. In the first row, scene (a) shows an arrangement of several chairs placed in close proximity. The bounding box view (b) reveals significant overlaps between neighbouring chairs due to their similar positioning and orientation. When translated into the privileged mask (c), these overlapping regions merge into a single connected shape, obscuring the boundaries between objects. This merging can lead the model to interpret separate chairs as a single instance, creating ambiguity in training and reducing its capacity to distinguish multiple objects of the same category.
+
+The second row illustrates the impact of occlusion by large objects. Scene (d) depicts a man standing in front of an aeroplane, with several buses positioned behind it, none entirely obscured. The bounding boxes in (e) show that parts of these buses intersect with the aeroplane’s bounding box. In the privileged mask (f), the bounding boxes are processed in descending order of size, with the largest first, as described in Algorithm \ref{alg:boundingBoxMask}; however, some of the buses are still partially obscured by the plane’s mask in the privileged information. This limitation becomes even more pronounced in datasets such as \gls{coco}, where dense scenes frequently contain many small objects overlapping or clustered together, increasing the likelihood of important features being masked out.
+
+The third row demonstrates limitations related to colour encoding. Scene (g) presents a boy standing beside a motorcycle, with bounding boxes in (h) that touch at their edges with some minor overlapping. The privileged mask (i) assigns each object a different colour; however, the chosen colours are so similar that they are difficult to distinguish. When a dataset contains many categories, the number of distinct colours available for a grayscale mask becomes insufficient, leading to such near-duplicate shades being reused. This can create ambiguity, especially where objects are adjacent, as their categories may be visually indistinguishable in the mask. While employing RGB masks could allow each category to be assigned a unique colour, this approach would substantially increase both training time and computational requirements due to the greater input dimensionality.
+
+
+Conclusively, these examples highlight the limitations inherent in generating privileged information, particularly in encoding bounding box data for object detection networks. The difficulties become more pronounced in scenarios involving overlapping objects or complex scenes with numerous categories. While strategies such as sorting or expanding the colour pool may alleviate some of these issues, there remains a need for further investigation into how this method can be generalised for larger, more intricate use cases. Nevertheless, the advantages of employing this approach significantly outweigh its limitations, suggesting that continued research in this area is both necessary and valuable.
 
 \section{Discussion}
 \label{sec:5_discussion}
-% Glorja lil Missier, lil Iben u lil Ispirtu s-Santu. Amen.
+% Glorja lil Missier, lil Iben u lil Ispirtu s-Santu, Kif kien mill-bidu issa u dejjem ta' dejjem. Amen.
 
-After carefully reviewing the experimental results, it is appropriate to consider how they relate to the central research question. This study set out to examine whether the \gls{lupi} paradigm can be meaningfully incorporated into object detection frameworks, and to evaluate the practical viability of such an approach. To support this investigation, four specific objectives were drawn up. The first objective (\textbf{O1}) focused on evaluating the real-world applicability of the method, using the particularly demanding use case of litter detection as an example of small object detection. The second objective (\textbf{O2}) centred on implementing and testing the approach across a broad selection of established object detection models, in order to examine whether the proposed strategy could generalise across architectures with different design characteristics.
+After carefully reviewing the experimental results, it is appropriate to consider how they relate to the central research question. This study aimed to explore the feasible integration of the \gls{lupi} paradigm into object detection frameworks and to assess the practical viability of this approach. To support this investigation, four specific objectives were drawn up. The first objective (\textbf{O1}) focused on evaluating the real-world applicability of the method, using the challenging use case of litter detection as an example of small object detection. The second objective (\textbf{O2}) centred on implementing and testing the approach across a broad selection of established object detection models, to examine whether the proposed strategy could generalise across architectures with different design characteristics.
 
 Objectives \textbf{O3} and \textbf{O4} broadened the scope of evaluation. These objectives focused on assessing the method within a structured experimental framework, considering both intra-dataset and cross-dataset performance. The intent was to examine its effectiveness under progressively challenging conditions and varying environmental factors. Particular emphasis was placed on the trade-offs between detection accuracy and computational efficiency, both of which are central to assessing practical viability. The results were consistent and encouraging. In three demanding within-dataset scenarios involving litter detection from \gls{uav} imagery, student models trained using the \gls{lupi} paradigm consistently outperformed baseline models, achieving clear improvements in detection accuracy.
 
-Although the extent of improvement varied depending on the complexity of the task, with smaller accuracy boosts observed in more challenging scenarios, the approach continued to demonstrate success, showing improvements ranging from 0.02 to 0.15 in the strict \gls{map}@50--95 metric. Preliminary experiments also explored the selection of optimal tiling parameters, contributing to the broader aim of determining feasibility within \gls{uav}-based litter detection use cases. Further evaluation focused on the method’s ability to generalise to external datasets, specifically \gls{bdw} and UAVVaste. These experiments once again confirmed that incorporating privileged information resulted in meaningful performance boosts. This outcome remained consistent even in cross-dataset evaluations, a setting where object detection models frequently encounter difficulties in maintaining accuracy.
+Although the extent of improvement varied depending on the complexity of the task, with more modest increases observed in more challenging scenarios, the approach continued to demonstrate success, showing improvements ranging from 0.02 to 0.15 in the strict \gls{map}@50--95 metric. Preliminary experiments also explored the selection of optimal tiling parameters, contributing to the broader aim of determining feasibility within \gls{uav}-based litter detection use cases. Further evaluation focused on the method’s ability to generalise to external datasets, specifically \gls{bdw} and UAVVaste. These experiments once again confirmed that incorporating privileged information resulted in meaningful performance benefits. This outcome remained consistent even in cross-dataset evaluations, a setting where object detection models frequently encounter difficulties in maintaining accuracy.
 
-The Pascal \gls{voc} 2012 dataset was subsequently employed to assess the method across a wider variety of object classes. The results demonstrated that the proposed approach maintained robustness even in more general-purpose object detection scenarios. Throughout the full set of experiments, five commonly used architectures were selected: Faster \gls{rcnn}, \gls{ssd}, RetinaNet, SSDLite, and \gls{fcos}. For each architecture, three model variants were trained: a baseline, a teacher, and four student models developed within the \gls{lupi} framework. Certain architectures, including RetinaNet and \gls{fcos}, yielded better results in \gls{uav}-based litter detection tasks, whereas SSDLite and \gls{ssd} achieved better performance in the Pascal \gls{voc} evaluation. Faster \gls{rcnn} demonstrated consistent performance across both contexts, although its relative advantage varied depending on the dataset and detection challenge. These outcomes suggest that differences in baseline performance are likely driven by the degree to which each architecture is suited to the characteristics of the target task, rather than by any inherent constraint of the \gls{lupi} approach.
+The Pascal \gls{voc} 2012 dataset was subsequently employed to assess the method across a wider variety of object classes. The results demonstrated that the proposed approach maintained robustness even in more general-purpose object detection scenarios. Throughout the full set of experiments, five commonly used architectures were selected: Faster \gls{rcnn}, \gls{ssd}, RetinaNet, SSDLite, and \gls{fcos}. For each architecture, three model variants were trained: a baseline, a teacher, and four student models developed within the \gls{lupi} framework. Certain architectures, including RetinaNet and \gls{fcos}, yielded better results in \gls{uav}-based litter detection tasks, whereas SSDLite and \gls{ssd} achieved better performance in the Pascal \gls{voc} evaluation. Faster \gls{rcnn} demonstrated consistent performance across both contexts, although its relative advantage varied depending on the dataset and detection challenge. This variation can be attributed to the presence of overlapping objects in the privileged information, which may have confused the \gls{rpn}. Moreover, these outcomes suggest that differences in baseline performance are likely driven by the degree to which each architecture is suited to the characteristics of the target task, rather than by any inherent constraint of the proposed \gls{lupi} approach.
 
-In total, \textit{120} object detection models were trained and evaluated, which made it possible to conduct an ablation study on the \gls{alpha} parameter to identify optimal conditions for student model learning. Although the proposed approach leads to longer training times and some minor limitations in the privileged information generation, it does not impact the model size or the number of parameters. As a result, lightweight models remain suitable, as they can deliver improved accuracy while maintaining efficiency during inference. Since inference is typically performed far more frequently than training in most deployment scenarios, this trade-off is both practical and worthwhile.
+In total, \textit{120} object detection models were trained and evaluated, which made it possible to conduct an ablation study on the \gls{alpha} parameter to identify optimal conditions for student model learning. Although the proposed approach leads to longer training times and some minor limitations in the privileged information generation, it does not impact the model size, the number of parameters, or the computational speed. As a result, lightweight models remain suitable, as they can deliver improved accuracy while maintaining efficiency during inference. Since inference is typically performed far more frequently than training in most deployment scenarios, this trade-off is both practical and worthwhile.
 
-Finally, visual outputs and feature-based analyses indicate that models trained with the proposed method can detect a greater number of objects with higher confidence. These models also exhibit stronger feature representations, further supporting the robustness of the approach. Overall, the findings suggest that the research question has been answered with a reasonable degree of confidence. The method demonstrates practical feasibility, with quantifiable performance boosts in detection accuracy. These improvements are especially significant in scenarios where constraints on model size and inference speed are imperative, such as in \gls{uav}-based small object detection.
+Finally, visual outputs and feature-based analyses indicate that models trained with the proposed method can detect a greater number of objects with higher confidence. These models also exhibit stronger feature representations, further supporting the robustness of the approach. Overall, the findings suggest that the research question has been answered with a reasonable degree of confidence. The method demonstrates practical feasibility, with quantifiable performance boosts in detection accuracy. These improvements are especially significant in scenarios where constraints on model size and inference speed are imperative, such as in \gls{uav}-based small object detection or other similar object detection applications.
 
 
 %--
@@ -772,4 +988,6 @@ Finally, visual outputs and feature-based analyses indicate that models trained 
 % Missierna li Inti fis Smewwiet, Jitqaddes Ismek, Tigi Saltanek, Ikun dak li trid into hekk fis Sema hekk da fl-art. Hobzna ta Kuljum, ghatina llum, Ahfrilna dnubietna bhal ma Nahfru lil Min Hu Hati' Ghalina, La ddahalniex fit tigrib izda ehslina mid deni. Amen, Grazzi ta' kollox.
 
 
-This chapter began by outlining the hardware setup that underpinned the experiments. It then moved on to the optimal tiling experiments conducted on the \gls{soda} dataset, which were essential as a preliminary step in achieving the study's objectives. The subsequent section focused on the within-dataset evaluation of \gls{uav}-based litter detection, covering three experiments performed on the \gls{soda} dataset. The chapter then shifted to the cross-dataset evaluation, where experiments on the \gls{bdw} and UAVVaste datasets were carried out to assess the generalisability of the trained models. Following this, the Pascal \gls{voc} 2012 evaluation tested the methodology’s ability to handle multi-label detection across a wide range of categories. An ablation study on the alpha parameter was then presented, along with a visual comparison of model predictions and an interpretability analysis. The chapter also addressed the limitations encountered in generating the privileged information, concerning the bounding boxes used to augment the feature representations. The chapter concluded with a synthesis of the results, evaluating whether the research question was successfully addressed in light of the stated objectives.
+This chapter began by outlining the hardware setup and evaluation strategy that underpinned the experiments. It then moved on to the optimal tiling experiments conducted on the \gls{soda} dataset, which were essential as a preliminary step in achieving the study's objectives. The subsequent section focused on the within-dataset evaluation of \gls{uav}-based litter detection, covering three experiments performed on the \gls{soda} dataset. The chapter then shifted to the cross-dataset evaluation, where experiments on the \gls{bdw} and UAVVaste datasets were carried out to assess the generalisability of the trained models. Further analysis explored how detection performance varied with object size, concentrating on whether the proposed \gls{lupi} methodology offered improvements in recognising small-scale objects. Following this, the Pascal \gls{voc} 2012 evaluation tested the method’s ability to handle multi-label detection across a wide range of categories. An ablation study on the alpha parameter was then presented, along with a visual comparison of model predictions and an interpretability analysis. The chapter also addressed the limitations encountered in generating the privileged information, concerning the bounding boxes used to augment the feature representations. The chapter concluded with a synthesis of the results, confirming that the research question has been addressed with a reasonable degree of confidence in light of the stated objectives.
+
+% Glorja x3

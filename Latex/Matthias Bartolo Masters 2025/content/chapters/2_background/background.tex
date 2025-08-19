@@ -25,8 +25,7 @@
 %     \item and knowledge Distillation Feature based, etc. . .
 % \end{itemize}
 
-This chapter opens by outlining the object detection problem and the primary difficulties it entails, such as the presence of cluttered backgrounds, scale variation, and the challenge of accurately detecting small objects. This section is then followed by an overview of prominent methods developed before the rise of deep learning, encompassing both traditional computer vision techniques and early machine learning models. This is followed by a section that explores deep learning-based approaches, including one-stage and two-stage detectors, transformer-based architectures, and other notable frameworks. The subsequent section presents an overview of the learning using privileged information paradigm, detailing its problem formulation and associated techniques. Following this, a review of prominent litter detection approaches is presented, encompassing both \gls{uav} and non-\gls{uav} methods. The chapter concludes with a review of approaches leveraging the \gls{lupi} paradigm within the field of computer vision.
-
+This chapter opens by outlining the object detection problem and the primary difficulties it entails, such as the presence of cluttered backgrounds, scale variation, and the challenge of accurately detecting small objects. This section is then followed by an overview of prominent methods developed before the rise of deep learning, encompassing both traditional computer vision techniques and early machine learning models. This is followed by a section that explores deep learning-based approaches, including one-stage and two-stage detectors, transformer-based architectures, and other notable frameworks. The subsequent section presents an overview of the learning using privileged information paradigm, detailing its problem formulation and associated techniques. Following this, a review of prominent litter detection approaches is presented, encompassing both \gls{uav} and non-\gls{uav} methods, along with an overview of approaches leveraging the \gls{lupi} paradigm within the field of computer vision. The chapter concludes by introducing relevant evaluation metrics that establish the criteria for model performance assessment.
 
 \section{Object Detection}
 \label{sec:2_detection}
@@ -41,7 +40,7 @@ To determine the position and presence of an object within an image, a bounding 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.7\columnwidth]{detection_explanation.png}
-    \caption{Visual representation of the bounding box coordinate system on a modified image taken from the SODA dataset (Source: \cite{soda_dataset}).}
+    \caption{Visual representation of the bounding box coordinate system on a modified image taken from the SODA dataset. (Source: \cite{soda_dataset}).}
     \label{fig:detection_explanation}
 \end{figure}
 
@@ -53,7 +52,7 @@ While a bounding box indicates the location of an object, identifying the type o
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.7\columnwidth]{detection_soda.jpg}
-    \caption{Visual representation of the classification and localisation tasks, showing multiple detections across various categories, based on an image from the SODA dataset (Source: \cite{soda_dataset}).}
+    \caption{Visual representation of the classification and localisation tasks, showing multiple detections across various categories, based on an image from the SODA dataset. (Source: \cite{soda_dataset}).}
     \label{fig:classification_explanation}
 \end{figure}
 
@@ -93,7 +92,7 @@ Later, the \gls{orb} algorithm \cite{rublee2011orb} emerged, combining the effic
 \subsubsection{Machine Learning Approaches}
 \label{subsubsec:2_machine_learning}
 
-In tandem with traditional methods, notable advances in object detection were made through the adoption of \gls{ml}, a branch of \gls{ai} focused on enabling systems to learn patterns from data \cite{machine_learning}. During this period, \gls{svms} \cite{hearst1998support} emerged as a pivotal tool, providing a strong classification framework, particularly when combined with feature descriptors such as \gls{hog} \cite{bhatt2023state}. Other machine learning strategies also contributed meaningfully to the field's development. Boosting algorithms, such as \gls{adaboost}, proved instrumental in the Viola-Jones face detection framework \cite{viola2001rapid}, while ensemble methods, including \gls{rf} \cite{saffari2009line} and techniques utilising \gls{rgbd} information \cite{seychell16}, further expanded detection capabilities. Although these approaches improved performance by allowing models to learn directly from data, they continued to rely heavily on manually engineered features. Additional progress was marked by the introduction of \gls{dpm} \cite{felzenszwalb2009object}, which conceptualised objects as collections of interconnected parts, thus enabling more effective modelling of variations in object appearance. Collectively, these machine learning-based methods significantly advanced object detection, laying the essential foundations for the subsequent development of deep learning approaches.
+In tandem with traditional methods, notable advances in object detection were made through the adoption of \gls{ml}, a branch of \gls{ai} focused on enabling systems to learn patterns from data \cite{machine_learning}. During this period, \gls{svms} \cite{hearst1998support} emerged as a pivotal tool, providing a strong classification framework, specifically when combined with feature descriptors such as \gls{hog} \cite{bhatt2023state}. Other machine learning strategies also contributed meaningfully to the field's development. Boosting algorithms, such as \gls{adaboost}, proved instrumental in the Viola-Jones face detection framework \cite{viola2001rapid}, while ensemble methods, including \gls{rf} \cite{saffari2009line} and techniques utilising \gls{rgbd} information \cite{seychell16}, further expanded detection capabilities. Although these approaches improved performance by allowing models to learn directly from data, they continued to rely heavily on manually engineered features. Additional progress was marked by the introduction of \gls{dpm} \cite{felzenszwalb2009object}, which conceptualised objects as collections of interconnected parts, thus enabling more effective modelling of variations in object appearance. Collectively, these machine learning-based methods significantly advanced object detection, laying the essential foundations for the subsequent development of deep learning approaches.
 
 \subsection{Object Detection in the Era of Deep Learning}
 \label{subsec:2_detection_in_dl}
@@ -112,7 +111,7 @@ OverFeat \cite{overfeat}, introduced in 2013, marked an early application of dee
 
 The You Only Look Once (YOLO) series significantly reshaped one-stage detection by reframing object detection as a regression problem. The original \gls{yolo} model \cite{yolo}, released in 2016, partitioned images into an $S \times S$ grid, with each cell responsible for predicting bounding boxes, confidence scores, and class probabilities (refer to Figure \ref{fig:yolov1}). Later versions introduced several refinements: \gls{yolo}v2 \cite{yolov2} integrated batch normalisation and optimised anchor boxes; \gls{yolo}v4 \cite{yolov4} adopted a suite of training techniques commonly referred to as bag-of-freebies \cite{bagoffreebies}; \gls{yolo}v5 \cite{yolov5} incorporated automatic anchor learning; and \gls{yolo}X \cite{yolox} shifted towards anchor-free methodologies. More recently, \gls{yolo}v12 \cite{yolov12} introduced attention-driven designs, leveraging linear attention mechanisms and residual-efficient layer aggregation networks.
 
-Further adaptations have continued to emerge. For example, \gls{yolo}-NAS \cite{yolonas} improved detection efficiency by employing \gls{nas} within a quantisation-friendly framework. Meanwhile, \gls{yolo}-World \cite{yoloworld} extended the model’s capabilities to open-vocabulary detection, integrating vision-language path aggregation and region-text contrastive loss, achieving notable gains in both speed and accuracy over contemporary models.
+Further adaptations have continued to emerge. For example, \gls{yolo}-NAS \cite{yolonas} improved detection efficiency by employing \gls{nas} within a quantisation-friendly framework. Meanwhile, \gls{yolo}-World \cite{yoloworld} extended the model’s capabilities to open-vocabulary detection, integrating vision-language path aggregation and region-text contrastive loss, achieving notable performance boosts in both speed and accuracy over contemporary models.
 
 \begin{figure}[ht]
     \centering
@@ -121,28 +120,97 @@ Further adaptations have continued to emerge. For example, \gls{yolo}-NAS \cite{
     \label{fig:yolov1}
 \end{figure}
 
-In parallel with developments in \gls{yolo}, other notable one-stage detectors have emerged. The \gls{ssd} Detector \cite{ssd}, introduced in 2016, employed default bounding boxes with a variety of aspect ratios and multi-scale feature maps, enabling it to handle objects of varying sizes. RetinaNet \cite{retinanet} addressed the issue of class imbalance through the application of \textit{Focal Loss}, incorporating a ResNet backbone along with a \gls{fpn} \cite{fpn} for enhanced multi-scale feature extraction. The \gls{fcos} model  \cite{fcos} adopted a fully convolutional architecture, directly predicting centre points and bounding boxes without relying on region proposals.
+In parallel with developments in \gls{yolo}, other notable one-stage detectors have emerged. Among them, the \gls{ssd} \cite{ssd}, released in 2016, introduced an architecture that bypasses region proposal networks. Instead, it predicts object categories and bounding box refinements directly over a fixed set of predefined anchor boxes, known as default boxes.
+\gls{ssd} builds on a modified VGG-16 backbone, where the fully connected layers are removed and replaced with additional convolutional layers. These progressively reduce spatial resolution, resulting in multiple feature maps of decreasing size. Each feature map is responsible for detecting objects at a specific scale, supporting effective multi-scale detection.
+
+To accommodate objects of varying sizes, \gls{ssd} deploys default boxes with multiple aspect ratios and scales across each feature map. At every level, lightweight convolutional heads independently predict class labels and refine bounding box coordinates. These operations are performed in parallel across all scales, enabling the model to classify and localise objects within a single forward pass simultaneously. This design achieves an effective compromise between computational efficiency and detection accuracy. The complete architecture is illustrated in Figure~\ref{fig:ssd}.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{ssd1.png}
+\caption{SSD architecture. (Source: \cite{ssd})}
+\label{fig:ssd}
+\end{figure}
+
+Other prominent one-stage detectors include RetinaNet \cite{retinanet}, introduced in 2017 to mitigate the foreground–background class imbalance that commonly undermines the performance of dense object detectors. Unlike two-stage methods such as Faster \gls{rcnn}, RetinaNet performs classification and localisation in a single forward pass (see Figure~\ref{fig:retinanet}). It employs a ResNet backbone combined with a \gls{fpn} to extract multi-scale features, followed by two parallel subnetworks: one for predicting object classes and another for refining bounding box coordinates. A key innovation is the use of focal loss, which shifts training focus toward difficult, misclassified examples by down-weighting easy negatives. To detect objects of different shapes and sizes, RetinaNet utilises anchor boxes with varying scales and aspect ratios across feature levels. This design allows the model to achieve accuracy comparable to that of many two-stage detectors, while maintaining the efficiency advantages of a single-stage framework.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{retinanet.png}
+\caption{RetinaNet architecture. (Source: \cite{retinanet})}
+\label{fig:retinanet}
+\end{figure}
+
+
+Building on the foundation of \gls{ssd}, SSDLite was introduced in 2018 as a lighter variant designed for mobile and resource-constrained devices \cite{ssdlite}. It replaces the original \gls{ssd}'s VGG-16 backbone with MobileNetv2, which employs inverted residual layers and linear bottlenecks to balance efficient feature extraction with model capacity. This change significantly reduces computational demand. Furthermore, standard convolutional layers in the detection heads are substituted with depthwise separable convolutions (see Figure~\ref{fig:ssdlite}), which decrease parameter count and speed up inference. Later iterations incorporated MobileNetv3 as the backbone, adding squeeze-and-excitation modules and the h-swish activation function for improved efficiency and accuracy (see Figure~\ref{fig:ssdlite2}). These adaptations make SSDLite highly suitable for deployment in environments with limited computational resources.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.8\columnwidth]{ssdlite.png}
+\caption{MobileNetV2-SSDLite architecture. (Source: \cite{ssdlite_diagram})}
+\label{fig:ssdlite}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.9\columnwidth]{mobilenet-v3-block.png}
+\caption{MobileNetv3 architecture. (Source: \cite{mobilenetv3})}
+\label{fig:ssdlite2}
+\end{figure}
+
+In contrast, \gls{fcos} \cite{fcos}, released in 2019, departs from traditional anchor box approaches entirely. It adopts a fully convolutional architecture that directly predicts object centre points and bounding box coordinates, simplifying the detection pipeline. One distinctive feature is the addition of a centre-ness branch, which estimates how close a predicted box is to the actual object centre, helping suppress low-quality detections and reducing false positives (see Figure~\ref{fig:fcos}). Built on a ResNet-\gls{fpn} backbone, \gls{fcos} leverages multi-scale feature extraction to improve detection across object sizes. Its output head consists of three branches: regression for bounding boxes, classification for object categories, and centre-ness for quality estimation, enabling competitive performance without complex anchor matching.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{fcos.png}
+\caption{FCOS architecture. (Source: \cite{fcos})}
+\label{fig:fcos}
+\end{figure}
 
 \subsubsection{Two Stage Detectors}
 \label{subsubsec:2_twostage}
 
-In contrast to one-stage detectors, two-stage detectors tackle object detection by decoupling localisation and classification into distinct stages, each handled by separate networks.
-The \gls{rcnn} family was instrumental in establishing the two-stage framework. This began with the original \gls{rcnn} model \cite{rcnn}, introduced in 2014, which utilised AlexNet \cite{alexnet} as its backbone and relied on selective search to identify potential object regions. This approach was subsequently refined through Fast \gls{rcnn} \cite{fastrcnn}, which bolstered efficiency by processing the entire image once to generate a feature map, before applying selective search. A more significant breakthrough came with Faster \gls{rcnn} \cite{fasterrcnn}, which introduced the \gls{rpn}, effectively eliminating the need for selective search. The \gls{rpn} enabled the network to directly learn region proposals through the use of anchor boxes of various scales and aspect ratios (see Figure \ref{fig:fasterrcnn}). Finally, Mask \gls{rcnn} \cite{maskrcnn} extended the Faster \gls{rcnn} architecture by incorporating an additional branch that predicted segmentation masks for each \gls{roi}.
+In contrast to one-stage detectors, two-stage detectors separate region proposal from classification and localisation. The \gls{rcnn} family was instrumental in this approach, beginning with the original \gls{rcnn} model \cite{rcnn}. This model used a selective search to generate candidate regions, which were then passed individually through AlexNet \cite{alexnet} to extract features. Each region was classified and refined through fully connected layers. Although effective, this process was slow due to repeated feature extraction for each region (see Figure \ref{fig:rcnn}). Fast \gls{rcnn} \cite{fastrcnn} improved efficiency by computing a convolutional feature map over the entire image once, and then applying region proposals on this shared feature map. This reduced redundant computations while maintaining detection accuracy.
 
 \begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.5\linewidth]{fasterrcnn.png}
-    \caption{Faster R-CNN pipeline. (Source: \cite{fasterrcnn})}
-    \label{fig:fasterrcnn}
+\centering
+\includegraphics[width=0.9\linewidth]{content/chapters/2_background/figures/RCNN.png}
+\caption{R-CNN architecture. (Source: \cite{rcnn})}
+\label{fig:rcnn}
 \end{figure}
 
-Complementing these technological advancements, \gls{fpn} \cite{fpn} improved detection across all network layers by constructing a feature pyramid for improved multi-scale detection. This pyramid included bottom-up pathways that captured semantic information and top-down pathways that refined these maps by merging high-level features with spatially rich information. \gls{rfcn} \cite{rfcn} integrated both classification and localisation tasks, utilising position-sensitive score maps to classify and refine bounding box coordinates. This approach struck a balance between speed and accuracy by enabling shared computation across regions.
-Building on these two-stage frameworks, EfficientDet \cite{efficientdet} incorporated an EfficientNet \cite{efficientnet} backbone and employed a weighted bi-directional feature pyramid network for efficient multi-scale feature fusion. Furthermore, it introduced a compound scaling method that uniformly scaled resolution, depth, and width across the backbone, feature network, and prediction networks.
+A more pivotal advancement came with Faster \gls{rcnn} \cite{fasterrcnn}, which introduced the \gls{rpn}. This component removed the dependency on external region proposal algorithms by allowing the network to learn object proposals directly from feature maps using anchor boxes of varying scales and aspect ratios. The \gls{rpn} shares convolutional features with the detection network, enabling efficient and integrated region proposal generation. After region proposals are obtained, a shared head performs both classification and bounding box regression, streamlining the process within a unified framework.
+
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.5\linewidth]{fasterrcnn.png}
+% \caption{Faster \gls{rcnn} pipeline. (Source: \cite{fasterrcnn})}
+% \label{fig:fasterrcnn}
+% \end{figure}
+
+Subsequent improvements to Faster \gls{rcnn} incorporated an \gls{fpn}, significantly enhancing the model’s ability to detect objects at multiple scales by enriching feature representations across layers. This advancement became standard in later implementations, exemplified by the ResNet-\gls{fpn} backbone architecture. Here, a shared network efficiently performs both region proposal and detection tasks. After extracting region proposals, a unified head simultaneously executes classification and bounding box regression, preserving architectural simplicity while boosting efficiency. Building upon this foundation, Mask \gls{rcnn} \cite{maskrcnn} added a parallel branch to predict segmentation masks for each \gls{roi}, enabling instance segmentation alongside detection.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{fasterrcnn2.png}
+\caption{Faster \gls{rcnn} architecture with ResNet-50 backbone and integrated \gls{fpn}, demonstrating a unified two-stage detection pipeline for proposal generation, classification, and bounding box regression. (Source: \cite{fasterrcnn_diagram})}
+\label{fig:fasterrcnn2}
+\end{figure}
+
+Complementing these technological advancements, \gls{fpn} \cite{fpn} improved detection across all network layers by constructing a feature pyramid for improved multi-scale detection. This pyramid included bottom-up pathways that captured semantic information and top-down pathways that refined these maps by merging high-level features with spatially rich information. The \gls{rfcn} \cite{rfcn} integrated both classification and localisation tasks, utilising position-sensitive score maps to classify and refine bounding box coordinates. This approach struck a balance between speed and accuracy by enabling shared computation across regions.
+Building on these two-stage frameworks, EfficientDet \cite{efficientdet} incorporated an EfficientNet \cite{efficientnet} backbone and employed a weighted bi-directional \gls{fpn} for efficient multi-scale feature fusion (see Figure \ref{fig:efficientdet}). Furthermore, it introduced a compound scaling method that uniformly scaled resolution, depth, and width across the backbone, feature network, and prediction networks.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{efficientdet.png}
+\caption{EfficientDet architecture. (Source: \cite{efficientdet})}
+\label{fig:efficientdet}
+\end{figure}
 
 \subsubsection{Transformer-Based Detectors}
 \label{subsubsec:2_transformers}
 
-Transformers, originally developed for natural language processing \cite{transformers}, have garnered significant attention in computer vision \cite{visiontransformer}, especially for object detection tasks. The \gls{detr} \cite{detr}, introduced in 2020, marked a pioneering shift in transformer-based object detection by framing the task as a set prediction problem. \gls{detr} removed the need for region proposals, employing a bipartite matching loss that aligns predicted boxes with ground-truth boxes. Its encoder-decoder architecture processes input data through self-attention mechanisms, enabling it to effectively distinguish individual instances. This structure supports both object detection and panoptic segmentation tasks (see Figure \ref{fig:detr}).
+Transformers, originally developed for natural language processing \cite{transformers}, have garnered significant attention in computer vision \cite{visiontransformer}, especially for object detection tasks. The \gls{detr} \cite{detr}, introduced in 2020, marked a pioneering shift in transformer-based object detection by framing the task as a set prediction problem. \gls{detr} removed the need for region proposals, employing a bipartite matching loss that aligns predicted boxes with ground-truth boxes. Its encoder-decoder architecture processes input data through self-attention mechanisms, enabling it to distinguish between individual instances successfully. This architecture supports both object detection and panoptic segmentation tasks, and the architecture for \gls{detr} is illustrated in Figure \ref{fig:detr}.
 
 \begin{figure}[ht]
     \centering
@@ -152,26 +220,47 @@ Transformers, originally developed for natural language processing \cite{transfo
 \end{figure}
 
 Several models have built upon the foundation laid by \gls{detr}. The \gls{dino} framework \cite{zhang2022dino, li2022dn, liu2022dabdetr} improved both training efficiency and overall performance. Grounding \gls{dino} \cite{groundingdino} advanced zero-shot object detection by enabling the identification of objects without prior training on specific categories. This was achieved through the use of natural language queries and the multimodal fusion of textual and visual information.
-Real-time transformer-based detection has also emerged as a significant advancement. \gls{rtdetr} \cite{rt-detr} addressed the limitations of non-maximum suppression by incorporating a hybrid encoder and high-quality initial queries. This made the model more efficient and adaptable, eliminating the need for retraining. \gls{rtdetr}v2 \cite{rt-detrv2} further optimised training strategies and integrated bag-of-freebies techniques, enhancing real-time performance.
+Real-time transformer-based detection has also emerged as a significant advancement. The \gls{rtdetr} \cite{rt-detr} addressed the limitations of non-maximum suppression by incorporating a hybrid encoder and high-quality initial queries. This made the model more efficient and adaptable, eliminating the need for retraining. \gls{rtdetr}v2 \cite{rt-detrv2} further optimised training strategies and integrated bag-of-freebies techniques, enhancing real-time performance.
 
-Vision-language models have also adopted transformer architectures for object detection. PaliGemma \cite{paligemma} combined a vision transformer for image encoding with a transformer decoder to merge textual and visual data, framing object detection as a set prediction task. Its successor, PaliGemma 2 \cite{paligemma2}, improved efficiency by incorporating Gemma 2 language models with the SigLIP vision encoder, enabling it to handle multiple input resolutions more effectively. Similarly, Florence-2 \cite{florence2} utilised a unified, prompt-based architecture with an image encoder and a multi-modality encoder-decoder to address a range of vision-language tasks, including object detection, captioning, and segmentation.
+Vision-language models have also adopted transformer architectures for object detection. PaliGemma \cite{paligemma} combined a vision transformer for image encoding with a transformer decoder to merge textual and visual data, framing object detection as a set prediction task. Its successor, PaliGemma 2 \cite{paligemma2}, improved efficiency by incorporating Gemma 2 language models with the SigLIP vision encoder, enabling it to handle multiple input resolutions more effectively. Similarly, Florence-2 \cite{florence2} utilised a unified, prompt-based architecture with an image encoder and a multi-modality encoder-decoder to address a range of vision-language tasks, including object detection, captioning, and segmentation (refer to Figure \ref{fig:florence2}).
 These transformer-based approaches collectively represent a paradigm shift in object detection, offering end-to-end solutions that eliminate traditional components, such as non-maximum suppression, while enabling more flexible, multimodal, and zero-shot capabilities.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{florence2.png}
+\caption{Florence-2 architecture. (Source: \cite{florence2})}
+\label{fig:florence2}
+\end{figure}
 
 \subsubsection{Other Deep Learning Approaches}
 \label{subsubsec:2_other_approaches}
 
 Deep learning methodologies that go beyond traditional one-stage, two-stage, and transformer detectors have emerged to tackle specific challenges in object detection. These approaches can be categorised based on their underlying principles and technical innovations.
-One prominent paradigm is reinforcement learning-based detection frameworks, starting with the approach by Caicedo et al. \cite{Caicedo_2015_ICCV}, which used class-specific Deep Q-Network agents to iteratively refine object localisation by framing detection as a \gls{sdmp}. Subsequent studies have expanded on this foundation by incorporating multitask learning \cite{multitask_learning}, integrating saliency ranking \cite{bartolo2024integratingsaliencyrankingreinforcement}, and developing other complementary strategies \cite{reinforcenet, bar_rl} to enhance the reinforcement learning paradigm for object detection.
+One prominent paradigm is reinforcement learning-based detection frameworks, starting with the approach by Caicedo et al. \cite{Caicedo_2015_ICCV}, which used class-specific Deep Q-Network agents to iteratively refine object localisation by framing detection as a \gls{sdmp}. Subsequent studies have expanded on this foundation by incorporating multitask learning \cite{multitask_learning}, integrating saliency ranking \cite{bartolo2024integratingsaliencyrankingreinforcement}, and developing other complementary strategies \cite{reinforcenet, bar_rl} to enhance the reinforcement learning paradigm for object detection. An example architecture of such a reinforcement learning-based framework for iterative object localisation is depicted in Figure~\ref{fig:sarlvision}.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{architecture.png}
+\caption{Architecture of a reinforcement learning-based object detection framework for iterative object localisation. (Source: \cite{bartolo2024integratingsaliencyrankingreinforcement})}
+\label{fig:sarlvision}
+\end{figure}
 
 Feature enhancement techniques represent another significant area, exemplified by \gls{dcn} introduced in 2017 \cite{dcn}. \gls{dcn} improves feature extraction across various detector architectures by incorporating deformable convolutional layers and \gls{roi} pooling, enabling adaptive sampling of input features with learnt offsets. This approach better models spatial transformations and bolsters the detection of objects with varying shapes and sizes.
-Point-based and slicing-based approaches offer alternative detection paradigms. CenterNet \cite{centernet} models objects as single points (the centres of their bounding boxes) and uses keypoint estimation to identify these centres while regressing to other properties such as size and orientation. This results in an end-to-end differentiable system that is simpler, faster, and often more accurate than traditional bounding box-based detectors. The \gls{sahi} framework \cite{sahi_detection} improves small object detection by dividing input images into overlapping patches during both fine-tuning and inference. This increases pixel coverage for small objects, which are then reassembled through non-maximum suppression.
+Point-based and slicing-based approaches offer alternative detection paradigms. CenterNet \cite{centernet}, models objects as single points (the centres of their bounding boxes) and uses keypoint estimation to identify these centres while regressing to other properties such as size and orientation. This results in an end-to-end differentiable system that is simpler, faster, and often more accurate than traditional bounding box-based detectors. The architecture of CenterNet is illustrated in Figure~\ref{fig:centernet}. Furthermore, the \gls{sahi} framework \cite{sahi_detection} improves small object detection by dividing input images into overlapping patches during both fine-tuning and inference. This increases pixel coverage for small objects, which are then reassembled through non-maximum suppression.
 These diverse approaches complement mainstream detection architectures by addressing specific limitations and introducing novel perspectives on the object detection problem.
 
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\columnwidth]{centernet.png}
+\caption{CenterNet architecture. (Source: \cite{centernet})}
+\label{fig:centernet}
+\end{figure}
 
 \section{Learning Using Privileged Information}
 \label{subsec:2_lupi_background}
 
-Unlike the conventional machine learning approach, which selects the most suitable function from a predefined set based solely on input-output training examples, the \gls{lupi} paradigm introduces a richer structure. Proposed by Vapnik and Vashist \cite{lupi, Vapnik2015LearningUP}, the \gls{lupi} framework incorporates additional information during the training phase. This information, which is not available at test time, is intended to accelerate the convergence of the learning process.
+Unlike the conventional machine learning approach, which selects the most suitable function from a predefined set based solely on input-output training examples, the \gls{lupi} paradigm introduces a richer structure. Proposed by Vapnik and Vashist \cite{lupi, Vapnik2015LearningUP}, \gls{lupi} introduces an inherent asymmetry between training and inference: additional informative inputs, referred to as privileged information, are available during training but not at test time \cite{lab2wild, lupi_classification}. This distinction aims to accelerate the learning process by guiding the model with supplementary insights that cannot be exploited during deployment.
+
 \gls{lupi} is inspired by human learning, reflecting the idea that a single day with a great teacher can be more valuable than a thousand days of independent study \cite{lupi_distillation, lupi}. Following the intuition that a student gains more than just examples, the teacher provides explanations, comparisons, and context, which enhance understanding \cite{lupi, lupi_distillation, lupi_nips}.
 In much the same way, \gls{lupi} incorporates additional information, known as privileged information (\gls{x_star}), during training. This data, which is not available during testing, offers a deeper understanding beyond the standard input-output $($\gls{x}$ ,$ \gls{y}$)$ pairs. 
 As outlined in \cite{lupi}, the standard supervised learning framework is formally expressed by a training set composed of input-output pairs:
@@ -190,6 +279,8 @@ Although the aim remains the same as in the conventional supervised learning set
 
 In addition, the \gls{lupi} framework can be extended to align with the concept of knowledge distillation \cite{hinton_distillation}, as proposed in \cite{lupi_distillation}. Both approaches can be viewed as instances of a broader idea in which one model provides guidance to another, a process referred to as \textit{generalised distillation}. This unified perspective treats Hinton’s distillation \cite{hinton_distillation} and Vapnik’s use of privileged information \cite{lupi} as complementary forms of machine-driven instruction.
 In this framework, a teacher model is first trained on standard input-output $($\gls{x_star}$ ,$ \gls{y}$)$  pairs. The teacher then produces soft labels, which act as enriched supervisory signals. These soft labels are used in Hinton’s distillation method to train a student model. The student learns from the soft labels generated by the teacher, benefiting from the additional information embedded in the teacher’s predictions, even though it only receives standard input-output $($\gls{x}$ ,$ \gls{y}$)$  pairs \cite{lupi_distillation}.
+
+Within practical implementations, \gls{lupi} in deep learning is generally realised through a teacher–student structure embedded in conventional training pipelines. The teacher network is trained using both regular inputs and privileged data. Its outputs, such as soft predictions or intermediate feature representations, are used to supervise the student through additional loss functions \cite{lupi_nips}. \gls{kl} divergence is often used for classification tasks, while cosine similarity is more suitable when aligning continuous outputs or internal vector representations \cite{lab2wild, hinton_distillation}. The architectures of the teacher and student are usually similar, though the teacher is adapted to accept the extra input during training \cite{lab2wild, lupi_distillation}. This setup integrates into existing deep learning workflows with minimal modification. Various strategies have been investigated for distilling knowledge, such as matching output logits \cite{output_logits}, aligning attention maps \cite{attention_maps_distillation}, transferring hidden features \cite{lab2wild, distillation2}, and combining multiple forms of guidance to strengthen the student’s learning process \cite{distillation1, lupi_distillation}. The application of \gls{lupi} within computer vision is examined in greater detail in Section~\ref{subsec:2_lupi}.
 
 % -- Start of Lit Review --
 
@@ -221,7 +312,7 @@ In their study, the authors utilise the created \gls{bdw} dataset in multiple ex
 Building on the concept of litter detection proposed by \cite{bdwdataset}, Deidun et al. (2018) introduced an optimised system for monitoring beach litter through aerial imagery \cite{umgeosurvey}. Their study focused on three coastal stretches within the North-East Marine Protected Area of the Maltese Islands. The monitored areas included Baħar iċ-Ċagħaq, specifically the western and eastern flanks of its rocky peninsula. 
 The data collection process utilised a DJI Phantom 4 Pro drone, configured with a gimbal angle of -90 degrees and flown at an \gls{agl} altitude of 30 metres. This altitude was empirically determined to balance image quality and spatial resolution, following tests conducted at heights ranging from 20 to 50 metres. Images were captured at varying ground resolutions, ranging from 2.5 to 50 centimetres per pixel, to provide detailed visual data \cite{umgeosurvey}.
 
-The collected footage was processed using OpenDroneMap software \cite{OpenDroneMap}, which facilitated the creation of point clouds and texture maps. Georeferenced orthophoto maps with a resolution of 1 centimetre per pixel were generated using \gls{gps} metadata embedded in the \gls{exif} data of each image file. These orthophotos were subsequently tiled and visualised in Google Earth© \cite{umgeosurvey}.
+The collected footage was processed using OpenDroneMap software \cite{OpenDroneMap}, which facilitated the creation of point clouds and texture maps. Georeferenced orthophoto maps with a resolution of 1 centimetre per pixel were generated using \gls{gps} metadata embedded in the \gls{exif} data of each image file. These orthophotos were subsequently tiled and visualised in Google Earth \cite{umgeosurvey}.%©
 
 \begin{figure}[!htbp]
     \centering
@@ -230,7 +321,7 @@ The collected footage was processed using OpenDroneMap software \cite{OpenDroneM
     \label{fig:geosurvey}
 \end{figure}
 
-The digitised database of detected marine litter, shown in Figure \ref{fig:geosurvey}, was created using 473 annotated images containing 608 labelled instances of litter. These instances were categorised into five litter types: \textit{plastics, rope, wood, rubber, and non-natural items}. While the study did not involve testing object detection algorithms, its key contribution lies in presenting a robust data collection protocol \cite{umgeosurvey}.
+The digitised database of detected marine litter, shown in Figure \ref{fig:geosurvey}, was created using 473 annotated images containing 608 labelled instances of litter. These instances were categorised into five litter types: \textit{plastics, rope, wood, rubber, and non-natural items}. While the study did not involve testing object detection algorithms, its key contribution lies in presenting a robust data collection protocol and improving problem understanding \cite{umgeosurvey}.
 
 \subsection{SuperDock: Automated Floating Trash Monitoring System}
 \label{subsec:3_superdock}
@@ -263,7 +354,7 @@ The developed dataset only contained a single litter category, focusing on detec
 \subsection{Small Litter Detection in Highly Variable Backgrounds}
 \label{subsec:3_smalldetection}
 
-In 2019, Schembri and Seychell proposed a case study focusing on litter detection through aerial imagery to address challenges in small object detection in highly variable backgrounds \cite{small_litter_detection}. This study explored techniques for small object localisation using \gls{cnn} to detect litter in outdoor, non-urban imagery. The dataset for this research was collected using a consumer-grade \gls{uav}s at altitudes ranging from 5 to 10 metres \gls{agl}. Compiled from land surveys conducted within the Maltese Islands, the dataset includes 744 annotated images with all types of litter objects classified under a single \textit{litter} category \cite{small_litter_detection}.
+In 2019, Schembri and Seychell proposed a case study focusing on litter detection through aerial imagery to address challenges in small object detection in highly variable backgrounds \cite{small_litter_detection}. This study explored techniques for small object localisation using \gls{cnn} to detect litter in outdoor, non-urban imagery. The dataset for this research was collected using a consumer-grade \glspl{uav} at altitudes ranging from 5 to 10 metres \gls{agl}. Compiled from land surveys conducted within the Maltese Islands, the dataset includes 744 annotated images with all types of litter objects classified under a single \textit{litter} category \cite{small_litter_detection}.
 The algorithmic pipeline proposed by the authors for small litter detection, is illustrated in Figure \ref{fig:smalllitterdetection}. A sliding window technique was used to subdivide the entire scene into tiles of $224 \times 224$ pixels with a 32-pixel overlap, and each tile was processed individually. Non-relevant objects such as the sky, sea, and humans were masked during a scene filtering stage to improve accuracy. The litter detection problem was tackled using a VGG-16 CNN model, pre-trained on ImageNet \cite{image_net}, and fine-tuned with the collected dataset. Data augmentation techniques were also applied to improve the model’s robustness \cite{small_litter_detection}.
 
 \begin{figure}[!htbp]
@@ -309,7 +400,7 @@ The authors noted that the detection performance was notably low due to challeng
 \label{subsec:3_mju-waste}
 
 In 2020, Wang et al. also sought to address the challenge of waste object segmentation through a multi-level approach \cite{mju_waste}. To create their dataset, the authors collected waste items from a university campus, photographed individuals holding these items, and then annotated the images. The MJU-Waste dataset focuses solely on a single category, classifying all items under the label of \textit{waste}. The MJU-Waste dataset contains 2,475 annotated images and 2,525 instances of litter, all of which are annotated using polygon masks.
-Unlike \gls{uav}-based datasets, the MJU-Waste dataset consists of images captured from controlled environments. The dataset includes segmentation masks, along with both raw and processed depth maps for all litter instances, captured using a Microsoft Kinect RGBD camera. However, due to sensor limitations, the depth frames contain missing values, particularly at reflective surfaces, occlusion boundaries, and distant regions. To address this, a median filter was applied to fill in the missing data and ensure the depth images were of high quality. Each image in the dataset was annotated with pixel-wise masks of the waste objects, and examples of colour frames, ground-truth annotations, and depth frames are provided in Figure \ref{fig:mjuwaste}. Alongside the semantic segmentation ground truths, object instance masks are also available \cite{mju_waste}.
+Unlike \gls{uav}-based datasets, the MJU-Waste dataset consists of images captured from controlled environments. The dataset includes segmentation masks, along with both raw and processed depth maps for all litter instances, captured using a Microsoft Kinect \gls{rgbd} camera. However, due to sensor limitations, the depth frames contain missing values, notably at reflective surfaces, occlusion boundaries, and distant regions. To address this, a median filter was applied to fill in the missing data and ensure the depth images were of high quality. Each image in the dataset was annotated with pixel-wise masks of the waste objects, and examples of colour frames, ground-truth annotations, and depth frames are provided in Figure \ref{fig:mjuwaste}. Alongside the semantic segmentation ground truths, object instance masks are also available \cite{mju_waste}.
 
 \begin{figure}[!htbp]
     \centering
@@ -363,7 +454,7 @@ The ZeroWaste dataset includes 10,715 annotated images, collected from a high-qu
 \end{figure}
 
 The data was gathered using two compact recording systems placed at the start and end of the conveyor belt during the facility's routine operations. The footage consists of 12 video sequences with a total duration of 95 minutes and 14 seconds, recorded at a frame rate of 120 \gls{fps} and a resolution of $1920 \times 1080$. To ensure high-quality data, the footage was processed to correct optical distortions, crop unnecessary elements, and remove motion blur.
-The ZeroWaste dataset was divided as follows: 65\% for training, 15\% for validation, and 20\% for testing. The evaluation metrics used include \gls{ap} and \gls{map} at various thresholds, \gls{iou}, and pixel precision. The models tested include RetinaNet, Mask \gls{rcnn}, TridentNet \cite{tridentnet}, and DeepLabv3, and a series of experiments were conducted, including fully, semi, and weakly supervised learning.
+The ZeroWaste dataset was divided as follows: 65\% for training, 15\% for validation, and 20\% for testing. The evaluation metrics used include \gls{ap} and \gls{map} at various thresholds, \gls{iou}, and pixel precision. Additionally, the models tested include RetinaNet, Mask \gls{rcnn}, TridentNet \cite{tridentnet}, and DeepLabv3, and a series of experiments were conducted, including fully, semi, and weakly supervised learning.
 The results revealed that the ZeroWaste dataset posed considerable challenges for state-of-the-art detectors such as Mask \gls{rcnn}. However, TridentNet emerged as the top-performing detector, while DeepLabv3 achieved the best results in terms of segmentation \cite{zerowaste}.
 
 \subsection{PlastOPol: Litter Detection with Deep Learning}
@@ -385,16 +476,16 @@ The experiment results demonstrated that \gls{yolo}v5 was the best-performing mo
 \subsection{Real-Time UAV Trash Monitoring System}
 \label{subsec:3_haida}
 
-In 2022, Liao and Juang developed a marine litter detection system using \gls{uav}s \cite{haida}. Their goal was to reduce reliance on manual efforts and offer a more efficient method for identifying marine debris. The real-time \gls{uav} trash monitoring system consisted of nine components: \gls{uav}s, a message queuing system, a database, a video streaming server, a connector, a \gls{uav} control station, a web service, a \gls{uav} map, and a data analysis module, as illustrated in Figure \ref{fig:haida1}. The ground station incorporated key elements, such as the video streaming server, Kafka, the Kafka connector, MongoDB, and the web service. The system addressed two key challenges: object detection and geolocation, and as part of the system's development, the authors introduced the HAIDA dataset. This dataset, collected on the NTOU campus, was used to train the object detection model and contains two types of litter objects: \textit{garbage} and \textit{bottles}. The data was gathered using a \gls{uav} equipped with a Pixhawk controller and an NVIDIA Jetson Xavier NX. The UAV operated at altitudes ranging from 1 to 10 metres \gls{agl} \cite{haida}.
+In 2022, Liao and Juang developed a marine litter detection system using \glspl{uav} \cite{haida}. Their goal was to reduce reliance on manual efforts and offer a more efficient method for identifying marine debris. The real-time \gls{uav} trash monitoring system consisted of nine components: \glspl{uav}, a message queuing system, a database, a video streaming server, a connector, a \gls{uav} control station, a web service, a \gls{uav} map, and a data analysis module, as illustrated in Figure \ref{fig:haida1}. The ground station incorporated key elements, such as the video streaming server, Kafka, the Kafka connector, MongoDB, and the web service. The system addressed two key challenges: object detection and geolocation, and as part of the system's development, the authors introduced the HAIDA dataset. This dataset, collected on the NTOU campus, was used to train the object detection model and contains two types of litter objects: \textit{garbage} and \textit{bottles}. The data was gathered using a \gls{uav} equipped with a Pixhawk controller and an NVIDIA Jetson Xavier NX. The UAV operated at altitudes ranging from 1 to 10 metres \gls{agl} \cite{haida}.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.7\linewidth]{haida1.png}
+    \includegraphics[width=0.9\linewidth]{haida1.png}
     \caption{The system architecture of the real-time \gls{uav} trash monitoring system. (Source: \cite{haida})}
     \label{fig:haida1}
 \end{figure}
 
-The HAIDA dataset comprises 1,319 annotated images, with 6,475 instances of litter, including 3,904 garbage objects and 2,571 bottle objects. Additionally, 456 images in the dataset contain no litter. The authors utilised the dataset to train the \gls{yolo} object detection model (version unspecified). The results showed that the model was able to identify trash objects with an \gls{ap} of over 70\% at a 0.5 \gls{iou} threshold. Notably, as shown in Figure \ref{fig:haida2}, the detection confidence for small objects was high, with confidence scores of 98.27\%, 64.65\%, and 91.86\% for different categories of litter.
+The HAIDA dataset comprises 1,319 annotated images, with 6,475 instances of litter, including 3,904 garbage objects and 2,571 bottle objects. Additionally, 456 images in the dataset contain no litter. The authors utilised the dataset to train a \gls{yolo} object detection model (version unspecified). The results showed that the model was able to identify trash objects with an \gls{ap} of over 70\% at a 0.5 \gls{iou} threshold. Notably, as shown in Figure \ref{fig:haida2}, the detection confidence for small objects was high, with confidence scores of 98.27\%, 64.65\%, and 91.86\% for different categories of litter.
 The real-time \gls{uav} trash monitoring system operated by first collecting \gls{uav} footage as the drone flew across predetermined waypoints. The footage was then transmitted to a server via Kafka, where it was stored in an online database such as Oracle, MySQL, or MongoDB. Using this stored data, the server applied the trash detection model to identify litter both in the images and on a map. Control stations, both mobile and desktop, could make requests to the server to retrieve the map data, which displayed the locations of detected litter \cite{haida}.
 To estimate litter geolocation, the authors followed an approach similar to that in \cite{uavvaste}, calculating pollution area based on \gls{uav} altitude, camera angles, and object size in the image. This enabled a reliable approximation of both the position and extent of detected waste \cite{haida}.
 
@@ -434,7 +525,7 @@ In their study, the authors reported that \gls{yolo}v5x was the best-performing 
 \subsection{Use of UAVs and Deep Learning for Beach Litter Monitoring}
 \label{subsec:3_beach_litter}
 
-In 2023, Pfeiffer et al. proposed a framework for an autonomous beach litter monitoring and retrieval system based on drone surveys and object detection using deep learning techniques \cite{beach_litter}. Their research combined drone footage collected from the islands of Malta and Gozo, Sicily (Italy), and the Red Sea coast with publicly available litter datasets, which were subsequently used to train an object detection model for identifying litter in the captured footage. Figure \ref{fig:beachlitter1} illustrates the overall framework of the proposed beach litter monitoring system. To address both object detection and geolocation challenges, the authors compiled a \gls{uav} dataset collected with DJI Phantom 4 Pro 2.0 and DJI Mavic 2 UAVs. The dataset covered altitudes ranging from 10 metres above ground level to 60 metres above sea level and included 67 types of litter, which were categorised into seven meta-classes: \textit{clothing \& fabric}, \textit{glass}, \textit{small objects}, \textit{metal litter}, \textit{paper \& cardboard}, \textit{plastic}, and \textit{other waste}.
+In 2023, Pfeiffer et al. proposed a framework for an autonomous beach litter monitoring and retrieval system based on drone surveys and object detection using deep learning techniques \cite{beach_litter}. Their research combined drone footage collected from the islands of Malta and Gozo, Sicily (Italy), and the Red Sea coast with publicly available litter datasets, which were subsequently used to train an object detection model for identifying litter in the captured footage. Figure \ref{fig:beachlitter1} illustrates the overall framework of the proposed beach litter monitoring system. To address both object detection and geolocation challenges, the authors compiled a \gls{uav} dataset collected with a DJI Phantom 4 Pro 2.0 and a DJI Mavic 2 UAVs. The dataset covered altitudes ranging from 10 metres above ground level to 60 metres above sea level and included 67 types of litter, which were categorised into seven meta-classes: \textit{clothing \& fabric}, \textit{glass}, \textit{small objects}, \textit{metal litter}, \textit{paper \& cardboard}, \textit{plastic}, and \textit{other waste}.
 Additionally, the collected Beach Litter Dataset contains 4,126 annotated images and 10,611 litter instances, including 1,154 images with no litter present. The dataset was divided as follows: 60\% for training, 20\% for validation, and 20\% for testing. The models were evaluated using metrics such as \gls{ap},\gls{map} (at 0.5–0.95), F1 score, and recall, with the \gls{yolo}v5 model being the primary model used for training \cite{beach_litter}. 
 
 \begin{figure}[!htbp]
@@ -458,13 +549,13 @@ The results of their experiments using the \gls{yolo}v5 model on the labelled da
 \subsection{TrashNet: Real-Time Object Detection for Trash Classification}
 \label{subsec:3_trashnet}
 
-In 2024, Veeravadivel Santhanalakshmi, and Nguyen introduced TrashNet, an object detection model designed to classify images of waste in real time. The dataset employed to train the TrashNet network comprises six primary categories of litter: \textit{cardboard}, \textit{glass}, \textit{metal}, \textit{paper}, \textit{plastic}, and \textit{general waste}. This dataset, derived from an image classification dataset on Kaggle, does not utilise \gls{uav}-based data. The TrashNet dataset comprises 2,524 annotated images, each featuring a single object instance. In addition, the authors explain that the dataset was divided into three subsets for model development: 70\% for training, 20\% for testing, and 10\% for validation.
-In this study, the \gls{yolo}v5 object detection model was used, and its performance was evaluated using using metrics such as mean \gls{map}, precision, recall, and F1 score. 
+In 2024, Veeravadivel Santhanalakshmi, and Nguyen introduced TrashNet, an object detection model designed to classify images of waste in real time. The dataset employed to train the TrashNet network comprises six primary categories of litter: \textit{cardboard}, \textit{glass}, \textit{metal}, \textit{paper}, \textit{plastic}, and \textit{general waste}. This dataset, derived from an image classification dataset on Kaggle, does not utilise \gls{uav}-based data. Furthermore, the TrashNet dataset comprises 2,524 annotated images, each featuring a single object instance. The authors explain that the dataset was divided into three subsets for model development: 70\% for training, 20\% for testing, and 10\% for validation.
+In this study, the \gls{yolo}v5 object detection model was used, and its performance was evaluated using metrics such as \gls{map}, precision, recall, and F1 score. 
 The authors highlight that the primary aim of this study was to develop a real-time system to assist individuals in identifying the correct bin for various types of waste near rubbish disposal areas, as seen in Figure \ref{fig:trashnet}. Notably, the model successfully fulfilled this objective, achieving an accuracy of 90\% on both the validation and testing sets \cite{trashnet}.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.7\linewidth]{trashnet.png}
+    \includegraphics[width=0.8\linewidth]{trashnet.png}
     \caption{Litter detection results generated by the TrashNet detection model. (Source: \cite{trashnet})}
     \label{fig:trashnet}
 \end{figure}
@@ -472,7 +563,7 @@ The authors highlight that the primary aim of this study was to develop a real-t
 \subsection{SODA: Small Objects at Different Altitudes}
 \label{subsec:3_sodadataset}
 
-Modern \gls{uav}s are equipped with high-resolution cameras capable of capturing detailed pictures and videos of their surroundings. However, when the \gls{uav} is flying at higher altitudes, objects in the images may look very tiny, occupying only a few pixels. This poses substantial hurdles for spotting such objects. To tackle this issue, Pisani et al. (2024) introduced the \gls{soda} dataset, designed to aid research focused on small object detection in aerial imagery \cite{soda_dataset}. The dataset features six primary types of litter, derived from the \gls{taco} dataset: \textit{clear plastic bottles}, \textit{other plastic bottles}, \textit{glass bottles}, \textit{glass jars}, \textit{drinking cans}, and \textit{drinking cartons}. Figure \ref{fig:soda1} illustrates examples of litter categories used in the \gls{soda} dataset. Furthermore, the images were collected using a combination of DJI Mini 2 and DJI Air 2S UAVs at various altitudes, including 1m, 5m, 10m, 15m, 20m, 25m, and 30m \cite{soda_dataset, detect_litter}.
+Modern \glspl{uav} are equipped with high-resolution cameras capable of capturing detailed pictures and videos of their surroundings. However, when the \gls{uav} is flying at higher altitudes, objects in the images may look very tiny, occupying only a few pixels. This poses substantial hurdles for spotting such objects. To tackle this issue, Pisani et al. (2024) introduced the \gls{soda} dataset, designed to aid research focused on small object detection in aerial imagery \cite{soda_dataset}. The dataset features six primary types of litter, derived from the \gls{taco} dataset: \textit{clear plastic bottles}, \textit{other plastic bottles}, \textit{glass bottles}, \textit{glass jars}, \textit{drinking cans}, and \textit{drinking cartons}. Figure \ref{fig:soda1} illustrates examples of litter categories used in the \gls{soda} dataset. Furthermore, the images were collected using a combination of DJI Mini 2 and DJI Air 2S UAVs at various altitudes, including 1m, 5m, 10m, 15m, 20m, 25m, and 30m \cite{soda_dataset, detect_litter}.
 
 \begin{figure}[!htbp]
     \centering
@@ -483,24 +574,24 @@ Modern \gls{uav}s are equipped with high-resolution cameras capable of capturing
 
 The \gls{soda} dataset consists of 829 annotated images, with 452 (54.52\%) taken at 1 metre and 377 (45.48\%) captured from altitudes of 5 metres or more. 
 The \gls{soda} dataset supports multi-class classification, with each object annotated with a distinct label using polygons rather than bounding boxes. The authors explain that polygons offer a more accurate fit around the object, whereas bounding boxes often capture additional background. Additionally, they clarify that polygons provide precise alignment during augmentations, such as rotation. Techniques for annotating with polygons and applying these augmentations are outlined in \cite{mask_to_annotation}. However, although the \gls{soda} dataset is annotated using polygons, the authors focus on the challenge of object detection rather than instance segmentation.
-To address the challenge of detecting small objects across multiple categories of litter, the authors employed three different training strategies. The first approach involved segregating the training dataset according to altitude. In the second approach, the dataset was merged while maintaining multi-class labels. The third approach also merged the dataset but consolidated all categories into a single \textit{litter} class. 
+To address the challenge of detecting small objects across multiple categories of litter, the authors employed three different training strategies. The first approach involved segregating the training dataset according to altitude. In the second approach, the dataset was merged while maintaining multi-class labels. The third approach also merged the dataset, consolidating all categories into a single \textit{litter} class. 
 Notably, a key feature of this study was the application of a \textit{tiling methodology} to improve the detection of small objects. This technique divides an image into a grid and splits it into smaller, equally sized sections, which were used in both the training and inference stages. The authors note that the grid size can significantly influence detection performance, with smaller grids, such as $2 \times 2$ (refer to Figure \ref{fig:soda2}), used at lower altitudes and larger grids, like $5 \times 5$, applied at higher altitudes. For the \gls{soda} dataset, a $5 \times 5$ grid was used across all altitudes and images \cite{detect_litter, soda_dataset, daniel_thesis}.
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.9\columnwidth]{soda2.png}
+    \includegraphics[width=1\columnwidth]{soda2.png}
     \caption{Application of a $2 \times 2$ tiling grid to aerial imagery captured at an altitude of 5 metres. (Source: \cite{detect_litter})}
     \label{fig:soda2}
 \end{figure}
 
 Three object detection models were trained for this study: \gls{yolo}v5 and \gls{yolo}v8 (both one-stage detectors) and Faster \gls{rcnn} (a two-stage detector). Models trained using the second and third approaches were evaluated on the \gls{bdw} dataset. The results indicated that the third approach, which merged all classes into a single litter category, outperformed the second approach. Additionally, the evaluation revealed that the \gls{soda} dataset was lacking a sufficient number of images of clear plastic bottles. 
 In terms of \gls{map}, the results for the different models were as follows: Faster \gls{rcnn} achieved a \gls{map} of 0.921, \gls{yolo}v5 had a \gls{map} of 0.854, and \gls{yolo}v8 performed with a \gls{map} of 0.728 \cite{soda_dataset, detect_litter}. 
-Finally, this study contributes to the use of \gls{uav}s for capturing aerial imagery and applying computer vision techniques to detect and classify objects within these images. The authors emphasise its significance as a crucial phase and a stepping stone towards the automation of litter collection for cleanup efforts \cite{detect_litter, soda_dataset, daniel_thesis}.
+Conclusively, this study contributes to the use of \glspl{uav} for capturing aerial imagery and applying computer vision techniques to detect and classify objects within these images. The authors emphasise its significance as a crucial phase and a stepping stone towards the automation of litter collection for cleanup efforts \cite{detect_litter, soda_dataset, daniel_thesis}.
 
 \subsection{Discussion}
 \label{subsec:3_discussion}
 
-The reviewed datasets and approaches highlight the growing potential, and popularity of \gls{uav}-based \gls{ai} systems for litter detection and management. While certain datasets were originally developed for recycling classification in indoor or controlled settings, others target outdoor environments, which present significantly greater challenges. Datasets that rely on \gls{uav}s are particularly affected by the difficulty of identifying small objects from aerial perspectives.
+The reviewed datasets and approaches highlight the growing potential, and popularity of \gls{uav}-based \gls{ai} systems for litter detection and management. While certain datasets were originally developed for recycling classification in indoor or controlled settings, others target outdoor environments, which present significantly greater challenges. Datasets that rely on \glspl{uav} are particularly affected by the difficulty of identifying small objects from aerial perspectives.
 The variation across datasets reveals a wide range of technical and contextual difficulties associated with litter detection, as shown in Table \ref{tab:lit_review}. For example, datasets such as TrashNet \cite{trashnet}, MJU-Waste \cite{mju_waste}, and ZeroWaste \cite{zerowaste} were created under artificial conditions. In contrast, datasets like PlastoPol \cite{plastopol}, TACO \cite{taco2020}, and several \gls{uav}-oriented collections \cite{haida,soda_dataset,uavvaste,bdwdataset,beach_litter,superdock,umgeosurvey} contain real-world data collected in natural and urban environments.
 
 Honing in on \gls{uav}-based litter deteciton, a recurring limitation evident in \gls{uav} datasets is the restricted number of annotated categories. In many cases, only one category is included. To this end, when multiple categories are included in a dataset, a common practice observed was to conduct an experiment by merging all classes into a single general litter category. Another challenge lies in the height at which data are collected. Most \gls{uav}-based datasets capture images at around 10 metres \gls{agl} or less. Exceptions such as \gls{bdw} \cite{bdwdataset} and \gls{soda} \cite{soda_dataset} extend this altitude to 30 metres, while the Beach Litter Dataset \cite{beach_litter} reaches up to 60 metres. Notwithstanding this, from among the \gls{uav} litter datasets only the \gls{soda} dataset \cite{soda_dataset} provides altitude-specific subsets of data.
@@ -519,21 +610,21 @@ In terms of detection methods, \textit{data augmentation} is frequently employed
 \hline
 \textbf{Name} & \textbf{Year} & \textbf{No of. Images} & \textbf{UAV}& \textbf{AGL Altitudes} & \textbf{Dataset Details}& \textbf{No of. Categories}  & \textbf{Available}\\ 
 \hline \hline
-BDW Dataset \cite{bdwdataset} & 2018 & 25,407 & Yes & 10m--30m & Detection & 1 (Litter)  &Yes\\ \hline
-UM Geo. Survey \cite{umgeosurvey} & 2018 & 472 & Yes & 30m & Data Collection & 5 (Litter)  &No\\\hline
-SuperDock \cite{superdock} & 2019 & 100 & Yes & 5m--10m & Detection & 1 (Litter)  &No\\\hline
-Styrofoam Monitoring \cite{styrofoam} & 2019 & N/S\footnotemark[1] & Yes & 15m & Detection, Segmentation & 1 (Litter)  &No\\\hline
-Small Litter Detection \cite{small_litter_detection} & 2019 & 744 & Yes & 5m--10m & Detection & 1 (Litter)  &No\\\hline
-TACO Dataset \cite{taco2020} & 2020 & 1,500 & No & N/A\footnotemark[2] & Detection, Segmentation & 60 (Litter) [28 Super]  &Yes\\\hline
-MJU-Waste Dataset \cite{mju_waste} & 2020 & 2,475 & No & N/A\footnotemark[2] & Segmentation & 1 (Litter)  &Yes\\\hline
-UAVVaste Dataset \cite{uavvaste} & 2021 & 772 & Yes & low-altitude & Detection, Geolocation & 1 (Litter)  &Yes\\\hline
-ZeroWaste Dataset \cite{zerowaste} & 2022 & 10,715 & No & N/A\footnotemark[2] & Detection, Segmentation & 4 (Litter)  &Yes\\\hline
-PlasOPol Dataset \cite{plastopol} & 2022 & 2,418 & No & N/A\footnotemark[2] & Detection & 1 (Litter)  &Yes\\\hline
-HAIDA Dataset \cite{haida} & 2022 & 1,319 & Yes & 1m--10m & Detection, Geolocation & 2 (Litter)  &Yes\\\hline
-Bangladeshi Dataset \cite{bangladeshi} & 2023 & 4,418 & No & N/A\footnotemark[2] & Detection & 10 (Litter)  &No\\\hline
-Beach Litter Dataset \cite{beach_litter} & 2023 & 4,126 & Yes & 10m--60m & Detection, Geolocation & 67 (Litter) [7 Super]  &No\\\hline
-TrashNet \cite{trashnet} & 2024 & 2,524 & No & N/A\footnotemark[2] & Detection & 6 (Litter)  &Yes\\\hline
-SODA Dataset \cite{soda_dataset} & 2024 & 829 & Yes & 1m, 5m--30m & Detection, Segmentation & 6 (Litter) [4 Super]  &Yes\\\hline
+\textbf{BDW Dataset \cite{bdwdataset}} & 2018 & 25,407 & Yes & 10m--30m & Detection & 1 (Litter)  &Yes\\ \hline
+\textbf{UM Geo. Survey \cite{umgeosurvey}} & 2018 & 472 & Yes & 30m & Data Collection & 5 (Litter)  &No\\\hline
+\textbf{SuperDock \cite{superdock}} & 2019 & 100 & Yes & 5m--10m & Detection & 1 (Litter)  &No\\\hline
+\textbf{Styrofoam Monitoring \cite{styrofoam}} & 2019 & N/S\footnotemark[1] & Yes & 15m & Detection, Segmentation & 1 (Litter)  &No\\\hline
+\textbf{Small Litter Detection \cite{small_litter_detection}} & 2019 & 744 & Yes & 5m--10m & Detection & 1 (Litter)  &No\\\hline
+\textbf{TACO Dataset \cite{taco2020}} & 2020 & 1,500 & No & N/A\footnotemark[2] & Detection, Segmentation & 60 (Litter) [28 Super]  &Yes\\\hline
+\textbf{MJU-Waste Dataset \cite{mju_waste}} & 2020 & 2,475 & No & N/A\footnotemark[2] & Segmentation & 1 (Litter)  &Yes\\\hline
+\textbf{UAVVaste Dataset \cite{uavvaste}} & 2021 & 772 & Yes & low-altitude & Detection, Geolocation & 1 (Litter)  &Yes\\\hline
+\textbf{ZeroWaste Dataset \cite{zerowaste}} & 2022 & 10,715 & No & N/A\footnotemark[2] & Detection, Segmentation & 4 (Litter)  &Yes\\\hline
+\textbf{PlasOPol Dataset \cite{plastopol}} & 2022 & 2,418 & No & N/A\footnotemark[2] & Detection & 1 (Litter)  &Yes\\\hline
+\textbf{HAIDA Dataset \cite{haida}} & 2022 & 1,319 & Yes & 1m--10m & Detection, Geolocation & 2 (Litter)  &Yes\\\hline
+\textbf{Bangladeshi Dataset \cite{bangladeshi}} & 2023 & 4,418 & No & N/A\footnotemark[2] & Detection & 10 (Litter)  &No\\\hline
+\textbf{Beach Litter Dataset \cite{beach_litter}} & 2023 & 4,126 & Yes & 10m--60m & Detection, Geolocation & 67 (Litter) [7 Super]  &No\\\hline
+\textbf{TrashNet \cite{trashnet}} & 2024 & 2,524 & No & N/A\footnotemark[2] & Detection & 6 (Litter)  &Yes\\\hline
+\textbf{SODA Dataset \cite{soda_dataset}} & 2024 & 829 & Yes & 1m, 5m--30m & Detection, Segmentation & 6 (Litter) [4 Super]  &Yes\\\hline
 \end{tabular}
 \renewcommand{\arraystretch}{1}
 \end{adjustbox}
@@ -551,7 +642,10 @@ Additionally, some methods \cite{taco2020, mju_waste, zerowaste} approach the pr
 \section{Review of Learning Using Privileged Information in Computer Vision}
 \label{subsec:2_lupi}
 % Glorja lil Missier u lil-iben u lil-Ispirtu Santu, Kif kien mill-bidu issa ghal dejjem ta' dejjem. Amen. Salve Regina
-At the time of writing this dissertation, no prior research has applied the \gls{lupi} paradigm within the problem of object detection. The most closely related work lies within the broader field of computer vision, where the application of \gls{lupi} remains relatively sparse. In this domain, many tasks exhibit an asymmetry in the availability of information between the training and testing phases \cite{learning2rank}, rendering \gls{lupi} particularly relevant.
+
+% At the time of writing this dissertation, no prior research has applied the \gls{lupi} paradigm within the problem of object detection. The most closely related work lies within the broader field of computer vision, where the application of \gls{lupi} remains relatively sparse. In this domain, many tasks exhibit an asymmetry in the availability of information between the training and testing phases \cite{learning2rank}, rendering \gls{lupi} particularly relevant.
+
+At the time of writing this dissertation, the application of the \gls{lupi} paradigm within object detection remains underexplored. One early attempt is the work of Feyereisl et al. (2014) \cite{lupi_od_extra1}, who employed segmentation masks and \gls{surf} features as privileged information for object localisation. Their approach enabled a Structural SVM+ algorithm to incorporate privileged information on the Caltech-UCSD Birds 2011 dataset \cite{birds_dataset}. However, this study is relatively old, addressed only the problem of general localisation, and did not involve modifications to deep learning–based object detection models. The reported improvements from privileged information were also marginal. A later study by Sun et al. (2018) \cite{lupi_od_extra2} also used the Caltech-UCSD Birds dataset to examine localisation with privileged information. In their work, segmentation masks were applied to a subset of images where the birds appeared relatively large and well-defined. The method, based on the \gls{jkse} algorithm \cite{jkse} and evaluated on this subset, achieved only limited improvements in localisation accuracy as measured by the \gls{iou} metric. These works highlight that research on \gls{lupi} in detection and localisation remains at an early stage. More broadly, in computer vision, applications of \gls{lupi} are still sparse, even though many tasks involve an asymmetry between the information available during training and that at test time \cite{learning2rank}, a setting where \gls{lupi} is particularly relevant.
 
 Sharmanska et al. \cite{learning2rank, learning2rank2} explore four distinct forms of privileged information for image classification: semantic attributes, bounding boxes, textual descriptions, and annotator rationale. Their experiments apply these types of privileged information within a rank transfer framework compatible with SVM solvers, focusing on the SVM+ algorithm. Their findings indicate a measurable improvement in classification performance when \gls{lupi} is integrated into the learning process \cite{learning2rank, learning2rank2}.
 In a related contribution, Wang et al. \cite{lupi_classification} also address multi-label image classification by incorporating privileged information during training. Their approach employs similarity constraints derived from privileged inputs, along with ranking constraints informed by multiple labels, to develop a more effective classifier. High-resolution images and associated image tags serve as the privileged data, available solely during training. The method is evaluated across several benchmark datasets, and the results suggest that the inclusion of privileged information, alongside an awareness of label dependencies, contributes meaningfully to improved model performance \cite{lupi_classification}.
@@ -559,13 +653,91 @@ In a related contribution, Wang et al. \cite{lupi_classification} also address m
 Although not directly related to \gls{lupi}, a substantial body of work aligns conceptually through the use of knowledge distillation techniques within computer vision \cite{distillation1, distillation2}. Knowledge distillation is a prominent method in machine learning, facilitating the transfer of information from a high-capacity model to a smaller, more efficient counterpart \cite{hinton_distillation}. This process enables the distilled model to retain essential predictive capabilities while reducing computational overhead.
 
 In the context of vision-based tasks, various distillation methods have been explored, including those based on output responses, internal feature representations, and inter-feature relationships \cite{distillation1}. These techniques are applicable across a range of visual domains, including image classification, object detection, and multimodal frameworks. Specific to object detection, two widely adopted strategies are feature imitation and logit matching, which aim to replicate intermediate activations and output distributions respectively \cite{distillation2}.
-A particularly noteworthy development is the concept of localisation distillation, as proposed in \cite{distillation2}, which refines the transfer process by concentrating on spatial regions deemed informative for both classification and localisation. This targeted distillation allows the student model to better capture salient visual patterns by selectively attending to regions that contribute meaningfully to detection accuracy.
+A noteworthy development is the concept of localisation distillation, as proposed in \cite{distillation2}, which refines the transfer process by concentrating on spatial regions deemed informative for both classification and localisation. This targeted distillation allows the student model to better capture salient visual patterns by selectively attending to regions that contribute meaningfully to detection accuracy.
+
+%  Evaluation Metrics
+\section{Metrics}
+\label{sec:4_metrics}
+% Glorja lil Missier, lil-Iben, u lil-Ispirtu s-Santu kif kien mill-bidu issa u dejjem ghal-dejjem. Amen.
+
+To objectively assess the performance of object detection systems, it is necessary to rely on standardised evaluation protocols. These metrics enable a consistent comparison between different models and methodologies, independent of the datasets or specific applications involved. In the context of object detection, evaluation typically involves comparing predicted bounding boxes and class labels against annotated ground truth data using metrics derived from the \gls{iou} criterion. This section outlines the most widely used performance metrics in vision-based detection tasks.
+
+Performance is typically measured by comparing predicted bounding boxes and class labels against annotated ground truth using the \gls{iou} metric, which quantifies the overlap between predictions and actual annotations. The \gls{iou} threshold defines the minimum required overlap for a detection to be accepted as a true positive. Lower thresholds (e.g., 0.5) allow for more leniency, while higher thresholds (e.g., 0.75) enforce stricter accuracy requirements \cite{coco}. This threshold informs the calculation of standard indicators: \gls{tp}, which represent correctly detected objects; \gls{fp}, indicating incorrect or insufficient detections; and \gls{fn}, which refer to missed objects that appear in the ground truth. \gls{tn} are generally excluded from these evaluations, as they pertain to correct predictions of object absence.
+
+% Having outlined the importance of datasets and identified those relevant to this study, it is essential to evaluate the quantitative performance of object detection techniques to gauge their effectiveness in addressing the detection problem, in line with objectives \textbf{O2} through \textbf{O4}. The evaluation of these systems primarily involves comparing model predictions (bounding boxes and labels) with ground truth annotations using the Intersection over Union (\gls{iou}) metric, which measures the overlap between predicted and actual bounding boxes. The \gls{iou} threshold determines the minimum overlap needed for a prediction to be considered a true positive. Lower thresholds (e.g., 0.5) allow for more flexible matching, whereas higher thresholds (e.g., 0.75) set stricter criteria \cite{coco}. This metric also facilitates the computation of important evaluation indicators: \gls{tp}, which are correctly identified objects with an \gls{iou} above the threshold; \gls{fp}, which are objects incorrectly identified or those with insufficient overlap; and \gls{fn}, which are objects missed by the model that are present in the ground truth. \gls{tn} are generally not included in object detection evaluations, as they correspond to the correct identification of the absence of an object.
+
+\gls{iou}, or Jaccard’s Index, serves as a metric for evaluating the overlap between the predicted bounding box and the ground truth, offering a quantitative measure of the precision in object localisation. As demonstrated in Equation \ref{eqn:iou}, $b$ denotes the predicted bounding box, while $g$ refers to the ground truth. A higher \gls{iou} value, with a maximum of 1, signifies greater accuracy in the predictions, indicating a smaller deviation between the predicted bounding box and the ground truth.
+\begin{equation}
+\label{eqn:iou}
+\text{IoU}(b, g) = \frac{{\text{area}(b \cap g)}}{{\text{area}(b \cup g)}}.
+\end{equation}
+Precision, as outlined in Equation \ref{eqn:precision}, measures the proportion of relevant items retrieved by the model. It is determined by the ratio of \gls{tp}, which are objects correctly identified as relevant, to the sum of \gls{tp} and \gls{fp}, which denotes the total number of objects that were mistakenly identified as relevant.
+\begin{equation}
+\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}} = \frac{\text{IoU}(b, g) > \text{threshold}}{\text{IoU}(b, g) > \text{threshold} + \text{FP}}.
+\label{eqn:precision}
+\end{equation}
+\noindent
+Recall, as presented in Equation \ref{eqn:recall}, evaluates the model's ability to identify all relevant items. Recall is calculated as the ratio of \gls{tp} to the sum of \gls{tp} and \gls{fn}, with \gls{fn} representing relevant objects that the model failed to detect.
+\begin{equation}
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}} = \frac{\text{IoU}(b, g) > \text{threshold}}{\text{IoU}(b, g) > \text{threshold} + \text{FN}}.
+\label{eqn:recall}
+\end{equation}
+\noindent
+The F1 Score, represented in Equation \ref{eqn:f1}, is the harmonic mean of precision and recall, offering a balanced evaluation of both. It is computed by taking the product of precision and recall, doubling it, and dividing by the sum of precision and recall, thereby reflecting the model's overall ability to identify relevant objects.
+\begin{equation}
+\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}.
+\label{eqn:f1}
+\end{equation}
+\noindent
+Average Precision (\gls{ap}), as outlined in Equation \ref{eqn:average_precision}, evaluates the overall precision at various recall levels, \( R_k \), where \( k \) represents a recall threshold between 0 and 1. \gls{ap} reflects the balance between \gls{fp} and \gls{fn}, providing a more nuanced evaluation of model performance. It can also be interpreted as the area under the precision-recall curve (AUC), with higher values signifying better model performance.
+\begin{equation}
+\text{Average Precision (AP)} = \sum_{k=0}^{n} (R_k - R_{k-1}) \cdot P_k.
+\label{eqn:average_precision}
+\end{equation}
+\noindent
+The Mean Average Precision (\gls{map}), as represented in Equation \ref{eqn:map}, computes the average precision across all \( N \) classes by summing the individual average precision values \( (\text{AP}_i) \) and dividing by the total number of classes. \gls{map} values range from 0 to 1, with higher values indicating better model performance.
+\begin{equation}
+\text{Mean Average Precision (mAP)} = \frac{1}{N} \sum_{i=1}^{N} \text{AP}_i.
+\label{eqn:map}
+\end{equation}
+\noindent
+The \gls{mar}, as defined in Equation~\ref{eqn:mar_coco}, measures the model's average recall across all \( N \) classes. For each class, recall is computed at several \gls{iou} thresholds, typically ranging from 0.50 to 0.95 in steps of 0.05. These per-class recall values are first averaged across \gls{iou} levels, then across all categories. This results in a single \gls{mar} score that reflects the model's ability to detect objects across varying overlap conditions. Additionally, \gls{mar} can be reported at different detection counts, such as \gls{mar}@1, \gls{mar}@10, and \gls{mar}@100. These settings restrict the evaluation to the top 1, 10, or 100 predicted boxes per image, respectively \cite{coco}.
+\begin{equation}
+\text{Mean Average Recall (mAR)} = \frac{1}{N} \sum_{i=1}^{N} \text{AR}_i(\text{IoU}).
+\label{eqn:mar_coco}
+\end{equation}
+\noindent
+The confusion matrix, shown in Equation~\ref{eq:confusion_matrix}, is a metric that summarises a classification network’s performance by reporting \gls{tp}, \gls{fp}, \gls{fn}, and \gls{tn} for each class. In the context of object detection, a background class (denoted as \( BG \)) is added to account for regions without objects. The matrix includes all object categories the model is trained to detect, collectively represented as the set \( C \). A strong diagonal in the matrix suggests high accuracy, indicating that predicted labels closely match the actual ones.
+% \begin{equation}
+% \text{Confusion Matrix}_c =
+% \begin{array}{c|cc}
+% & \text{Predicted Positive} & \text{Predicted Negative} \\
+% \hline
+% \text{Actual Positive} & \text{\small TP}_c & \text{\small FN}_c \\
+% \text{Actual Negative} & \text{\small FP}_c & \text{\small TN}_c \\
+% \end{array}
+% \quad \text{for } c \in \{BG, 1, \dots, C\}.
+% \label{eq:confusion_matrix}
+% \end{equation}
+\begin{equation}
+\underset{\text{\fontsize{9}{11}\selectfont $c \in \{BG, 1, \dots, C\}$}}{\text{Confusion Matrix}} =
+\begin{array}{c|cc}
+& \text{\footnotesize Predicted Positive} & \text{\footnotesize Predicted Negative} \\
+\hline
+\text{\footnotesize Actual Positive} & \text{\footnotesize TP}_c & \text{\footnotesize FN}_c \\
+\text{\footnotesize Actual Negative} & \text{\footnotesize FP}_c & \text{\footnotesize TN}_c \\
+\end{array}.
+\label{eq:confusion_matrix}
+\end{equation}
+
+% CM + MAR + Remember punctuation . and ,
 
 \section{Conclusion}
 \label{sec:2_conclusion}
-% Sliema ghalik Marija, bil Grazzja Mimlija, Imbierek il frott tal guf tieghek Gesu', Qaddisa Marija Omm Alla, itlob ghalina il midinbin, issa u fis siegha tal mewt taghna. Amen.
+% Sliema ghalik Marija, bil Grazzja Mimlija, Imbierek il frott tal guf tieghek Gesu', Qaddisa Marija Omm Alla, itlob ghalina il midinbin, issa u fis-siegha tal-mewt taghna. Amen.
 
-This chapter has provided a structured foundation for understanding the task of object detection, describing its core challenges and progressing through the evolution of methodologies, from traditional techniques to contemporary deep learning models. It has also outlined the conceptual basis and definition of the learning using privileged information framework, highlighting its potential to address information asymmetries during training by incorporating privileged data and distilling knowledge effectively. The discussion then turned to existing approaches in litter detection, considering both aerial and ground-based methods, as well as the broader application of \gls{lupi} within computer vision. Collectively, these sections provide the necessary foundation for a focused examination of how models trained using the \gls{lupi} framework may improve both the performance and robustness of litter detection systems.
+% This chapter has provided a structured foundation for understanding the task of object detection, describing its core challenges and progressing through the evolution of methodologies, from traditional techniques to contemporary deep learning models. It has also outlined the conceptual basis and definition of the learning using privileged information framework, highlighting its potential to address information asymmetries during training by incorporating privileged data and distilling knowledge effectively. The discussion then turned to existing approaches in litter detection, considering both aerial and ground-based methods, as well as the broader application of \gls{lupi} within computer vision. Collectively, these sections provide the necessary foundation for a focused examination of how models trained using the \gls{lupi} framework may improve both the performance and robustness of litter detection systems.
+This chapter has provided a structured foundation for understanding the task of object detection, describing its core challenges and progressing through the evolution of methodologies, from traditional techniques to contemporary deep learning models. It has also outlined the conceptual basis and definition of the \gls{lupi} framework, highlighting its potential to address information asymmetries during training by incorporating privileged data and distilling knowledge effectively. The discussion then turned to existing approaches in litter detection, considering both aerial and ground-based methods, as well as the broader application of \gls{lupi} within computer vision. Collectively, these sections provide the necessary foundation for a focused examination of how models trained using the \gls{lupi} framework may improve both the performance and robustness of litter detection systems. To complete the framework, relevant evaluation metrics were introduced, setting the stage for the rigorous assessment of these models in subsequent chapters.
 
 % Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla. Grazzi Hafna. Amen
 %--

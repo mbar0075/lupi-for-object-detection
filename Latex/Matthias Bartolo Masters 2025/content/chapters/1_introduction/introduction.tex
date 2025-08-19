@@ -47,9 +47,11 @@ This becomes especially significant in environmental monitoring contexts, where 
 
 Within the broader effort to improve object detection performance in challenging visual contexts, automated systems designed for the identification of environmental waste have become as a growing area of interest within applicable \gls{ai} technology. Although several datasets and models have emerged to address this task \cite{taco2020, zerowaste, plastopol}, consistently accurate detection remains elusive. Litter manifests in a wide range of shapes, sizes, materials, and colours. Often, it appears partially obscured or embedded within complex backgrounds. These conditions demand not only high spatial sensitivity but also strong contextual reasoning, both of which are difficult to achieve with conventional architectures trained on limited or imbalanced data.
 
-Notably, an increasingly explored direction involves the use of aerial imagery, captured via unmanned aerial vehicles, to expand the scale and coverage of litter detection systems \cite{uavvaste, soda_dataset, detect_litter}. While promising in terms of spatial reach and operational efficiency, aerial viewpoints introduce their own set of challenges. As the altitude of image capture increases, litter would start to appear at much smaller scales, becoming less distinct and occupying only a few pixels in high-resolution images. This reduction transforms the detection problem into one of identifying small objects, which remains an ongoing challenge in computer vision due to low signal-to-noise ratios and ambiguous boundaries \cite{small_detection_survey, small_detection}.
+Notably, an increasingly explored direction involves the use of aerial imagery, captured via unmanned aerial vehicles, to expand the scale and coverage of litter detection systems \cite{uavvaste, soda_dataset, detect_litter}. While promising in terms of spatial reach and operational efficiency, aerial viewpoints introduce their own set of challenges. As the altitude of image capture increases, litter would start to appear at much smaller scales, becoming less distinct and occupying only a few pixels in high-resolution images. This reduction transforms the detection problem into one of identifying small objects, which remains an ongoing challenge in computer vision due to low signal-to-noise ratios and ambiguous boundaries \cite{small_detection_survey, small_detection}. 
 
-Alongside the technical limitations faced by current detection systems lies a pressing concern regarding environmental sustainability \cite{sdgs}. Improvements in accuracy are frequently achieved by expanding model depth or increasing computational complexity \cite{detr, rt-detr}, both of which carry significant energy demands. While such strategies may yield stronger performance on benchmark tasks, their long-term viability becomes questionable when deployed at scale, especially in scenarios where energy efficiency is a priority \cite{pilz2024increasedcomputeefficiencydiffusion}. As such, there is a clear need for approaches that can maintain or improve predictive performance without exacerbating computational costs. 
+In addition to these technical considerations, the practical deployment of drone-based detection systems is also governed by legal and operational frameworks. To gain a deeper understanding of the regulatory aspects surrounding drone usage, the author obtained both A1/A3 and A2 drone operating licenses through a certification process administered by Transport Malta.
+
+Alongside the functional limitations faced by current detection systems lies a pressing concern regarding environmental sustainability \cite{sdgs}. Improvements in accuracy are frequently achieved by expanding model depth or increasing computational complexity \cite{detr, rt-detr}, both of which carry significant energy demands. While such strategies may yield stronger performance on benchmark tasks, their long-term viability becomes questionable when deployed at scale, especially in scenarios where energy efficiency is a priority \cite{pilz2024increasedcomputeefficiencydiffusion}. As such, there is a clear need for approaches that can maintain or improve predictive performance without exacerbating computational costs. 
 % Learning frameworks that incorporate privileged information exclusively during training offer a promising avenue here. By enriching the learning process with supplementary cues unavailable at test time, these methods can support better generalisation and efficiency, all without inflating inference-time requirements.
 
 
@@ -136,9 +138,15 @@ This study aims to explore the potential of integrating the \gls{lupi} paradigm 
 \section{Publications}
 \label{sec:publications}
 
-The key milestones of this study, including the work conducted in the area of object detection, were documented in papers and published in internationally recognised, peer-reviewed conferences and journals.
+During the writing of this dissertation, the key milestones of the study, including work conducted in the area of object detection, were documented in papers and published in internationally recognised, peer-reviewed conferences and journals:
 
---None till now--
+{\sloppy
+\begin{enumerate}
+\item M. Bugeja, \underline{M. Bartolo}, M. Montebello, and D. Seychell, “MRTMD: A Multi-Resolution Dataset for Evaluating Object Detection in Traffic Monitoring Systems,” \textit{IEEE Access}, vol. 13, pp. 134460–134483, 2025. doi: \href{https://doi.org/10.1109/ACCESS.2025.3585986}{10.1109/ACCESS.2025.3585986}. \cite{Mark_Paper}
+
+\item \underline{M. Bartolo}, K. Makantasis, and D. Seychell, “Learning Using Privileged Information for Litter Detection,” in \textit{Proc. 2025 13th European Workshop on Visual Information Processing (EUVIP)}, 2025. \cite{Euvip_Paper}
+\end{enumerate}
+}
 
 \section{Dissertation Overview}
 \label{sec:structure}
@@ -150,18 +158,18 @@ The dissertation is structured as follows:
     
     % \item reviews the current literature on litter detection, focusing on existing approaches, datasets, and models. It discusses general litter detection methodologies and explores \gls{uav}-based deep learning techniques used in this field.
 
-    \item establishes the foundational concepts of object detection and examines key detection models. It provides an in-depth exploration of learning using privileged information, followed by a review of literature on litter detection approaches. The chapter concludes with a review of the application of learning using privileged information to computer vision.
+    \item establishes the foundational concepts of object detection and examines key detection models. It provides an in-depth exploration of learning using privileged information, followed by a review of literature on litter detection approaches. The chapter concludes with a review of the application of learning using privileged information to computer vision, as well as the performance metrics used for evaluation.
     
-    \item details the study's methodology, including the problem definition, theoretical framework, and the proposed system architecture. Additionally, it discusses the implementation of privileged information, knowledge distillation, and the experimental setup, including model selection, data pre-processing techniques, training parameters, and the performance metrics used for evaluation.
+    \item details the study's methodology, including the problem definition, theoretical framework, and the proposed system architecture. Additionally, it discusses the implementation of privileged information, knowledge distillation, and the experimental setup, including model selection, data pre-processing techniques, and training parameters.
     
     \item evaluates the proposed system through a series of experiments on the SODA, BDW, UAVVaste, and Pascal VOC 2012 datasets, including a preliminary optimal tiling experiment. It compares the performance of various models across these experiments, discussing the findings and their implications, along with comparing their visual predictions and interpretability.
     
     % \item outlines the study's limitations and suggests areas for further research, including extensions to the methodology and applications in other domains.
 
-    \item concludes the dissertation by summarising the aims and objectives, highlighting potential applications of the study, and discussing its limitations and possible future directions for further research.
+    \item concludes the dissertation by summarising the aims and objectives, highlighting potential applications of the study, and discussing its limitations and possible directions for further research.
 \end{enumerate}
 
 \section{Conclusion}
 \label{sec:conclusion_intro}
 
-This chapter introduced the motivation behind the study, offering a summary of the research undertaken and the defined problem. It then presented the aims and objectives of the dissertation, followed by an overview of the key contributions and a brief outline of the chapters that follow.
+This chapter introduced the motivation behind the study, offering a summary of the research undertaken and the defined problem. It then presented the aims and objectives of the dissertation, followed by an overview of the key contributions and publications, and a brief outline of the chapters that follow.
