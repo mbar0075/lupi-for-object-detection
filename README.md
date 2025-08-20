@@ -83,6 +83,7 @@
 - [🎓 About This Research](#-about-this-research)
 - [📘 Citation](#-citation)
   - [🎓 Dissertation](#-dissertation)
+  - [📄 Research Paper](#-research-paper)
 - [🪪 License](#-license)
 - [✉️ Contact](#️-contact)
 
@@ -484,10 +485,20 @@ This research was carried out at the [University of Malta](https://www.um.edu.mt
 }
 ```
 
-<!--
+### 📄 Research Paper
+The main findings of this research have also been accepted at the *`2025 IEEE 13th European Workshop on Visual Information Processing (EUVIP 2025)`*
 
 ```bibtex
-``` -->
+@misc{bartolo2025learningusingprivilegedinformation,
+      title={Learning Using Privileged Information for Litter Detection}, 
+      author={Matthias Bartolo and Konstantinos Makantasis and Dylan Seychell},
+      year={2025},
+      eprint={2508.04124},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2508.04124}, 
+}
+```
 
 ## 🪪 License
 
@@ -495,4 +506,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## ✉️ Contact
 
-For questions, collaboration, or feedback, please contact [Matthias Bartolo](mailto:matthias.bartolo@um.edu.mt)
+For questions, collaboration, or feedback, please contact [Matthias Bartolo](mailto:matthias.bartolo.21@um.edu.mt)
