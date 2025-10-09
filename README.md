@@ -394,18 +394,18 @@ flowchart TD
 
 <div align="center">
 
-| Model         | Config     | Size (MB) | Params (M) | Classes | Channels |
-|---------------|------------|-----------|------------|---------|----------|
-| **Faster R-CNN**  | Baseline   | 157.92    | 41.40      | 21      | 3        |
-|                | **Student** | 157.92    | 41.40      | 21      | 3        |
-| **RetinaNet**     | Baseline   | 124.22    | 32.56      | 21      | 3        |
-|                | **Student** | 124.22    | 32.56      | 21      | 3        |
-| **FCOS**          | Baseline   | 122.48    | 32.11      | 21      | 3        |
-|                | **Student** | 122.48    | 32.11      | 21      | 3        |
-| **SSD**           | Baseline   | 100.27    | 26.29      | 21      | 3        |
-|                | **Student** | 100.27    | 26.29      | 21      | 3        |
-| **SSD Lite**      | Baseline   | 9.42      | 2.47       | 21      | 3        |
-|                | **Student** | 9.42      | 2.47       | 21      | 3        |
+| Model            | Config      | Size (MB) | Params (M) | Classes | Channels |
+| ---------------- | ----------- | --------- | ---------- | ------- | -------- |
+| **Faster R-CNN** | Baseline    | 157.92    | 41.40      | 21      | 3        |
+|                  | **Student** | 157.92    | 41.40      | 21      | 3        |
+| **RetinaNet**    | Baseline    | 124.22    | 32.56      | 21      | 3        |
+|                  | **Student** | 124.22    | 32.56      | 21      | 3        |
+| **FCOS**         | Baseline    | 122.48    | 32.11      | 21      | 3        |
+|                  | **Student** | 122.48    | 32.11      | 21      | 3        |
+| **SSD**          | Baseline    | 100.27    | 26.29      | 21      | 3        |
+|                  | **Student** | 100.27    | 26.29      | 21      | 3        |
+| **SSD Lite**     | Baseline    | 9.42      | 2.47       | 21      | 3        |
+|                  | **Student** | 9.42      | 2.47       | 21      | 3        |
 
 </div>
 
@@ -435,13 +435,13 @@ All results shown below reflect the performance of **teacher models** across key
 <div align='center'>
 
 
-| Model               | mAP@50-95 | mAP@50 | mAP@75 | mAR@1 | mAR@10 | mAR@100 | Precision | Recall | F1 Score |
-|---------------------|-----------|--------|--------|-------|--------|---------|-----------|--------|----------|
-| RetinaNet           | 0.77      | 0.86   | 0.79   | 0.60  | 0.81   | 0.81    | 0.26      | 0.90   | 0.38     |
-| FCOS 🥈              | 0.80      | 0.88   | 0.82   | 0.61  | 0.84   | 0.84    | 0.43      | 0.91   | **0.56** |
-| Faster R-CNN 🥇      | 0.77      | 0.91   | 0.82   | 0.59  | 0.82   | 0.82    | 0.56      | 0.91   | **0.68** |
-| SSD                 | 0.42      | 0.56   | 0.49   | 0.41  | 0.48   | 0.48    | 0.25      | 0.69   | 0.36     |
-| SSDLite            | 0.49      | 0.61   | 0.54   | 0.46  | 0.55   | 0.55    | 0.04      | 0.79   | 0.07     |
+| Model          | mAP@50-95 | mAP@50 | mAP@75 | mAR@1 | mAR@10 | mAR@100 | Precision | Recall | F1 Score |
+| -------------- | --------- | ------ | ------ | ----- | ------ | ------- | --------- | ------ | -------- |
+| RetinaNet      | 0.77      | 0.86   | 0.79   | 0.60  | 0.81   | 0.81    | 0.26      | 0.90   | 0.38     |
+| FCOS 🥈         | 0.80      | 0.88   | 0.82   | 0.61  | 0.84   | 0.84    | 0.43      | 0.91   | **0.56** |
+| Faster R-CNN 🥇 | 0.77      | 0.91   | 0.82   | 0.59  | 0.82   | 0.82    | 0.56      | 0.91   | **0.68** |
+| SSD            | 0.42      | 0.56   | 0.49   | 0.41  | 0.48   | 0.48    | 0.25      | 0.69   | 0.36     |
+| SSDLite        | 0.49      | 0.61   | 0.54   | 0.46  | 0.55   | 0.55    | 0.04      | 0.79   | 0.07     |
 
 </div>
 
@@ -499,6 +499,19 @@ The main findings of this research have also been accepted at the *`2025 IEEE 13
       url={https://arxiv.org/abs/2508.04124}, 
 }
 ```
+<!-- Showing Poster and Presentation -->
+
+<p align='center'>
+  <img src="Latex/IEEE EUVIP Publication/Learning Using Privileged Information IEEE EUVIP Poster.jpg" alt="IEEE EUVIP Publication Poster" width="100%" height="auto">
+  <br>
+  <b>Our poster presented at IEEE EUVIP 2025</b>
+</p>
+
+<div align="center">
+
+📄 **[Download Conference Presentation](./Latex/IEEE%20EUVIP%20Publication/Learning%20Using%20Privileged%20Information%20for%20Litter%20Detection%20IEEE%20EUVIP%202025.pptx.pdf)**
+
+</div>
 
 ## 🪪 License
 
