@@ -105,7 +105,7 @@ Experimental results consistently demonstrate improvements in detection accuracy
 
 <p align="center">
   <img src="Assets/Diagrams/Architecture LUPIv4.png" alt="Architecture" width="100%" height="auto">
-  <img src="Assets/Diagrams/Architecture LUPIv5.png" alt="Architecture" width="100%" height="auto">
+  <img src="Assets/Diagrams/LUPI Journal Architecture.png" alt="Architecture" width="100%" height="auto">
 </p>
 
 ## 🧪 Methodology
