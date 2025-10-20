@@ -421,7 +421,7 @@ flowchart TD
 </p>
 
 <p align='center'>
-  <img src="Assets/figures/Preliminary Experiment Privileged Information Selection.png" alt="Privileged Information Results" width="100%" height="auto">
+  <img src="Assets/Diagrams/Journal Privileged Info.png" alt="Privileged Information Results" width="100%" height="auto">
   <br>
   <b>Preliminary Experiment Results</b>
 </p>
@@ -469,6 +469,12 @@ This research was carried out at the [University of Malta](https://www.um.edu.mt
 <div align="center">
 
 📄 **[Download PDF](./Latex/Matthias_Bartolo_Masters_2025.pdf)**
+
+</div>
+
+<div align="center">
+
+📄 **[View Presentation](./Latex/Presentations/Matthias%20Masters%20-%20Viva%20-%2020%20minutes.pdf)** 📄 **[View FAQs](./Latex/Presentations/Viva%20Voce%20Examination%20Questions.pdf)**
 
 </div>
 
