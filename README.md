@@ -464,7 +464,7 @@ pip install -r requirements.txt
 
 ## 🎓 About This Research
 
-This research was carried out at the [University of Malta](https://www.um.edu.mt) and submitted in partial fulfilment of the requirements for the Master of Science Degree by Research. It was supervised by [Dr. Dylan Seychell](https://www.um.edu.mt/profile/dylanseychell) and [Dr. Konstantinos Makantasis](https://www.um.edu.mt/profile/konstantinosmakantasis). The full master’s dissertation, which includes the research question, background, methodology, evaluation, and analysis, can be downloaded below.
+This research was carried out at the [University of Malta](https://www.um.edu.mt) and submitted in partial fulfilment of the requirements for the Master of Science Degree by Research. It was supervised by [Dr Dylan Seychell](https://www.um.edu.mt/profile/dylanseychell) and [Dr Konstantinos Makantasis](https://www.um.edu.mt/profile/konstantinosmakantasis). The full master’s dissertation, which includes the research question, background, methodology, evaluation, and analysis, can be downloaded below.
 
 <div align="center">
 
@@ -474,7 +474,7 @@ This research was carried out at the [University of Malta](https://www.um.edu.mt
 
 <div align="center">
 
-📄 **[View Presentation](./Latex/Presentations/Matthias%20Masters%20-%20Viva%20-%2020%20minutes.pdf)** 📄 **[View FAQs](./Latex/Presentations/Viva%20Voce%20Examination%20Questions.pdf)**
+📄 **[View Presentation](https://docs.google.com/presentation/d/1YFLRjvR6bFGR1AGP8NCYJuLbHFuTiwrzj5BVjANgaZQ/edit?usp=sharing)** 📄 **[View FAQs](./Latex/Presentations/Viva%20Voce%20Examination%20Questions.pdf)**
 
 </div>
 

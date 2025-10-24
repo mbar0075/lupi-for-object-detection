@@ -204,3 +204,4 @@
 \newcommand\titledate[1]{\newcommand\@titledate{#1}}
 \newcommand\degreename[1]{\newcommand\@degreename{#1}}
 \makeatother
+

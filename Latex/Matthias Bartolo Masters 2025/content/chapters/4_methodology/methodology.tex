@@ -101,7 +101,11 @@ f_{\text{student}} = f_1^{(s)} \circ f_2^{(s)} \circ \cdots \circ f_{l}^{(s)} \c
   \end{array}
 \right\} \circ f_\mathcal{L}^{(s)},
 \end{equation}
-where ``\( \circ \)'' denotes function composition, and \( f_i^{(t)} \) and \( f_i^{(s)} \) represent the \( i \)-th transformation layer in the teacher and student networks, respectively. The \( l \)-th layer of both networks, \( f_l^{(t)} \) and \( f_l^{(s)} \), is constrained to have identical dimensionality, ensuring that the shared latent representation is consistent across both models. This shared representation serves as the foundation for deriving both the regression and classification outputs. Specifically, the regression branch, consisting of layers \( f_r^{(s)}, f_{r+1}^{(s)}, \dots, f_{r+k}^{(s)} \), predicts the bounding box coordinates, while the classification branch, consisting of layers \( f_c^{(s)}, f_{c+1}^{(s)}, \dots, f_{c+m}^{(s)} \), assigns class labels to the detected objects. The results from both branches are then combined at the final layer \( f_\mathcal{L}^{(s)} \) to form the final detection output (\gls{O}).
+where the operator \( \circ \) denotes function composition, and \( f_i^{(t)} \) and \( f_i^{(s)} \) represent the \( i \)-th transformation layer in the teacher and student networks, respectively. The \( l \)-th layer of both networks, \( f_l^{(t)} \) and \( f_l^{(s)} \), is constrained to have identical dimensionality, ensuring that the shared latent representation is consistent across both models. This shared representation serves as the foundation for deriving both the regression and classification outputs. 
+Specifically, the regression branch, consisting of layers $f_r^{(s)}, f_{r+1}^{(s)}, \dots, f_{r+k}^{(s)}$, predicts the bounding box coordinates, while the classification branch, consisting of layers $f_c^{(s)}, f_{c+1}^{(s)}, \dots, f_{c+m}^{(s)}$, assigns class labels to the detected objects. In our implementation, the number of layers in both branches is the same ($k = m$), and the outputs of both branches, which produce vectors of compatible dimensions, are combined (e.g., concatenated or stacked) and then fed into the final layer $f_\mathcal{L}^{(s)}$ to form the final detection output (\gls{O}) as defined in Equation~\ref{eq:multi_label_output}.
+
+In this formulation, both teacher and student networks follow a structure similar to standard object detectors such as RetinaNet, with their detailed architectures and training setup described in the subsequent sections. The indices \( r \) and \( c \) denote the starting layers of the regression and classification branches, respectively, while \( k \) and \( m \) specify the number of layers within those branches. The index \( l \) identifies the shared intermediate layer used for representational alignment between the two models and serves purely as a reference point for comparison rather than a fixed architectural parameter.
+
 
 To enable knowledge transfer between the models, a distance function \( D(f_l^{(t)}, f_l^{(s)}) \) is minimised, thereby aligning the internal representations of the teacher and student at layer \( l \). For each training triplet \( (x_i, x_i^*, y_i) \in \mathcal{D}_{train} \), where \( x_i \) denotes the standard input, \( x_i^* \) denotes the privileged information, and \( y_i \) is the target label, the teacher computes a more expressive latent representation due to access to both \( x_i \) and \( x_i^* \). The student, restricted to \( x_i \), is guided to approximate this representation via distillation.
 
@@ -178,6 +182,8 @@ Although the network already receives guidance through the ground-truth bounding
 The bounding box mask image proposed in this study serves as a structured form of privileged information, developed to support object detection networks across both localisation and classification tasks. The generated image consists of a black background, representing non-object regions. Over this, bounding boxes are drawn to indicate the locations of objects, thereby addressing the localisation problem. To simultaneously encode class-specific information, each bounding box is filled with a distinct shade of grey corresponding to its class label in order to tackle the classification problem. This approach is visually exemplified in Figure \ref{fig:privileged_visual}.
 
 Moreover, a single-channel grayscale format in the range $[0, 255]$ was used to represent the generated privileged information image. This kept the representation simple, preserving essential structure and meaning, without adding extra computational load. This single-channel format was selected in preference to RGB representations, as it simplifies the data without compromising the richness of the information conveyed. The algorithm used to generate this form of privileged input is presented in Algorithm \ref{alg:boundingBoxMask}. Special attention was given to reducing object occlusion within the privileged mask. To achieve this, a sorting step was introduced before rendering the bounding boxes onto the black mask image. The boxes were ordered in descending size, allowing the larger ones to be drawn first. This approach helped to reduce the likelihood of smaller objects being obscured.
+
+It is important to note that the generation of this privileged layer makes use of the ground-truth annotations provided in the training dataset. The bounding box coordinates and class labels are used to create the grayscale mask, where each object class is assigned a unique shade of grey. This allows different object types to be visually distinguishable within the privileged image. However, this information is only available during training and is therefore considered privileged. At inference time, such annotations--including bounding boxes and class labels--are not accessible, as they represent the outputs produced by the object detection network rather than its inputs. Consequently, only the teacher network can make use of this additional information, while the student network learns from the teacher’s guidance without directly accessing these annotations.
 
 % \begin{algorithm}
 %     \caption{Generating Bounding Box Mask (Privileged Information) for Object Detection}
@@ -279,13 +285,6 @@ Once the appropriate layer was selected, the corresponding latent feature repres
 \label{subsec:4_architecture}
 % Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla
 
-\begin{figure}[!b]
-    \centering
-    \includegraphics[width=1\textwidth]{Architecture LUPIv3.png}
-    \caption{General architecture for integrating the \gls{lupi} paradigm into any object detection model. The diagram illustrates the incorporation of both RGB images and bounding box masks as inputs to the teacher network, the use of a standard RGB input for the student network, the selection of the final backbone layer for knowledge distillation, and the generation of output predictions from the student model.}
-    \label{fig:lupi_architecture}% Resized to 200%
-\end{figure}
-
 Bringing together all the elements described in this section, the incorporation of privileged information into any object detection model can be formally represented through the architecture depicted in Figure \ref{fig:lupi_architecture}. This method rests on two core alterations: adapting the teacher network to process both RGB images and the corresponding privileged input and introducing a loss adjustment in the student model to enable distillation. These adjustments are deliberately kept minimal to prevent unnecessary architectural complexity or increased computational demands. The required changes are confined to modifying the input layer of the teacher model and integrating a distillation mechanism during the student training. Moreover, generating the privileged information, such as bounding box masks, remains a simple and direct process.
 % \begin{figure}[!htbp] % Overflow since problem with small font
 %     \centering
@@ -298,22 +297,28 @@ Bringing together all the elements described in this section, the incorporation 
 %-
 Training an optimised detection model in this study began with the teacher network, which was configured to learn from a richer four-channel input composed of RGB data and privileged information. Once the teacher was trained, its parameters were frozen, and it served as a guide for the student model. During this training phase, the student processed only the standard RGB images, ensuring no modifications to the existing detection architecture while strictly preventing any data leakage from privileged information into the student model or inference process. Feature representations were drawn from the final layer of the backbone in both networks. Using identical architectures for the teacher and student simplifies implementation, as it guarantees that the resulting feature vectors are dimensionally aligned and directly comparable.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{Architecture LUPIv3.png}
+    \caption{General architecture for integrating the \gls{lupi} paradigm into any object detection model. The diagram illustrates the incorporation of both RGB images and bounding box masks as inputs to the teacher network, the use of a standard RGB input for the student network, the selection of the final backbone layer for knowledge distillation, and the generation of output predictions from the student model.}
+    \label{fig:lupi_architecture}% Resized to 200%
+\end{figure}
+
+The similarity between the latent feature representations---obtained by compressing feature maps into continuous vectors---was measured using a cosine distance function (see Equation~\ref{eq:cosine_distance}), producing a distillation loss that captures how closely the student aligns with the teacher. This loss was backpropagated through the student model alongside standard detection losses such as regression and classification, as well as additional losses specific to each architecture, including the \gls{fpn} loss for Faster \gls{rcnn} and the centerness loss for \gls{fcos}. The influence of the teacher’s guidance on the overall training objective was controlled by a tunable parameter, \gls{alpha}, which determines the weight given to the distillation term. Once training was complete, the teacher model was no longer needed, as privileged information, such as bounding box ground truth, cannot be accessed during inference when detections must be produced autonomously. Nevertheless, the student model, having learned under the teacher’s supervision, retains the benefits of this privileged knowledge despite relying solely on standard RGB inputs at test time.
 
 % Glorja lil Missier, lil Iben u lil Ispirtu s-Santu, Kif kien mill Bidu, Issa u ghal Dejjem ta' Dejjem. Amen. Grazzi hafna Mulej
 
-\begin{figure}[ht]
+\begin{figure}[!ht]
 \centering
-\includegraphics[width=1\textwidth]{Architecture LUPIv5.png}
+\makebox[\textwidth][c]{%
+    \includegraphics[width=1.1\textwidth]{LUPI Journal Architecture.png}%
+  }
 \caption{Detailed architecture of the training setup showing the teacher network receiving both RGB images and privileged input channels. The student network processes only RGB data but is trained with additional supervision through knowledge distillation. A baseline RGB-only model is included for comparison.}
 \label{fig:lupi_architecture_final}
 \end{figure}
 
-The similarity between the latent feature representations—obtained by compressing feature maps into continuous vectors—was measured using a cosine distance function (see Equation \ref{eq:cosine_distance}), producing a distillation loss that captures how closely the student aligns with the teacher. This loss was backpropagated through the student model alongside standard detection losses such as regression and classification, as well as additional losses specific to each architecture, including the \gls{fpn} loss for Faster \gls{rcnn} and the centerness loss for \gls{fcos}. The influence of the teacher’s guidance on the overall training objective was controlled by a tunable parameter, \gls{alpha}, which determines the weight given to the distillation term. Once training was complete, the teacher model was no longer needed, as privileged information, such as bounding box ground truth, cannot be accessed during inference when detections must be produced autonomously. Nevertheless, the student model, having learned under the teacher’s supervision, retains the benefits of this privileged knowledge despite relying solely on standard RGB inputs at test time.
-
-
 To complement the overview presented in Figure~\ref{fig:lupi_architecture}, Figure~\ref{fig:lupi_architecture_final} offers a more detailed and structured illustration of the training framework. This expanded diagram does not revisit the mathematical details but clarifies the data flow and knowledge distillation process. It highlights that the teacher model receives a richer input, combining standard RGB channels with additional privileged information. Meanwhile, both teacher and student models operate in parallel, with the loss computation (refer to Equation \ref{eq:lupi_loss_function}) abstracted into a simplified and more interpretable visual form.
-
-The baseline model, relying exclusively on standard RGB input, serves as a conventional point of reference within this framework. The emphasis remains on contrasting this baseline with the student model, which, although identical in architecture during inference, achieves improved performance through the additional supervision provided by the teacher during training.
+Furthermore, the baseline model, relying exclusively on standard RGB input, serves as a reference point within this framework. The emphasis remains on contrasting this baseline with the student model, which, although identical in architecture during inference, benefits from the teacher’s additional supervision during training.
 
 
 \section{Training Parameters}
@@ -526,7 +531,7 @@ Additionally, with the use of tiling, the spatial distribution of object annotat
 \end{figure}
 
 Tiling unintentionally worsened the class imbalance. As images were split into smaller sections, some object bounding boxes were also divided. This was especially the case for objects near the edges or those covering a larger area. Common categories like \textit{drink can} and \textit{clear plastic bottle}, which were already more frequent, appeared even more often after tiling. This shift is reflected in the category distribution shown in Figure \ref{fig:soda_annotation_distribution}.
-Meanwhile, less frequent classes such as \textit{glass jar} and \textit{drink carton} showed a marginal increase in representation. Interestingly, \textit{glass bottle} surpassed Other \textit{plastic bottle} in the number of annotations, reversing their relative frequencies before tiling.
+Meanwhile, less frequent classes such as \textit{glass jar} and \textit{drink carton} showed a marginal increase in representation. Interestingly, \textit{glass bottle} surpassed \textit{other plastic bottle} in the number of annotations, reversing their relative frequencies before tiling.
 
 % \clearpage
 
@@ -543,7 +548,7 @@ Meanwhile, less frequent classes such as \textit{glass jar} and \textit{drink ca
   \label{fig:soda_object_size_distribution}
 \end{figure}
 
-The increase in annotations due to tiling has had a significant impact on the overall distribution of object sizes. Using the object size classifications from the \gls{coco} dataset \cite{coco}, where objects are defined as small (less than 32$\times$32 pixels), medium (ranging from 32$\times$32 to 96$\times$96 pixels), and large (greater than 96$\times$96 pixels), a clear shift in object size distribution can be observed. As shown in Figure~\ref{fig:soda_object_size_distribution}, while the total number of objects has increased, the proportion of small objects has decreased, with a corresponding rise in both medium and large objects. This shift in distribution suggests an improvement in the dataset’s size balance, which should improve the detection of previously smaller objects. With the larger objects now more prominent, the detection models can benefit from improved size constraints, making these objects easier to detect.
+The increase in annotations due to tiling had a significant impact on the overall distribution of object sizes. Using the object size classifications from the \gls{coco} dataset \cite{coco}, where objects are defined as small (less than 32$\times$32 pixels), medium (ranging from 32$\times$32 to 96$\times$96 pixels), and large (greater than 96$\times$96 pixels), a clear shift in object size distribution can be observed. As shown in Figure~\ref{fig:soda_object_size_distribution}, while the total number of objects has increased, the proportion of small objects has decreased, with a corresponding rise in both medium and large objects. This shift in distribution suggests an improvement in the dataset’s size balance, which should improve the detection of previously smaller objects. With the larger objects now more prominent, the detection models can benefit from improved size constraints, making these objects easier to detect.
 
 
 
@@ -585,14 +590,14 @@ UAVVaste \cite{uavvaste}, the final publicly available \gls{uav}-based litter de
 \subsection{Pascal Visual Object Classes}
 \label{subsec:4_pascal_voc}
 
-\begin{figure}[!b]% Place Figure at Bottom of Page
+Pascal \gls{voc} is a widely used benchmark dataset in object detection, featuring 20 object categories including people, animals, vehicles, and various household items \cite{pascal-voc-2012}. Figure \ref{fig:pascal_voc} shows sample images that illustrate the diversity of the dataset. The dataset includes images annotated with object class labels, bounding boxes, and pixel-level segmentation masks, enabling its use across multiple computer vision tasks. In this study, the Pascal \gls{voc} 2012 dataset is used for both training and validation to test the proposed methodology beyond the context of \gls{uav}-based litter detection, per the fourth objective (\textbf{O4}). This helps assess whether the approach remains effective across a broader set of object classes. 
+
+\begin{figure}[!ht]% Place Figure at Bottom of Page
     \centering
     \includegraphics[width=1\textwidth]{pascalvoc2012images.jpg}
     \caption{Sample images from the Pascal VOC 2012 dataset, showcasing the diversity in object categories included in the dataset. (Source: \cite{pascal-voc-2012})}
     \label{fig:pascal_voc}% Resized to 200%
 \end{figure}
-
-Pascal \gls{voc} is a widely used benchmark dataset in object detection, featuring 20 object categories including people, animals, vehicles, and various household items \cite{pascal-voc-2012}. Figure \ref{fig:pascal_voc} shows sample images that illustrate the diversity of the dataset. The dataset includes images annotated with object class labels, bounding boxes, and pixel-level segmentation masks, enabling its use across multiple computer vision tasks. In this study, the Pascal \gls{voc} 2012 dataset is used for both training and validation to test the proposed methodology beyond the context of \gls{uav}-based litter detection, per the fourth objective (\textbf{O4}). This helps assess whether the approach remains effective across a broader set of object classes. 
 
 The dataset utilised in this study, sourced from Roboflow, contains 17,112 images in total. Of these, 13,690 are assigned to the training set, and 3,422 are designated for validation. However, the Pascal VOC 2012 dataset also suffers from class imbalance, as shown in Figure~\ref{fig:class_distribution_pascal_voc}. There is a disproportionately high number of instances labelled as \textit{person} compared to other categories. While the remaining classes show smaller gaps among themselves, class imbalance is still present, with \textit{bus} being the least represented category.
 

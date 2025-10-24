@@ -95,6 +95,15 @@ The method may also be adapted for dense prediction problems such as semantic or
 
 \end{description}
 
+\section{Concluding Remarks}
+\label{sec:6_concluding_remarks}
+
+This dissertation explored the feasibility of integrating the \gls{lupi} paradigm into object detection models, with the overarching aim of improving detection accuracy without increasing model size or inference time. To achieve this, a teacher–student framework was developed in which the teacher model received privileged information in the form of bounding box masks and distilled this knowledge to the student model, which was then used at inference. The methodology was applied across five widely used architectures, covering both one-stage and two-stage detection paradigms, and evaluated using within-dataset and cross-dataset experiments, including \gls{uav}-based litter detection and general-purpose benchmarks such as Pascal \gls{voc} 2012.
+The results illustrate that \gls{lupi}-trained student models consistently outperformed baseline counterparts across all tested architectures and datasets, achieving higher accuracy while maintaining identical model size and inference speed. An ablation study on the distillation coefficient further confirmed the robustness of the approach, while qualitative evaluations highlighted improved interpretability. Overall, this dissertation demonstrates that incorporating privileged information via \gls{lupi} provides a practical, generalisable means to enhance object detection performance in resource-constrained scenarios, addressing all four research objectives and laying the groundwork for future extensions and applications.
+
+%  Oh My Jesus, Forgive us of our sins, saves us from the fires of hell. Lead All Souls to Heaven. Expecially those in Most Need of Thy Mercy!
+
+
 % Grazzi Sinjur Alla, Ahfirli Sinjur Alla, u Ismaghni Sinjur Alla
 
 %--

@@ -30,6 +30,7 @@ This chapter begins by outlining the hardware setup and evaluation strategy that
 \label{sec:5_hardware_setup}
 
 All experiments involving deep learning models were conducted using two primary hardware configurations. Training was performed on systems equipped with an NVIDIA GeForce RTX 4070 and an RTX 4090 \gls{gpu}, both supporting \gls{cuda}-enabled acceleration. These setups were used across different experiments as needed, enabling parallel computation and helping to reduce training times significantly. Furthermore, a batch size of 16 was consistently used across all experiments for training the deep learning models.
+Within this setup, a fixed random seed of 42, symbolically representing the "seed of life," was used, and all architectures were configured to employ deterministic algorithms. Several preliminary tests were carried out to verify that the results were consistent between runs. Minor variability in the reported results may still occur due to inherent non-deterministic operations on the GPU, but this was observed to be negligible, supporting the reliability of the findings.
 
 \section{Evaluation Strategy}
 \label{sec:5_evaluation_strategy}
@@ -44,13 +45,13 @@ Key experiments included validating the tiling preprocessing strategy on \gls{so
 
 This evaluation strategy was carefully designed to cover all the key objectives: developing, evaluating and refining the methodology (Objectives \textbf{O1} and \textbf{O2}), testing it across various litter detection datasets (Objective \textbf{O3}), and examining both the computational trade-offs and wider generalisation of the approach (Objective \textbf{O4}). A summary of how each experiment relates to these goals is detailed in Table \ref{tab:experiment_strategy}.
 
-
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 \renewcommand{\arraystretch}{1.5} % increase row height by 30%
 \begin{table}[htbp]
     \centering
     \small
     \begin{adjustbox}{max width=\textwidth}
-    \begin{tabular}{|l|p{3.5cm}|p{3.5cm}|p{2.5cm}|p{5cm}|}
+    \begin{tabular}{|l|P{3.5cm}|P{3.5cm}|P{2.5cm}|P{5cm}|}
         \hline
         \textbf{Experiment} & \textbf{Dataset/s} & \textbf{Metric/s} & \textbf{Objective/s} & \textbf{Purpose} \\
         \hline \hline
@@ -126,7 +127,7 @@ Two separate experiments were conducted. The first included the full \gls{soda} 
 The results of both experiments demonstrate that, as grid size increases, the number of images and annotations also increases. Conversely, the number of small objects decreases, while the count of medium and large objects rises. In the experiment covering all altitudes, the rate of change was more pronounced, largely due to the presence of large objects captured at the 1-metre altitude. In contrast, the experiment excluding 1-metre data showed more gradual, consistent changes. Despite this difference, both experiments exhibited the expected trends based on the tiling methodology.
 However, these outcomes alone do not provide a direct conclusion regarding the optimal grid size. The goal remains to identify a configuration that reduces the proportion of small objects without introducing excessive computational overhead from processing a high number of tiles. To this end, the ratio of small objects to the number of generated tiles was examined across grid sizes, as shown in Figure \ref{fig:elbow_plot}.
 
-To determine the optimal grid size, the elbow point \cite{elbow_point} method was applied. This approach involved calculating the first and second derivatives of the curve, identifying the point at which the rate of change begins to level off. The second derivative was essential in locating the inflection point, where diminishing returns set in.
+To determine the optimal grid size, the elbow point \cite{elbow_point} method was applied. This approach involved calculating the first and second derivatives of the curve and identifying the point at which the rate of change begins to level off. The second derivative was essential in locating the inflection point, where diminishing returns set in.
 Interestingly, both experiments pointed to a 3$\times$3 grid as the optimal configuration. It is worth noting, however, that although the trends across both plots were similar, the ratio of small objects per tile was higher in the all-altitudes experiment. This suggests that including close-range imagery may influence the density of small object annotations.
 As a result of this experiment, the tiling configuration used for dataset pre-processing in this study was set to a 3$\times$3 grid for the \gls{soda} dataset (refer to Subsection \ref{subsec:4_soda}), in line with the findings outlined above.
 
@@ -156,7 +157,7 @@ All models were trained using the designated training subsets, while validation 
 
 The first experiment aimed to assess the benefits of using the \gls{lupi} framework for close-range litter detection. To this end, a subset of the \gls{soda} dataset at a 1-metre altitude was selected, consisting of 452 images. These images were divided into 316 for training, 46 for validation, and 90 for testing. In this experiment, detection models were trained to classify all litter into a single category, distinguishing between litter (foreground) and background.
 
-The results of this experiment, comparing the baseline model with the best student model across all five selected detection architectures, are presented in Figure \ref{fig:soda01m_bar}. In all architectures, the student model outperformed the baseline, showing a notable improvement in detection accuracy, particularly in the challenging \gls{map}@50–95 metric. Additionally, improvements were seen in other key detection metrics, including precision, recall, and F1 score. Among the models, the RetinaNet student achieved the highest performance, followed by the Faster \gls{rcnn} and \gls{fcos} student models. Across all metrics, the student models demonstrated an accuracy improvement ranging from 0.05 to 0.15. Interestingly, when comparing the baseline models with the student models, RetinaNet and \gls{ssd} showed the highest improvements in detection accuracy, with the student models outperforming their baseline counterparts. The other architecture types, such as Faster \gls{rcnn} and \gls{fcos}, also saw improvements, though the performance boosts were somewhat smaller in comparison to those of RetinaNet and \gls{ssd}.
+The results of this experiment, comparing the baseline model with the best student model across all five selected detection architectures, are presented in Figure \ref{fig:soda01m_bar}. In all architectures, the student model outperformed the baseline, showing a notable improvement in detection accuracy, particularly in the challenging \gls{map}@50–95 metric. Additionally, improvements were seen in other key detection metrics, including precision, recall, and F1 score. Amongst the models, the RetinaNet student achieved the highest performance, followed by the Faster \gls{rcnn} and \gls{fcos} student models. Across all metrics, the student models demonstrated an accuracy improvement ranging from 0.05 to 0.15. Interestingly, when comparing the baseline models with the student models, RetinaNet and \gls{ssd} showed the highest improvements in detection accuracy, with the student models outperforming their baseline counterparts. The other architecture types, such as Faster \gls{rcnn} and \gls{fcos}, also saw improvements, though the performance boosts were somewhat smaller in comparison to those of RetinaNet and \gls{ssd}.
 
 \begin{figure}[!ht]
     \centering
@@ -196,7 +197,7 @@ Interestingly, while Faster \gls{rcnn} proved to be the top-performing teacher m
 Across all teacher models, recall was generally high, while precision tended to be lower. This implies that the teacher models were primarily geared toward minimising false negatives.
 % , reinforcing their utility in guiding student models to identify more instances, albeit sometimes at the expense of \gls{fp}.
 
-\begin{figure}[!b]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{training_times_soda_01m_dataset_binary_detection.jpg}
     \caption{Comparison of model training times on the \gls{soda} dataset at a 1-metre altitude for binary litter detection.}
@@ -210,7 +211,7 @@ To examine the impact of these changes on training duration, Figure~\ref{fig:sod
 
 In terms of model-specific performance, \gls{fcos} and SSDLite exhibited the shortest training durations, whereas RetinaNet and Faster \gls{rcnn} incurred the highest training times, especially under the \gls{lupi} setup. Notably, teacher models consistently recorded the longest training durations across all architectures.
 
-\begin{table}[!b]
+\begin{table}[!ht]
     \centering
     \begin{adjustbox}{width=\textwidth}
     \begin{tabular}{llcccc}
@@ -343,8 +344,6 @@ Overall, this experiment sought to introduce a more challenging setting in which
 The third experiment aimed to build upon the context established in the second, focusing again on multi-altitude \gls{uav}-based litter detection. However, this time, the objective was to test the method’s generalisability in a multi-label detection setting. The experimental setup remained consistent with the previous trials, though the model heads were reconfigured to classify six distinct litter categories, as defined in the 3$\times$3 tiled \gls{soda} dataset. This dataset comprised 7,461 images, of which 5,238 were used for training, 765 for validation, and 1,458 for testing.
 This experiment posed a significantly greater challenge for the detection models. The task required accurate identification of small, visually similar litter types, often set against complex and varied backgrounds. The difficulty of distinguishing between these categories introduced a new layer of complexity.
 
-The results, comparing the baseline models with the best-performing student models across the five selected detection architectures, are illustrated in Figure~\ref{fig:soda_tiled_multi_bar}. In most cases, the student models outperformed their baselines, with improvements particularly evident in the more demanding \gls{map}@50–95 metric and precision, recall, and F1 scores. However, these improvements were notably smaller than those observed in the previous experiments. Given this added complexity, detection accuracy declined across all models, with low metric scores observed throughout. The \gls{ssd} and SSDLite architectures in particular showed little to no improvement under these conditions, further exacerbating their limitations in the context of \gls{uav}-based detection.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{SODA Dataset (Tiled Multi-label Detection).png}
@@ -352,11 +351,11 @@ The results, comparing the baseline models with the best-performing student mode
     \label{fig:soda_tiled_multi_bar}
 \end{figure}
 
+The results, comparing the baseline models with the best-performing student models across the five selected detection architectures, are illustrated in Figure~\ref{fig:soda_tiled_multi_bar}. In most cases, the student models outperformed their baselines, with improvements particularly evident in the more demanding \gls{map}@50–95 metric and precision, recall, and F1 scores. However, these improvements were notably smaller than those observed in the previous experiments. Given this added complexity, detection accuracy declined across all models, with low metric scores observed throughout. The \gls{ssd} and SSDLite architectures in particular showed little to no improvement under these conditions, further exacerbating their limitations in the context of \gls{uav}-based detection.
+
 Compared to the earlier experiments, this setup presented a more difficult detection scenario, leading to an overall drop in performance. Nevertheless, models trained using the \gls{lupi} framework continued to show a measurable advantage in most cases.
 Among all the models, the student version of \gls{fcos} delivered the best overall results, followed by Faster \gls{rcnn} and RetinaNet. While this represents a shift from previous experiments, the general trend suggests that architectures using the ResNet-\gls{fpn} backbone, which benefits from acquiring richer and more precise spatial information, tend to be more effective for this litter detection task. For all-altitude binary litter detection, Faster \gls{rcnn} produced the best results, but in the multi-label detection experiment, \gls{fcos} was more successful. However, the differences between the two were minimal in both experiments.
 Furthermore, the student models outperformed their baseline counterparts across all evaluated metrics, with accuracy improvements ranging from 0.01 to 0.08. Although these improvements gradually decreased, they still had a noticeable impact. \gls{fcos} and Faster \gls{rcnn} showed the most significant performance boosts compared to their baselines. RetinaNet and \gls{ssd} also showed some benefit, though to a lesser degree. In contrast, SSDLite showed no improvement in any of the metrics.
-
-Having addressed multi-label detection, a class-specific analysis of detection accuracy was also conducted. Figure~\ref{fig:soda_tiled_multi_per_class} presents this evaluation using the \gls{ap}@50--95 metric. As seen, the same trend in model performance is maintained across architecture types. \gls{fcos} and Faster \gls{rcnn} again emerged as the best-performing models, followed by RetinaNet, \gls{ssd}, and SSDLite. The advantage offered by the \gls{lupi} framework is especially pronounced here, with student models outperforming their baseline counterparts in most individual \gls{ap} scores.
 
 \begin{figure}[!ht]
     \centering
@@ -364,6 +363,8 @@ Having addressed multi-label detection, a class-specific analysis of detection a
     \caption{Comparison between the baseline and best-performing student models based on mean average precision by class on the 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection.}
     \label{fig:soda_tiled_multi_per_class}
 \end{figure}
+
+Having addressed multi-label detection, a class-specific analysis of detection accuracy was also conducted. Figure~\ref{fig:soda_tiled_multi_per_class} presents this evaluation using the \gls{ap}@50--95 metric. As seen, the same trend in model performance is maintained across architecture types. \gls{fcos} and Faster \gls{rcnn} again emerged as the best-performing models, followed by RetinaNet, \gls{ssd}, and SSDLite. The advantage offered by the \gls{lupi} framework is especially pronounced here, with student models outperforming their baseline counterparts in most individual \gls{ap} scores.
 
 When this performance is compared against the class imbalance found in the \gls{soda} dataset, as shown in Figure~\ref{fig:soda_annotation_distribution}, a consistent pattern is observed. The classes \textit{drink can} and \textit{clear plastic bottle}, which are most frequent in the dataset, tend to record the highest \gls{ap} scores. Curiously, although \textit{glass bottle} is more common than several other classes, no detector in this study successfully identified it. This could be attributed to it being misclassified as \textit{glass jar}, due to the visual similarity between the two, leading to incorrect predictions.
 
@@ -411,14 +412,14 @@ In addition to the above comparisons, an extended analysis was conducted to eval
 The \gls{ssd} and SSDLite teacher models once again displayed a marked drop in detection accuracy, both in comparison to other architectures and relative to their performance in the preceding experiment. This further exacerbates their limited capacity to generalise within this more demanding detection context. As observed previously, Faster \gls{rcnn} remained the most effective teacher model overall. However, despite being the second-best teacher, \gls{fcos} produced the highest-performing student in this multi-label setup. RetinaNet continued to lag behind both Faster \gls{rcnn} and \gls{fcos}, showing comparatively weaker performance.
 Among all teacher models, recall scores were consistently high, while precision varied more significantly. Notably, SSDLite recorded a precision score of zero, whereas the remaining models achieved more acceptable precision values, ranging from 0.59 to 0.96.
 
-The training durations for all models used in this experiment are shown in Figure~\ref{fig:soda_tiled_multi_training_time}. These results contrast significantly with those from the previous experiment (see Figure~\ref{fig:soda_tiled_single_training_time}). Overall, training times increased across the board. Notably, the student models required substantially more time to train compared to their baseline counterparts, marking a sharp rise relative to the earlier experiment.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=1\textwidth]{training_times_soda_dataset_tiled_multi_label_detection.jpg}
     \caption{Comparison of model training times on 3$\times$3 tiled \gls{soda} dataset across all altitudes for multi-label litter detection.}
     \label{fig:soda_tiled_multi_training_time}
 \end{figure}
+
+The training durations for all models used in this experiment are shown in Figure~\ref{fig:soda_tiled_multi_training_time}. These results contrast significantly with those from the previous experiment (see Figure~\ref{fig:soda_tiled_single_training_time}). Overall, training times increased across the board. Notably, the student models required substantially more time to train compared to their baseline counterparts, marking a sharp rise relative to the earlier experiment.
 
 Interestingly, the teacher models now required less training time than their corresponding student models, a trend observed across all architectures except for Faster \gls{rcnn}. The \gls{fcos} student model, despite requiring more training time than RetinaNet, achieved the best performance overall. In contrast, Faster \gls{rcnn} trained faster than RetinaNet, and both Faster \gls{rcnn} and \gls{fcos} required less cumulative time for training (teacher and student combined) than the RetinaNet model. Meanwhile, \gls{ssd} and SSDLite remained the fastest to train, maintaining a similar trend to that observed in previous experimental setups.
 
@@ -557,8 +558,6 @@ Examining the results for the \gls{soda} dataset at 1-metre altitude for binary 
 
 Tackling a more challenging problem with binary litter detection on the \gls{soda} dataset, the application of a 3$\times$3 tiling preprocessing step enables more detailed analysis, as shown in Table \ref{tab:soda_tiled_binary_object_sizes_split}. Unlike before, this dataset subset now includes small objects, thus $\text{mAP}^{\text{Small}}$ and $\text{mAR}^{\text{Small}}$ are defined. Notably, RetinaNet, \gls{fcos}, and Faster \gls{rcnn} demonstrate substantial improvements across object sizes. However, these advances are less apparent for the \gls{ssd} and SSDLite architectures. As expected, the highest scores are generally observed for medium and large objects, but meaningful improvements in $\text{mAP}^{\text{Small}}$ and $\text{mAR}^{\text{Small}}$ are also visible, particularly for models with ResNet-\gls{fpn} backbones. The other architectures tend to perform worse in this regard, consistent with observations from Subsection \ref{subsec:5_soda_tiled_single_dataset_exp}. Interestingly, \gls{ssd} is the only case where the baseline outperforms the student model on small object metrics, which may be attributed to the architectural limitations of \gls{ssd} in capturing fine-grained features for small objects, resulting in less effective knowledge transfer through \gls{lupi} compared to the other models.
 
-Continuing to increase the complexity of the problem by targeting multi-label detection on the 3$\times$3 tiled \gls{soda} dataset, the difficulty of the task naturally rises, and the magnitude of improvements begins to diminish. Nonetheless, Table \ref{tab:soda_tiled_multi_object_sizes_split} continues to illustrate that the proposed approach generally improves multi-label small object detection. Specifically, marginal improvements were noted for Faster \gls{rcnn}, \gls{fcos}, and to a lesser extent \gls{ssd}. However, for RetinaNet and SSDLite, the baseline models outperformed the student models in terms of small object detection. Despite this, the student models consistently outperformed the baselines on medium and large object metrics. These findings align with observations from Subsection \ref{subsec:5_soda_tiled_multi_dataset_exp}, where a significant drop in \gls{map} and \gls{mar} scores was recorded due to the increased complexity. Still, even with this heightened challenge, a marginal benefit from adopting the proposed methodology remains evident.
-
 \begin{table*}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.5} % increase row height
@@ -586,6 +585,8 @@ Continuing to increase the complexity of the problem by targeting multi-label de
 \caption{Comparison of the baseline and best‐performing student models across \gls{coco} detection metrics on the 3$\times$3 \gls{soda} dataset across all altitudes for multi-label litter detection, with results reported separately for each object size category.}
 \label{tab:soda_tiled_multi_object_sizes_split}
 \end{table*}
+
+Continuing to increase the complexity of the problem by targeting multi-label detection on the 3$\times$3 tiled \gls{soda} dataset, the difficulty of the task naturally rises, and the magnitude of improvements begins to diminish. Nonetheless, Table \ref{tab:soda_tiled_multi_object_sizes_split} continues to illustrate that the proposed approach generally improves multi-label small object detection. Specifically, marginal improvements were noted for Faster \gls{rcnn}, \gls{fcos}, and to a lesser extent \gls{ssd}. However, for RetinaNet and SSDLite, the baseline models outperformed the student models in terms of small object detection. Despite this, the student models consistently outperformed the baselines on medium and large object metrics. These findings align with observations from Subsection \ref{subsec:5_soda_tiled_multi_dataset_exp}, where a significant drop in \gls{map} and \gls{mar} scores was recorded due to the increased complexity. Still, even with this heightened challenge, a marginal benefit from adopting the proposed methodology remains evident.
 
 \begin{table*}[htbp]
 \centering
